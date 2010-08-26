@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Welcome to Domino Flip! Tap the domino to flip it.</string>
+    <string name="app_name">DominoFlip</string>
+    <string name="random">Random</string>
+</resources>
