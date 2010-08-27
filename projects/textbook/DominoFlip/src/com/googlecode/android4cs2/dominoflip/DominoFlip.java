@@ -61,7 +61,7 @@ public class DominoFlip extends Activity implements OnTouchListener {
     }
 	@Override
 	public boolean onTouch(View arg0, MotionEvent arg1) {
-		// TODO Auto-generated method stub
+		// d.flip();
 		return false;
 	}
 }
