@@ -9,17 +9,49 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class DominoFlip extends Activity implements OnTouchListener {
+public class DominoFlip extends Activity {
 	
 	private Domino d;
 	private Button random;
 
+	private ImageView left;
+	private ImageView right;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        left = (ImageView) findViewById(R.id.left);
+        right = (ImageView) findViewById(R.id.right);
+        
+        left.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if ((event.getAction()  & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+					d.flip();
+			    	draw((ImageView) findViewById(R.id.left), d.getLeft());
+			    	draw((ImageView) findViewById(R.id.right), d.getRight());
+				}
+				return true;
+			}
+		});
+
+        right.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+					d.flip();
+			    	draw((ImageView) findViewById(R.id.left), d.getLeft());
+			    	draw((ImageView) findViewById(R.id.right), d.getRight());
+				}
+				return true;
+			}
+        	
+        });
         
         d = new ArrayDomino(1,1);
         random = (Button) findViewById(R.id.random);
@@ -57,11 +89,5 @@ public class DominoFlip extends Activity implements OnTouchListener {
 		default: view.setImageResource(R.drawable.die1);
 		break;
 		}
-
     }
-	@Override
-	public boolean onTouch(View arg0, MotionEvent arg1) {
-		// d.flip();
-		return false;
-	}
 }
