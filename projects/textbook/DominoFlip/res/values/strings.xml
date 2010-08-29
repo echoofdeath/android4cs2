@@ -3,4 +3,7 @@
     <string name="welcome">Welcome to Domino Flip! Tap the domino to flip it.</string>
     <string name="app_name">DominoFlip</string>
     <string name="random">Random</string>
+    <string name="switcher">Implementation: </string>
+    <string name="radio_array">Array</string>
+    <string name="radio_field">Field</string>
 </resources>
