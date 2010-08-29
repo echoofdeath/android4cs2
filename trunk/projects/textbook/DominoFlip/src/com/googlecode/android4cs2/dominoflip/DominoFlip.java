@@ -53,12 +53,10 @@ public class DominoFlip extends Activity {
         		d = (FieldDomino) o;
         		field.toggle();
         	}
-        	
-        	draw(left, d.getLeft());
-        	draw(right, d.getRight());
+
+        	redraw();
         	
         } else {
-        	d = new ArrayDomino(1,1);
             randomize((int)(Math.random()*6)+1, (int)(Math.random()*6)+1);
         }
 
@@ -77,10 +75,14 @@ public class DominoFlip extends Activity {
     	return d;
     }
     
-    public void randomize(int left, int right) {
-    	d = new ArrayDomino(left, right);
-    	draw((ImageView) findViewById(R.id.left), d.getLeft());
-    	draw((ImageView) findViewById(R.id.right), d.getRight());
+    public void redraw() {
+    	draw(left, d.getLeft());
+    	draw(right, d.getRight());   	
+    }
+    
+    public void randomize(int leftnum, int rightnum) {
+    	d = new ArrayDomino(leftnum, rightnum);
+    	redraw();
     }
 
     public void draw(ImageView view, int number) {
@@ -108,8 +110,7 @@ public class DominoFlip extends Activity {
     	public boolean onTouch(View v, MotionEvent event) {
     		if ((event.getAction()  & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
     			d.flip();
-    	    	draw((ImageView) findViewById(R.id.left), d.getLeft());
-    	    	draw((ImageView) findViewById(R.id.right), d.getRight());
+    			redraw();
     		}
     		return true;
     	}
@@ -125,9 +126,7 @@ public class DominoFlip extends Activity {
 			} else {
 				d = new FieldDomino(d.getLeft(), d.getRight());
 			}
-			
-			draw(left, d.getLeft());
-			draw(right, d.getRight());
+			redraw();
 		}
     	
     };
