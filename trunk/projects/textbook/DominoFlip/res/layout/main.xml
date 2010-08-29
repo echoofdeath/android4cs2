@@ -15,7 +15,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/welcome"
-            android:gravity="center_horizontal" >
+            android:gravity="center_horizontal"
+            android:paddingBottom="12sp" >
             
 	        <ImageView android:id="@+id/left"
 	            android:layout_height="wrap_content"
@@ -29,5 +30,43 @@
 	            android:scaleType="centerInside"
 	            android:layout_width="wrap_content" />
             </LinearLayout>
-        <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/linLay" android:id="@+id/random" android:text="@string/random" android:layout_centerInParent="true"></Button>
+            
+        <Button android:id="@+id/random" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content" 
+        	android:layout_below="@+id/linLay" 
+        	android:text="@string/random" 
+        	android:layout_centerInParent="true" />
+        
+        <TextView android:id="@+id/imp_switch" 
+			android:layout_below="@id/random"
+			android:layout_height="wrap_content" 
+			android:layout_width="wrap_content"
+			android:text="@string/switcher"
+			android:layout_centerInParent="true"
+			android:paddingTop="24sp" />
+				
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        	android:id="@+id/linLay2"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/imp_switch"
+        	android:gravity="center_horizontal"
+        	android:layout_centerInParent="true">
+
+        	<RadioGroup android:orientation="horizontal"
+        		android:layout_width="wrap_content"
+        		android:layout_height="wrap_content">
+        	
+        		<RadioButton android:id="@+id/radio_array"
+        			android:text="@string/radio_array"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"
+        			android:checked="true" />
+        		<RadioButton android:id="@+id/radio_field"
+        			android:text="@string/radio_field"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content" />      			
+        	</RadioGroup>
+        </LinearLayout>
 </RelativeLayout>

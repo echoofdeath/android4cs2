@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 public class DominoFlip extends Activity {
 	
@@ -15,6 +16,10 @@ public class DominoFlip extends Activity {
 	private Button random;
 
 	private TouchFlipListener tfl;
+	
+	private RadioButton array;
+	private RadioButton field;
+	
 	private ImageView left;
 	private ImageView right;
 	
@@ -32,13 +37,21 @@ public class DominoFlip extends Activity {
         left.setOnTouchListener(tfl);
         right.setOnTouchListener(tfl);
         
+        array = (RadioButton) findViewById(R.id.radio_array);
+        field = (RadioButton) findViewById(R.id.radio_field);
+        
+        array.setOnClickListener(radioListener);
+        field.setOnClickListener(radioListener);
+        
         if (getLastNonConfigurationInstance() != null) {
         	Object o = getLastNonConfigurationInstance();
         	
         	if (o.getClass().toString().contains("ArrayDomino")) {
         		d = (ArrayDomino) o;
+        		array.toggle();
         	} else if (o.getClass().toString().contains("FieldDomino")) {
         		d = (FieldDomino) o;
+        		field.toggle();
         	}
         	
         	draw(left, d.getLeft());
@@ -47,7 +60,6 @@ public class DominoFlip extends Activity {
         } else {
         	d = new ArrayDomino(1,1);
             randomize((int)(Math.random()*6)+1, (int)(Math.random()*6)+1);
-            Log.d("NON_CONFIG: ", "THAT MOTHERFUCKER IS NULL!");
         }
 
         random = (Button) findViewById(R.id.random);
@@ -103,4 +115,20 @@ public class DominoFlip extends Activity {
     	}
     	
     }
+    
+    RadioButton.OnClickListener radioListener = new RadioButton.OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			if (array.isChecked()) {
+				d = new ArrayDomino(d.getLeft(), d.getRight());
+			} else {
+				d = new FieldDomino(d.getLeft(), d.getRight());
+			}
+			
+			draw(left, d.getLeft());
+			draw(right, d.getRight());
+		}
+    	
+    };
 }
