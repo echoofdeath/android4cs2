@@ -2,10 +2,10 @@ package com.googlecode.android4cs2.dominoflip;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -14,6 +14,7 @@ public class DominoFlip extends Activity {
 	private Domino d;
 	private Button random;
 
+	private TouchFlipListener tfl;
 	private ImageView left;
 	private ImageView right;
 	
@@ -26,34 +27,29 @@ public class DominoFlip extends Activity {
         left = (ImageView) findViewById(R.id.left);
         right = (ImageView) findViewById(R.id.right);
         
-        left.setOnTouchListener(new View.OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if ((event.getAction()  & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-					d.flip();
-			    	draw((ImageView) findViewById(R.id.left), d.getLeft());
-			    	draw((ImageView) findViewById(R.id.right), d.getRight());
-				}
-				return true;
-			}
-		});
-
-        right.setOnTouchListener(new View.OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-					d.flip();
-			    	draw((ImageView) findViewById(R.id.left), d.getLeft());
-			    	draw((ImageView) findViewById(R.id.right), d.getRight());
-				}
-				return true;
-			}
-        	
-        });
+        tfl = new TouchFlipListener();
         
-        d = new ArrayDomino(1,1);
+        left.setOnTouchListener(tfl);
+        right.setOnTouchListener(tfl);
+        
+        if (getLastNonConfigurationInstance() != null) {
+        	Object o = getLastNonConfigurationInstance();
+        	
+        	if (o.getClass().toString().contains("ArrayDomino")) {
+        		d = (ArrayDomino) o;
+        	} else if (o.getClass().toString().contains("FieldDomino")) {
+        		d = (FieldDomino) o;
+        	}
+        	
+        	draw(left, d.getLeft());
+        	draw(right, d.getRight());
+        	
+        } else {
+        	d = new ArrayDomino(1,1);
+            randomize((int)(Math.random()*6)+1, (int)(Math.random()*6)+1);
+            Log.d("NON_CONFIG: ", "THAT MOTHERFUCKER IS NULL!");
+        }
+
         random = (Button) findViewById(R.id.random);
         random.setOnClickListener(new OnClickListener() {
 
@@ -63,7 +59,10 @@ public class DominoFlip extends Activity {
 			}
         	
         });
-        randomize((int)(Math.random()*6)+1, (int)(Math.random()*6)+1);
+    }
+    
+    public Object onRetainNonConfigurationInstance() {
+    	return d;
     }
     
     public void randomize(int left, int right) {
@@ -89,5 +88,19 @@ public class DominoFlip extends Activity {
 		default: view.setImageResource(R.drawable.die1);
 		break;
 		}
+    }
+    
+    class TouchFlipListener implements View.OnTouchListener {
+
+    	@Override
+    	public boolean onTouch(View v, MotionEvent event) {
+    		if ((event.getAction()  & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+    			d.flip();
+    	    	draw((ImageView) findViewById(R.id.left), d.getLeft());
+    	    	draw((ImageView) findViewById(R.id.right), d.getRight());
+    		}
+    		return true;
+    	}
+    	
     }
 }
