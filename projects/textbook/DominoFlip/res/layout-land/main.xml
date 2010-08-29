@@ -3,4 +3,40 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
+	<TextView android:id="@+id/welcome" 
+        android:textSize="24sp"
+        android:text="@string/welcome" 
+        android:padding="10sp" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+        
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        	android:id="@+id/linLay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcome"
+            android:layout_alignParentLeft="true">
+            
+	        <ImageView android:id="@+id/left"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/die1"
+	            android:scaleType="centerInside"
+	            android:layout_width="wrap_content" />
+	            
+	        <ImageView android:id="@+id/right" 
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/die1"
+	            android:scaleType="centerInside"
+	            android:layout_width="wrap_content" />
+    </LinearLayout>
+            
+    <Button android:id="@+id/random" 
+    	android:layout_width="wrap_content" 
+    	android:layout_height="wrap_content" 
+    	android:layout_toRightOf="@+id/linLay"
+    	android:layout_below="@+id/welcome"  
+    	android:text="@string/random"
+    	android:gravity="center" />
+    	
 </RelativeLayout>
