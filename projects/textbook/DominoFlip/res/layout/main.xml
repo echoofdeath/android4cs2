@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/welcome"
-            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
             android:background="@drawable/domino" >
             
 	        <ImageView android:id="@+id/left"
@@ -36,7 +36,7 @@
         	android:layout_height="wrap_content" 
         	android:layout_below="@+id/linLay" 
         	android:text="@string/random" 
-        	android:layout_centerInParent="true" />
+        	android:layout_centerInParent="true" android:layout_marginTop="12sp"/>
         
         <TextView android:id="@+id/imp_switch" 
 			android:layout_below="@id/random"
@@ -44,7 +44,7 @@
 			android:layout_width="wrap_content"
 			android:text="@string/switcher"
 			android:layout_centerInParent="true"
-			android:paddingTop="24sp" />
+			android:paddingTop="12sp" />
 				
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         	android:id="@+id/linLay2"
