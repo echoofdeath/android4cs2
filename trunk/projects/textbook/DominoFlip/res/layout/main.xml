@@ -12,11 +12,11 @@
 	            
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         	android:id="@+id/linLay"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/welcome"
             android:gravity="center_horizontal"
-            android:paddingBottom="12sp" >
+            android:background="@drawable/domino" >
             
 	        <ImageView android:id="@+id/left"
 	            android:layout_height="wrap_content"

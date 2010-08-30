@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/welcome"
             android:layout_alignParentLeft="true"
-            android:paddingRight="18sp">
+            android:background="@drawable/domino">
             
 	        <ImageView android:id="@+id/left"
 	            android:layout_height="wrap_content"
