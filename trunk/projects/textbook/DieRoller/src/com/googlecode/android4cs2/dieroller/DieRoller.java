@@ -14,20 +14,24 @@ import android.widget.ImageView;
  * @author mgoadric
  *
  */
-public class DieRoller extends Activity implements OnClickListener{
+public class DieRoller extends Activity implements OnClickListener {
 	
-	/** A Die object for rolling and tracking state */
+	/** A Die object for rolling and tracking state. */
 	private Die d;
 	
-	/** The reference to our GUI Button */
+	/** The reference to our GUI Button. */
 	private Button rollButton;
 	
-	/** The reference to the image of the Die */
+	/** The reference to the image of the Die. */
 	private ImageView imagedie;
-	
-    /** 
-     * Called when the activity is first created. 
-     */
+	 
+     /**
+	 * This is the entry point for any Android Activity.
+	 * @param savedInstanceState contains data supplied in onSaveInstanceState(Bundle) (null here)
+	 * @return void
+	 * @see Activity
+	 * @see Bundle
+	 */ 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -56,7 +60,8 @@ public class DieRoller extends Activity implements OnClickListener{
     }
 
     /**
-     * Retains the state of the Die d when rotated or paused
+     * Retains the state of the Die d when rotated or paused.
+     * @return Object
      */
     @Override  
     public Object onRetainNonConfigurationInstance() 
@@ -65,7 +70,8 @@ public class DieRoller extends Activity implements OnClickListener{
     }
     
     /**
-     * Swaps out the image according to the topFace of Die
+     * Swaps out the image according to the topFace of Die.
+     * @param top the integer representation of the top of a die
      */
     public void setDieImage(int top) {
 		switch (top) {
@@ -87,10 +93,12 @@ public class DieRoller extends Activity implements OnClickListener{
     }
     
     /**
-     * The callback for the Roll Button, rolls the die and sets the image
+     * The callback for the Roll Button. This rolls the die and sets the image.
+     * @param v the view in which the callback was triggered
+     * @see View
      */
 	@Override
-	public void onClick(View arg0) {
+	public void onClick(View v) {
 		d.roll();
 		setDieImage(d.getTopFace());
 	}
