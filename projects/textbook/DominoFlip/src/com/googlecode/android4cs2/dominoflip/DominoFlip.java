@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+/**
+ * An Activity subclass which displays a domino and allows the user to flip it, change
+ * the backend implementation, or generate a random domino.
+ * @author jdjennin
+ */
 public class DominoFlip extends Activity {
 	
 	// Data members
@@ -28,6 +33,13 @@ public class DominoFlip extends Activity {
 	/* Unlike regular Java programs which start in the main method,
 	 * onCreate is where the program begins for Android applications. */
 	
+	/**
+	 * This is the entry point for any Android Activity.
+	 * @param savedInstanceState contains data supplied in onSaveInstanceState(Bundle) (null here)
+	 * @return void
+	 * @see Activity
+	 * @see Bundle
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +83,7 @@ public class DominoFlip extends Activity {
         	
         } else {
         	// ...otherwise, just put out a new domino
-            randomize((int)(Math.random()*6)+1, (int)(Math.random()*6)+1);
+            randomize();
         }
 
         random = (Button) findViewById(R.id.random);
@@ -81,33 +93,52 @@ public class DominoFlip extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				randomize((int)(Math.random()*6)+1, (int)(Math.random()*6)+1);
+				randomize();
 			}
         	
         });
     }
     
-    /* This method allows you to save any data you need when the orientation changes.
+    /**
+     * This method allows you to save any data you need when the orientation changes.
      * The Activity is destroyed and completely recreated, so this is necessary if we want to
-     * keep the same domino as we had before the orientation change. */
+     * keep the same domino as before the orientation change.
+     * @return Object
+     * @see Activity
+     *  */
     
     public Object onRetainNonConfigurationInstance() {
     	return d;
     }
     
-    // Redraws the domino images
+    /**
+     * Redraws the images to the screen with their updated values
+     * @return void
+     * 
+     */
     public void redraw() {
     	draw(left, d.getLeft());
     	draw(right, d.getRight());   	
     }
     
-    // Picks a random domino
-    public void randomize(int leftnum, int rightnum) {
-    	d = new ArrayDomino(leftnum, rightnum);
+    /**
+     * This method randomly generates a new domino using the selected implementation
+     * @return void
+     * 
+     */
+    public void randomize() {
+    	d = new ArrayDomino((int)(Math.random()*6)+1, (int)(Math.random()*6)+1);
     	redraw();
     }
 
-    // Draws our domino images to the screen
+    /**
+     * This method draws the domino images to the screen in the specified view.
+     * @param view the view to which the domino image should be drawn
+     * @param number the numeric value of the particular side of the domino
+     * @return void
+     * @see ImageView
+     * 
+     */
     public void draw(ImageView view, int number) {
 		switch (number) {
 		case 1: view.setImageResource(R.drawable.die1);
@@ -129,9 +160,22 @@ public class DominoFlip extends Activity {
     
     /* We use a private class here because OnTouchListener is only an interface,
      * not a class. Thus, we must CREATE a class to use the functionality of the interface. */
+    /**
+     * An implementation of View.OnTouchListener, this class flips the currently displayed domino
+     * when the user touches the domino.
+     * @see View
+     * @see View.OnTouchListener
+     */
     class TouchFlipListener implements View.OnTouchListener {
 
     	@Override
+    	/**
+    	 * @param v the View which received the MotionEvent event
+    	 * @param event the event which triggered this callback
+    	 * @return boolean
+    	 * @see View
+    	 * @see MotionEvent
+    	 */
     	public boolean onTouch(View v, MotionEvent event) {
     		// If the touch event which just happened was the finger pressing down on the screen...
     		if ((event.getAction()  & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
