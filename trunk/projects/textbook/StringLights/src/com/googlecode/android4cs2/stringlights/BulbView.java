@@ -74,65 +74,52 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent event) {
-		Log.d("BulbView:", "onSingleTapUp");
 		if (bulb.isOn()) {
-			bulb.setOn(false);
-			this.setImageResource(R.drawable.bulboff);
-			Log.d("BulbView:", "Bulb is on.");
+			turnOff();
 		} else {
-			bulb.setOn(true);
-			switch (bulb.getColor()) {
-			case 'R':
-				this.setImageResource(R.drawable.bulbred);
-				Log.d("BulbView:", "Bulb is red.");
-				break;
-			case 'G':
-				this.setImageResource(R.drawable.bulbgreen);
-				Log.d("BulbView:", "Bulb is green.");
-				break;
-			case 'B':
-				this.setImageResource(R.drawable.bulbblue);
-				Log.d("BulbView:", "Bulb is blue.");
-				break;
-			default:
-				this.setImageResource(R.drawable.bulboff);
-				Log.d("BulbView:", "Bulb is off.");
-				break;
-			}
+			turnOn();
 		}
-		
-		this.invalidate();
 		return true;
 	}
 	
 	public void randomize() {
+		boolean state = bulb.isOn();
 		bulb = new ColoredLight();
 		
-		if (bulb.isOn()) {
-			switch (bulb.getColor()) {
-			case 'R':
-				this.setImageResource(R.drawable.bulbred);
-				Log.d("BulbView:", "Bulb is red.");
-				break;
-			case 'G':
-				this.setImageResource(R.drawable.bulbgreen);
-				Log.d("BulbView:", "Bulb is green.");
-				break;
-			case 'B':
-				this.setImageResource(R.drawable.bulbblue);
-				Log.d("BulbView:", "Bulb is blue.");
-				break;
-			default:
-				this.setImageResource(R.drawable.bulboff);
-				Log.d("BulbView:", "Bulb is off.");
-				break;
-			}
+		if (state) {
+			turnOn();
 		} else {
-			this.setImageResource(R.drawable.bulboff);
+			turnOff();
 		}
-		
+	}
+	
+	public void turnOn() {
+		bulb.setOn(true);
+		switch (bulb.getColor()) {
+		case 'R':
+			this.setImageResource(R.drawable.bulbred);
+			Log.d("BulbView:", "Bulb is red.");
+			break;
+		case 'G':
+			this.setImageResource(R.drawable.bulbgreen);
+			Log.d("BulbView:", "Bulb is green.");
+			break;
+		case 'B':
+			this.setImageResource(R.drawable.bulbblue);
+			Log.d("BulbView:", "Bulb is blue.");
+			break;
+		default:
+			this.setImageResource(R.drawable.bulboff);
+			Log.d("BulbView:", "Bulb is off.");
+			break;
+		}
 		this.invalidate();
-		
+	}
+	
+	public void turnOff() {
+		bulb.setOn(false);
+		this.setImageResource(R.drawable.bulboff);
+		this.invalidate();
 	}
 }
 
