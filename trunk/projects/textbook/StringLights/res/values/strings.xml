@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Welcome to the String of Lights! \nTap a light to turn it off or on.</string>
+    <string name="app_name">StringLights</string>
+    <string name="random">Randomize</string>
+    <string name="blink">Blink</string>
+</resources>
