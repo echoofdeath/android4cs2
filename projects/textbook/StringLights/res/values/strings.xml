@@ -3,5 +3,8 @@
     <string name="welcome">Welcome to the String of Lights! \nTap a light to turn it off or on.</string>
     <string name="app_name">StringLights</string>
     <string name="random">Randomize</string>
-    <string name="blink">Blink</string>
+    <string name="blinkOn">Blink On</string>
+    <string name="blinkOff">Blink Off</string>
+    <string name="allOn">All On</string>
+    <string name="allOff">All Off</string>
 </resources>

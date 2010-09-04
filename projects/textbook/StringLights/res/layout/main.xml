@@ -15,18 +15,36 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
+		android:layout_marginBottom="12sp"
+		android:layout_marginTop="12sp"
 		android:layout_below="@id/welcome" />
 	
-	<Button android:id="@+id/random"
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/linLay2"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
-		android:layout_below="@id/linLay"
-		android:text="@string/random" />
-	<ToggleButton android:id="@+id/blink"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerInParent="true"
-		android:layout_below="@id/random"
-		android:text="@string/blink" />
+		android:layout_marginTop="12sp"
+		android:layout_below="@id/linLay">
+		
+		<Button android:id="@+id/random"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/random" />
+		<Button android:id="@+id/allOn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/allOn" />
+		<Button android:id="@+id/allOff"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/allOff" />
+		<ToggleButton android:id="@+id/blink"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:textOn="@string/blinkOn"
+			android:textOff="@string/blinkOff" />
+			
+	</LinearLayout>
+		
 </RelativeLayout>

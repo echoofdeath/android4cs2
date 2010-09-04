@@ -19,6 +19,8 @@ public class LightStringDemo extends Activity {
 
 	private LinearLayout linLay;
 	private Button random;
+	private Button allOn;
+	private Button allOff;
 	private ToggleButton blink;
 	private ArrayList<BulbView> lights;
 
@@ -52,13 +54,36 @@ public class LightStringDemo extends Activity {
         	
         });
         
+        allOn = (Button) findViewById(R.id.allOn);
+        allOn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				for (BulbView b: lights) {
+					b.turnOn();
+				}
+			}
+		});
+        
+        allOff = (Button) findViewById(R.id.allOff);
+        allOff.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				for (BulbView b: lights) {
+					b.turnOff();
+				}
+			}
+        	
+        });
+        
         blink = (ToggleButton) findViewById(R.id.blink);
         
     }
     
     public void randomize() {
-		for (BulbView v: lights) {
-			v.randomize();
+		for (BulbView b: lights) {
+			b.randomize();
 		}
     }
 }
