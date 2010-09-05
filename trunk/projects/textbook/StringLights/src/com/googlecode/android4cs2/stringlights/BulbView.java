@@ -1,9 +1,7 @@
 package com.googlecode.android4cs2.stringlights;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -98,19 +96,15 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 		switch (bulb.getColor()) {
 		case 'R':
 			this.setImageResource(R.drawable.bulbred);
-			Log.d("BulbView:", "Bulb is red.");
 			break;
 		case 'G':
 			this.setImageResource(R.drawable.bulbgreen);
-			Log.d("BulbView:", "Bulb is green.");
 			break;
 		case 'B':
 			this.setImageResource(R.drawable.bulbblue);
-			Log.d("BulbView:", "Bulb is blue.");
 			break;
 		default:
 			this.setImageResource(R.drawable.bulboff);
-			Log.d("BulbView:", "Bulb is off.");
 			break;
 		}
 		this.invalidate();
