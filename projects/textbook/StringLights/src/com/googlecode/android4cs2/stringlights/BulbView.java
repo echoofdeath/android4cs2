@@ -121,5 +121,13 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 		this.setImageResource(R.drawable.bulboff);
 		this.invalidate();
 	}
+	
+	public boolean isOn() {
+		return bulb.isOn();
+	}
+	
+	public Character getColor() {
+		return bulb.getColor();
+	}
 }
 
