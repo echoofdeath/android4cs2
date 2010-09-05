@@ -1,7 +1,6 @@
 package com.googlecode.android4cs2.stringlights;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,7 +24,13 @@ public class LightStringDemo extends Activity {
 	
 	final Runnable updateLights = new Runnable() {
 		public void run() {
-			updateLightImages();
+			for (BulbView v: lights) {
+				if (v.isOn()) {
+					v.turnOff();
+				} else {
+					v.turnOn();
+				}
+			}
 		}
 	};
 	
@@ -36,7 +41,6 @@ public class LightStringDemo extends Activity {
 	private ToggleButton blink;
 	private ArrayList<BulbView> lights;
 	private Timer timer;
-	private boolean isBlinking = false;
 
 	/**
 	 * This is the entry point for any Android Activity.
@@ -75,7 +79,11 @@ public class LightStringDemo extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				stopBlinking();
+				if (blink.isChecked()) {
+					stopBlinking();
+					blink.toggle();
+				}
+				
 				for (BulbView b: lights) {
 					b.turnOn();
 				}
@@ -87,7 +95,11 @@ public class LightStringDemo extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				stopBlinking();
+				if (blink.isChecked()) {
+					stopBlinking();
+					blink.toggle();
+				}
+				
 				for (BulbView b: lights) {
 					b.turnOff();
 				}
@@ -111,15 +123,6 @@ public class LightStringDemo extends Activity {
         
     }
     
-    public Object onRetainNonConfigurationInstance() {
-    	HashMap<Character, Boolean> oldLights = new HashMap<Character, Boolean>();
-    	for (BulbView v: lights) {
-    		oldLights.put(v.getColor(), v.isOn());
-    	}
-    	oldLights.put(new Character('X'), isBlinking);
-    	return oldLights;
-    }
-    
     public void randomize() {
 		for (BulbView b: lights) {
 			b.randomize();
@@ -127,7 +130,6 @@ public class LightStringDemo extends Activity {
     }
     
     public void startBlinking() {
-    	isBlinking = true;
     	timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
@@ -138,18 +140,7 @@ public class LightStringDemo extends Activity {
     }
     
     public void stopBlinking() {
-    	isBlinking = false;
     	timer.cancel();
     	timer = new Timer();
-    }
-    
-    public void updateLightImages() {
-    	for (BulbView v: lights) {
-			if (v.isOn()) {
-				v.turnOff();
-			} else {
-				v.turnOn();
-			}
-		}
     }
 }
