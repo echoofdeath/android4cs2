@@ -33,7 +33,11 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 	 */
 	public BulbView(Context context) {
 		super(context);
-		bulb = new ColoredLight();
+		if (Math.random() > 0.5) {
+			bulb = new ColoredLight();
+		} else {
+			bulb = new Light();
+		}
 		detector = new GestureDetector(this);
 		this.setImageResource(R.drawable.bulboff);
 	}
@@ -179,26 +183,31 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 		// Set the state of the bulb to on
 		bulb.setOn(true);
 		// If the bulb's color is...
-		switch (((ColoredLight)bulb).getColor()) {
-		// ...red...
-		case 'R':
-			// ...change the Image Resource of the bulb to the red image
-			this.setImageResource(R.drawable.bulbred);
-			break;
-		// ...or if green...
-		case 'G':
-			// ...change the Image Resource to the green image
-			this.setImageResource(R.drawable.bulbgreen);
-			break;
-		// ...or if blue...
-		case 'B':
-			// ...change the Image Resource to the blue image
-			this.setImageResource(R.drawable.bulbblue);
-			break;
-		default:
-			// And if the bulb doesn't have a color, make it white
-//			this.setImageResource(R.drawable.bulbwhite);
-			break;
+		if (bulb instanceof ColoredLight) {
+			switch (((ColoredLight)bulb).getColor()) {
+			// ...red...
+			case 'R':
+				// ...change the Image Resource of the bulb to the red image
+				this.setImageResource(R.drawable.bulbred);
+				break;
+			// ...or if green...
+			case 'G':
+				// ...change the Image Resource to the green image
+				this.setImageResource(R.drawable.bulbgreen);
+				break;
+			// ...or if blue...
+			case 'B':
+				// ...change the Image Resource to the blue image
+				this.setImageResource(R.drawable.bulbblue);
+				break;
+			default:
+				// And if the bulb doesn't have a color, just have a broken bulb
+				this.setImageResource(R.drawable.bulboff);
+				break;
+			}
+		} else {
+			// this.setImageResource(R.drawable.bulbwhite);
+			this.setImageResource(R.drawable.bulboff);
 		}
 		// Invalidate the View so that it is redrawn with the updated Image Resource 
 		this.invalidate();
