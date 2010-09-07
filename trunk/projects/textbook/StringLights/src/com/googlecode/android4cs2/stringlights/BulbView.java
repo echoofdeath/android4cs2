@@ -19,7 +19,7 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 	/** 
 	 * The light bulb
 	 */
-	private ColoredLight bulb;
+	private Light bulb;
 	
 	/**
 	 * Allows us to detect gestures
@@ -179,7 +179,7 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 		// Set the state of the bulb to on
 		bulb.setOn(true);
 		// If the bulb's color is...
-		switch (bulb.getColor()) {
+		switch (((ColoredLight)bulb).getColor()) {
 		// ...red...
 		case 'R':
 			// ...change the Image Resource of the bulb to the red image
@@ -196,8 +196,8 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 			this.setImageResource(R.drawable.bulbblue);
 			break;
 		default:
-			// And if something crazy happened and the bulb has no color, just keep it off
-			this.setImageResource(R.drawable.bulboff);
+			// And if the bulb doesn't have a color, make it white
+//			this.setImageResource(R.drawable.bulbwhite);
 			break;
 		}
 		// Invalidate the View so that it is redrawn with the updated Image Resource 
