@@ -162,7 +162,11 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 		boolean state = bulb.isOn();
 		
 		// Create a new random ColoredLight
-		bulb = new ColoredLight();
+		if (Math.random() > 0.5) {
+			bulb = new ColoredLight();
+		} else {
+			bulb = new Light();
+		}
 		
 		// If the old bulb was on...
 		if (state) {
@@ -206,8 +210,7 @@ public class BulbView extends ImageView implements GestureDetector.OnGestureList
 				break;
 			}
 		} else {
-			// this.setImageResource(R.drawable.bulbwhite);
-			this.setImageResource(R.drawable.bulboff);
+			this.setImageResource(R.drawable.bulbwhite);
 		}
 		// Invalidate the View so that it is redrawn with the updated Image Resource 
 		this.invalidate();
