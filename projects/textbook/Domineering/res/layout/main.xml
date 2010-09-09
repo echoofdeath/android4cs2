@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
-	<TextView android:id="@+id/welcome"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:text="@string/welcome" />
+	<TextView android:id="@+id/title"
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerInParent="true" 
+	    android:text="@string/hello"
+	    android:textSize="24sp" />
+	    
+	<GridView android:id="@+id/board"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/title"
+		android:numColumns="8" 
+		android:stretchMode="spacingWidthUniform"
+		android:verticalSpacing="2sp"
+		android:horizontalSpacing="2sp" />
+	
+	<Button android:id="@+id/newGame"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/board"
+		android:layout_centerInParent="true" 
+		android:text="@string/newGame"/>
 	
 </RelativeLayout>
