@@ -11,10 +11,10 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
 
 	private Context context;
-	private Integer[] tileIds = { R.drawable.red, R.drawable.red, R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,
-			 R.drawable.red, R.drawable.red, R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,
-			 R.drawable.red, R.drawable.red, R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,
-			 R.drawable.red, R.drawable.red, R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red };
+	private Integer[] tileIds = { R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,
+			 R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,
+			 R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,
+			 R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank };
 	private Display display;
 	private int width;
 	
