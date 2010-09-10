@@ -18,8 +18,6 @@
 		android:layout_below="@id/title"
 		android:numColumns="8" 
 		android:stretchMode="spacingWidthUniform"
-		android:verticalSpacing="2sp"
-		android:horizontalSpacing="2sp"
 		android:gravity="center" />
 	
 	<TextView android:id="@+id/turn"
