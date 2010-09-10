@@ -11,7 +11,7 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
 
 	private Context context;
-	private Integer[] tileIds = { R.drawable.red, R.drawable.blue };
+	private Integer[] tileIds = { R.drawable.red, R.drawable.red, R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red,R.drawable.red, R.drawable.red };
 	private Display display;
 	private int width;
 	
@@ -28,7 +28,6 @@ public class ImageAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -52,6 +51,10 @@ public class ImageAdapter extends BaseAdapter {
 		
 		view.setImageResource(tileIds[position]);
 		return view;
+	}
+	
+	public void setItem(int position, int id) {
+		tileIds[position] = id;
 	}
 
 }

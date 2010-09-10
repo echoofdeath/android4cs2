@@ -29,7 +29,11 @@ public class DomineeringActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				// if player 1's turn, use red image. else use blue image. To come later.
-				((ImageView)v).setImageResource(R.drawable.red);
+				ImageAdapter ia = (ImageAdapter) boardView.getAdapter();
+				ia.setItem(position, R.drawable.blue);
+				ia.setItem(position+1, R.drawable.blue);
+				ia.notifyDataSetChanged();
+				
 			}
         });
         
