@@ -3,4 +3,6 @@
     <string name="hello">Domineering</string>
     <string name="app_name">Domineering</string>
     <string name="newGame">New Game</string>
+	<string name="red">Red Player\'s turn!</string>
+	<string name="blue">Blue Player\'s turn!</string>
 </resources>

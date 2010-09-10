@@ -19,12 +19,21 @@
 		android:numColumns="8" 
 		android:stretchMode="spacingWidthUniform"
 		android:verticalSpacing="2sp"
-		android:horizontalSpacing="2sp" />
+		android:horizontalSpacing="2sp"
+		android:gravity="center" />
 	
-	<Button android:id="@+id/newGame"
+	<TextView android:id="@+id/turn"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/board"
+		android:paddingTop="24sp"
+		android:layout_centerInParent="true"
+		android:text="@string/red" />
+		
+	<Button android:id="@+id/newGame"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/turn"
 		android:layout_centerInParent="true" 
 		android:text="@string/newGame"/>
 	
