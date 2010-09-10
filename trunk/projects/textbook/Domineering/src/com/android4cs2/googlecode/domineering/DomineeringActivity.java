@@ -13,12 +13,15 @@ public class DomineeringActivity extends Activity {
 	
 	private GridView boardView;
 	private Button newGame;
+	private Domineering d;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        d = new Domineering();
         
         boardView = (GridView) findViewById(R.id.board);
         newGame = (Button) findViewById(R.id.newGame);
@@ -33,7 +36,6 @@ public class DomineeringActivity extends Activity {
 				ia.setItem(position, R.drawable.blue);
 				ia.setItem(position+1, R.drawable.blue);
 				ia.notifyDataSetChanged();
-				
 			}
         });
         
