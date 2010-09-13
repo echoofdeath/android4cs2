@@ -8,11 +8,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class DomineeringActivity extends Activity {
 	
 	private GridView boardView;
 	private Button newGame;
+	private TextView playerTurn;
 	private Domineering d;
 	
     /** Called when the activity is first created. */
@@ -25,17 +27,30 @@ public class DomineeringActivity extends Activity {
         
         boardView = (GridView) findViewById(R.id.board);
         newGame = (Button) findViewById(R.id.newGame);
+        playerTurn = (TextView) findViewById(R.id.turn);
         
         boardView.setAdapter(new ImageAdapter(this, getWindowManager().getDefaultDisplay()));
         boardView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				// if player 1's turn, use red image. else use blue image. To come later.
-				ImageAdapter ia = (ImageAdapter) boardView.getAdapter();
-				ia.setItem(position, R.drawable.blue);
-				ia.setItem(position+1, R.drawable.blue);
-				ia.notifyDataSetChanged();
+				if (d.playAt(position / 8, position % 8, d.getPlayer())) {
+					ImageAdapter ia = (ImageAdapter) boardView.getAdapter();
+					if (d.getPlayer() == Domineering.HORIZONTAL) {
+						ia.setItem(position, R.drawable.blue);
+						ia.setItem(position+1, R.drawable.blue);
+						playerTurn.setText(R.string.red);
+					} else {
+						ia.setItem(position, R.drawable.red);
+						ia.setItem(position+8, R.drawable.red);
+						playerTurn.setText(R.string.blue);
+					}
+					
+					ia.notifyDataSetChanged();
+					
+				} else if (!d.hasLegalMoveFor(d.getPlayer())) {
+					// Game over, last player to move wins
+				}
 			}
         });
         
