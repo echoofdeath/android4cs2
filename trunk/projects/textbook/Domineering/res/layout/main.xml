@@ -18,7 +18,8 @@
 		android:layout_below="@id/title"
 		android:numColumns="8" 
 		android:stretchMode="spacingWidthUniform"
-		android:gravity="center" />
+		android:gravity="center"
+		android:listSelector="@drawable/background" />
 	
 	<TextView android:id="@+id/turn"
 		android:layout_width="wrap_content"
