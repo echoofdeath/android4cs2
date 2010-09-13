@@ -26,7 +26,7 @@
 		android:layout_below="@id/board"
 		android:paddingTop="24sp"
 		android:layout_centerInParent="true"
-		android:text="@string/blue" />
+		android:text="@string/red" />
 		
 	<Button android:id="@+id/newGame"
 		android:layout_width="wrap_content"
