@@ -59,6 +59,11 @@ public class DomineeringActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Ask if the user is sure he wants to create a new game; Yes: do it. No: don't.
+				boardView.setAdapter(new ImageAdapter(getApplicationContext(), getWindowManager().getDefaultDisplay()));
+				playerTurn.setText(R.string.red);
+				if (d.getPlayer() == Domineering.VERTICAL) {
+					d.nextPlayer();
+				}
 			}
         	
         });
