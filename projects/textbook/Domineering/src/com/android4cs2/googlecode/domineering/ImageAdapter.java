@@ -11,22 +11,20 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
 
 	private Context context;
-	private Integer[] tileIds = { R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,
-			 R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,
-			 R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,
-			 R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank,R.drawable.blank, R.drawable.blank };
+	private Domineering d;
 	private Display display;
 	private int width;
 	
-	public ImageAdapter(Context c, Display d) {
+	public ImageAdapter(Context c, Display d, Domineering dom) {
 		context = c;
 		display = d;
+		this.d = dom;
 		width = display.getWidth();
 	}
 
 	@Override
 	public int getCount() {
-		return tileIds.length;
+		return 64;
 	}
 
 	@Override
@@ -51,13 +49,12 @@ public class ImageAdapter extends BaseAdapter {
 		} else {
 			view = (ImageView) convertView;
 		}
-		
-		view.setImageResource(tileIds[position]);
+		if (d.isCovered(position / 8, position % 8)) {
+			view.setImageResource(R.drawable.blue);			
+		} else {
+			view.setImageResource(R.drawable.blank);
+		}
 		return view;
-	}
-	
-	public void setItem(int position, int id) {
-		tileIds[position] = id;
 	}
 
 }

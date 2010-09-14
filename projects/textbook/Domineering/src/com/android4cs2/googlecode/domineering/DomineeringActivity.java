@@ -29,27 +29,22 @@ public class DomineeringActivity extends Activity {
         newGame = (Button) findViewById(R.id.newGame);
         playerTurn = (TextView) findViewById(R.id.turn);
         
-        boardView.setAdapter(new ImageAdapter(this, getWindowManager().getDefaultDisplay()));
+        boardView.setAdapter(new ImageAdapter(this, getWindowManager().getDefaultDisplay(), d));
         boardView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				if (d.playAt(position / 8, position % 8, d.getPlayer())) {
-					ImageAdapter ia = (ImageAdapter) boardView.getAdapter();
-					if (d.getPlayer() == Domineering.HORIZONTAL) {
-						ia.setItem(position, R.drawable.blue);
-						ia.setItem(position+1, R.drawable.blue);
-						playerTurn.setText(R.string.red);
-					} else {
-						ia.setItem(position, R.drawable.red);
-						ia.setItem(position+8, R.drawable.red);
-						playerTurn.setText(R.string.blue);
-					}
-					
-					ia.notifyDataSetChanged();
-					
-				} else if (!d.hasLegalMoveFor(d.getPlayer())) {
-					// Game over, last player to move wins
+				d.playAt(position / 8, position % 8, d.getPlayer());
+				ImageAdapter ia = (ImageAdapter) boardView.getAdapter();
+				if (d.getPlayer() == Domineering.HORIZONTAL) {
+					playerTurn.setText(R.string.red);
+				} else {
+					playerTurn.setText(R.string.blue);
+				}	
+				d.nextPlayer();
+				ia.notifyDataSetChanged();
+				if (!d.hasLegalMoveFor(d.getPlayer())) {
+					playerTurn.setText("GAME OVER!");
 				}
 			}
         });
@@ -59,7 +54,7 @@ public class DomineeringActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Ask if the user is sure he wants to create a new game; Yes: do it. No: don't.
-				boardView.setAdapter(new ImageAdapter(getApplicationContext(), getWindowManager().getDefaultDisplay()));
+				boardView.setAdapter(new ImageAdapter(getApplicationContext(), getWindowManager().getDefaultDisplay(), d));
 				playerTurn.setText(R.string.red);
 				if (d.getPlayer() == Domineering.VERTICAL) {
 					d.nextPlayer();
