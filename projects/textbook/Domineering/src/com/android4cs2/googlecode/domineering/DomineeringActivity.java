@@ -37,9 +37,9 @@ public class DomineeringActivity extends Activity {
 				d.playAt(position / 8, position % 8, d.getPlayer());
 				ImageAdapter ia = (ImageAdapter) boardView.getAdapter();
 				if (d.getPlayer() == Domineering.HORIZONTAL) {
-					playerTurn.setText(R.string.red);
-				} else {
 					playerTurn.setText(R.string.blue);
+				} else {
+					playerTurn.setText(R.string.red);
 				}	
 				d.nextPlayer();
 				ia.notifyDataSetChanged();
@@ -54,6 +54,7 @@ public class DomineeringActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Ask if the user is sure he wants to create a new game; Yes: do it. No: don't.
+				d = new Domineering();
 				boardView.setAdapter(new ImageAdapter(getApplicationContext(), getWindowManager().getDefaultDisplay(), d));
 				playerTurn.setText(R.string.red);
 				if (d.getPlayer() == Domineering.VERTICAL) {
