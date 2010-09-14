@@ -2,7 +2,10 @@
 <resources>
     <string name="hello">Domineering</string>
     <string name="app_name">Domineering</string>
-    <string name="newGame">New Game</string>
+    <string name="newgame">Clear Board</string>
+    <string name="help">Help</string>
 	<string name="red">Horizontal turn!</string>
 	<string name="blue">Vertical turn!</string>
+	<string name="intro">Welcome to Domineering!</string>
+	<string name="help_text">The goal of this game is to be the last player to make a move. One user may only play horizontally while the other may only play vertically. By touching the grid, the user will play two pieces: one in the spot they touched and another to the right, if horizontal, or another below, if vertical.</string>
 </resources>
