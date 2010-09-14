@@ -28,6 +28,9 @@ public class DomineeringActivity extends Activity {
 	/** This is the height of the Android device on which this Activity is running. */
 	private int height;
 	
+	/** This is the listener for the GridView. */
+	private OnItemClickListener listener;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,9 +57,7 @@ public class DomineeringActivity extends Activity {
         	width = height;
         }
         
-        // We must set up an Adapter which maps images onto our GridView from the state of the squares array in the Domineering object
-        boardView.setAdapter(new ImageAdapter(this, width, d));
-        boardView.setOnItemClickListener(new OnItemClickListener() {
+        listener = new OnItemClickListener() {
 
         	/**
         	 * This method is called when an item on the board is clicked.
@@ -92,10 +93,14 @@ public class DomineeringActivity extends Activity {
 				// And when there are no more available moves, display a game over and don't let anybody click the board
 				if (!d.hasLegalMoveFor(d.getPlayer())) {
 					playerTurn.setText("GAME OVER!");
-					boardView.setClickable(false);
+					boardView.setOnItemClickListener(null);
 				}
 			}
-        });
+        };
+        
+        // We must set up an Adapter which maps images onto our GridView from the state of the squares array in the Domineering object
+        boardView.setAdapter(new ImageAdapter(this, width, d));
+        boardView.setOnItemClickListener(listener);
     }
     
     /** 
@@ -128,13 +133,14 @@ public class DomineeringActivity extends Activity {
     	case R.id.newGame:
     		d = new Domineering();
     		boardView.setAdapter(new ImageAdapter(getApplicationContext(), width, d));
-			boardView.setClickable(true);
+    		// Need to be able to click things...
+			boardView.setOnItemClickListener(listener);
 			playerTurn.setText(R.string.blue);
 			if (d.getPlayer() == Domineering.HORIZONTAL) {
 				d.nextPlayer();
 			}
     		return true;
-    	// Otherwise, if they need help, they cna have that too
+    	// Otherwise, if they need help, they can have that too
     	case R.id.help:
     		Intent i = new Intent(DomineeringActivity.this, HelpActivity.class);
     		startActivity(i);
