@@ -1,7 +1,6 @@
 package com.android4cs2.googlecode.domineering;
 
 import android.content.Context;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,14 +11,12 @@ public class ImageAdapter extends BaseAdapter {
 
 	private Context context;
 	private Domineering d;
-	private Display display;
 	private int width;
 	
-	public ImageAdapter(Context c, Display d, Domineering dom) {
+	public ImageAdapter(Context c, int w, Domineering dom) {
 		context = c;
-		display = d;
 		this.d = dom;
-		width = display.getWidth();
+		this.width = w;
 	}
 
 	@Override

@@ -29,11 +29,4 @@
 		android:layout_centerInParent="true"
 		android:text="@string/blue" />
 		
-	<Button android:id="@+id/newGame"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@id/turn"
-		android:layout_centerInParent="true" 
-		android:text="@string/newGame"/>
-	
 </RelativeLayout>
