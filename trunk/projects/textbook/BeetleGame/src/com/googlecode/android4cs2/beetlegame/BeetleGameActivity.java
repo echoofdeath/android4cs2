@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class BeetleGameActivity extends Activity {
@@ -13,47 +16,19 @@ public class BeetleGameActivity extends Activity {
 	
 	private ImageView die;
 	private TextView turn;
-	private OnClickListener dieListener;
+	private LinearLayout l;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        die = (ImageView) findViewById(R.id.die);
         turn = (TextView) findViewById(R.id.turn);
+        l = (LinearLayout) findViewById(R.id.linLay);
         
-        dieListener = new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				switch ((int)(Math.random()*6)+1) {
-				case 1:
-					die.setImageResource(R.drawable.die1);
-					break;
-				case 2:
-					die.setImageResource(R.drawable.die2);
-					break;
-				case 3:
-					die.setImageResource(R.drawable.die3);
-					break;
-				case 4:
-					die.setImageResource(R.drawable.die4);
-					break;
-				case 5:
-					die.setImageResource(R.drawable.die5);
-					break;
-				case 6:
-					die.setImageResource(R.drawable.die6);
-					break;
-				default:
-					break;
-				}
-			}
-        	
-        };
+        die = new DieView(this);
+        l.addView(die);
         
-        die.setOnClickListener(dieListener);
         
     }
 }

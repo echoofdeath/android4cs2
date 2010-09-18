@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -11,12 +12,12 @@
     	android:gravity="center_horizontal"
     	android:text="@string/playerone"
     	android:textSize="24dp" />
-    	
-    <ImageView android:id="@+id/die"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:id="@+id/linLay"
     	android:layout_below="@id/turn"
-    	android:src="@drawable/die4"
-    	android:clickable="true" />
+    	android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:gravity="center_horizontal" />
 
 </RelativeLayout>
