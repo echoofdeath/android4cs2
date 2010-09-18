@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-</LinearLayout>
+    android:gravity="center_horizontal">
+    
+    <TextView android:id="@+id/turn"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center_horizontal"
+    	android:text="@string/playerone"
+    	android:textSize="24dp" />
+    	
+    <ImageView android:id="@+id/die"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@id/turn"
+    	android:src="@drawable/die4"
+    	android:clickable="true" />
+
+</RelativeLayout>
