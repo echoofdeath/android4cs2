@@ -8,23 +8,27 @@ import android.view.MotionEvent;
 public class DieView extends ImageView {
 
 	private Die d;
+	private BeetleGame game;
 	
 	public DieView(Context context) {
 		super(context);
 		setImageResource(R.drawable.die4);
-		d = new Die();
+		game = new BeetleGame();
+		d = game.getDie();
 	}
 
 	public DieView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setImageResource(R.drawable.die4);
-		d = new Die();
+		game = new BeetleGame();
+		d = game.getDie();
 	}
 
 	public DieView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		setImageResource(R.drawable.die4);
-		d = new Die();
+		game = new BeetleGame();
+		d = game.getDie();
 	}
 
 	@Override
@@ -62,5 +66,8 @@ public class DieView extends ImageView {
 	public Die getDie() {
 		return d;
 	}
-
+	
+	public BeetleGame getGame() {
+		return game;
+	}
 }
