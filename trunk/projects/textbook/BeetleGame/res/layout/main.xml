@@ -18,6 +18,17 @@
     	android:layout_below="@id/turn"
     	android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:gravity="center_horizontal" />
+	    android:gravity="center_horizontal">
+	
+		<com.googlecode.android4cs2.beetlegame.BeetleSurface xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/bug_one"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<com.googlecode.android4cs2.beetlegame.DieView xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/die"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+			
+	</LinearLayout>
 
 </RelativeLayout>

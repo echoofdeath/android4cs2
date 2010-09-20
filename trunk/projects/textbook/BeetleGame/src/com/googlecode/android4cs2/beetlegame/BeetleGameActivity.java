@@ -12,7 +12,8 @@ public class BeetleGameActivity extends Activity {
 	private ImageView die;
 	private TextView turn;
 	private LinearLayout l;
-	private BeetleGame bg;
+	private BeetleGame game;
+	private BeetleSurface surface1;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,10 @@ public class BeetleGameActivity extends Activity {
         
         turn = (TextView) findViewById(R.id.turn);
         l = (LinearLayout) findViewById(R.id.linLay);
+        surface1 = (BeetleSurface) findViewById(R.id.bug_one);
         
-        die = new DieView(this);
-        l.addView(die);
-        
+        game = new BeetleGame();
+        surface1.init(game.getLeft());
         
     }
 }
