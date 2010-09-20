@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -27,8 +28,8 @@ public class BeetleSurface extends SurfaceView implements SurfaceHolder.Callback
 		super(context, attrs, defStyle);
 	}
 	
-	public void init(Beetle b, Die d) {
-		this.b = b;
+	public void init(Die d) {
+		this.b = new Beetle();
 		this.die = d;
 		getHolder().addCallback(this);
 		thread = new BeetleThread(getHolder(), this);
@@ -80,6 +81,10 @@ public class BeetleSurface extends SurfaceView implements SurfaceHolder.Callback
 		if (b.getTail()) {
 			
 		} */
+	}
+	
+	public Beetle getBug() {
+		return b;
 	}
 	
 	public void onMeasure(int width, int height) {

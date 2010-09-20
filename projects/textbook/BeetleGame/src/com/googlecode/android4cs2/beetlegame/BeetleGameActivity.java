@@ -8,7 +8,6 @@ public class BeetleGameActivity extends Activity {
     /** Called when the activity is first created. */
 	
 	private TextView turn;
-	private BeetleGame game;
 	private DieView dv;
 	private BeetleSurface surface1;
 	
@@ -21,8 +20,7 @@ public class BeetleGameActivity extends Activity {
         surface1 = (BeetleSurface) findViewById(R.id.bug_one);
         dv = (DieView) findViewById(R.id.die);
         
-        game = dv.getGame();
-        surface1.init(game.getLeft(), game.getDie());
+        surface1.init(dv.getDie());
         
     }
 }
