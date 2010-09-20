@@ -13,10 +13,10 @@ public class BeetleSurface extends SurfaceView implements SurfaceHolder.Callback
 
 	private Beetle b;
 	private BeetleThread thread;
+	private Die die;
 	
-	public BeetleSurface(Context context, Beetle b) {
+	public BeetleSurface(Context context) {
 		super(context);
-		init(b);
 	}
 
 	public BeetleSurface(Context context, AttributeSet attrs) {
@@ -27,8 +27,9 @@ public class BeetleSurface extends SurfaceView implements SurfaceHolder.Callback
 		super(context, attrs, defStyle);
 	}
 	
-	public void init(Beetle b) {
+	public void init(Beetle b, Die d) {
 		this.b = b;
+		this.die = d;
 		getHolder().addCallback(this);
 		thread = new BeetleThread(getHolder(), this);
 		setFocusable(true);
