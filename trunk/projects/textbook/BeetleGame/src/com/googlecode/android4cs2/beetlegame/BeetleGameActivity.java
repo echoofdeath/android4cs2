@@ -2,13 +2,8 @@ package com.googlecode.android4cs2.beetlegame;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.SurfaceView;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class BeetleGameActivity extends Activity {
@@ -17,6 +12,7 @@ public class BeetleGameActivity extends Activity {
 	private ImageView die;
 	private TextView turn;
 	private LinearLayout l;
+	private BeetleGame bg;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
