@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">BeetleGame</string>
     <string name="playerone">Player one\'s turn. Click the die to roll!</string>
+    <string name="playertwo">Player two\'s turn. Click the die to roll!</string>
+    <string name="playerone_win">Player one wins!</string>
+    <string name="playertwo_win">Player two wins!</string>
 </resources>
