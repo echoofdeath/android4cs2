@@ -29,5 +29,6 @@ public class BeetleGameActivity extends Activity {
         surface2.init(dv.getDie());
         
         dv.setBugSurfaces(surface1, surface2);
+        dv.setTextLabel(turn);
     }
 }
