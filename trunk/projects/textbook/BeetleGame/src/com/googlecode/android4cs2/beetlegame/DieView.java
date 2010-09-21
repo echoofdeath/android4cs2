@@ -17,21 +17,18 @@ public class DieView extends ImageView {
 		super(context);
 		setImageResource(R.drawable.die4);
 		d = new Die();
-		Log.d("Con1.", "");
 	}
 
 	public DieView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setImageResource(R.drawable.die4);
 		d = new Die();
-		Log.d("Con2.", "");
 	}
 
 	public DieView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		setImageResource(R.drawable.die4);
 		d = new Die();
-		Log.d("Con3.", "");
 	}
 
 	@Override
