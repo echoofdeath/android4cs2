@@ -9,7 +9,9 @@ import android.view.MotionEvent;
 public class DieView extends ImageView {
 
 	private Die d;
-	private BeetleSurface bs;
+	private Beetle[] bugs = new Beetle[2];
+	private BeetleView[] surfaces = new BeetleView[2];
+	private int player = 0;
 	
 	public DieView(Context context) {
 		super(context);
@@ -36,38 +38,39 @@ public class DieView extends ImageView {
 	public boolean onTouchEvent(MotionEvent event) {
 		if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
 			d.roll();
-			// Problem here: null pointer exception. Need pointer to BeetleSurface
-			Beetle current = bs.getBug();
+			
 			switch (d.getTopFace()) {
 			case 1:
 				setImageResource(R.drawable.die1);
-				current.addBody();
+				bugs[player].addBody();
 				break;
 			case 2:
 				setImageResource(R.drawable.die2);
-				current.addHead();
+				bugs[player].addHead();
 				break;
 			case 3:
 				setImageResource(R.drawable.die3);
-				current.addLeg();
+				bugs[player].addLeg();
 				break;
 			case 4:
 				setImageResource(R.drawable.die4);
-				current.addEye();
+				bugs[player].addEye();
 				break;
 			case 5:
 				setImageResource(R.drawable.die5);
-				current.addFeeler();
+				bugs[player].addFeeler();
 				break;
 			case 6:
 				setImageResource(R.drawable.die6);
-				// current.addTail();
+				// bugs[player].addTail();
 				break;
 			default:
 				break;
 			}
 			invalidate();
-			bs.invalidate();
+			
+			surfaces[player].updateImages();
+			// player++;
 			
 			return true;
 		}
@@ -76,5 +79,16 @@ public class DieView extends ImageView {
 	
 	public Die getDie() {
 		return d;
+	}
+	
+	private void setBugs(Beetle one, Beetle two) {
+		bugs[0] = one;
+		bugs[1] = two;
+	}
+	
+	public void setBugSurfaces(BeetleView one, BeetleView two) {
+		surfaces[0] = one;
+		surfaces[1] = two;
+		setBugs(one.getBug(), two.getBug()); // must change null back to two.getBug()
 	}
 }
