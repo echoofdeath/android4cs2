@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,64 +47,62 @@ public class DieView extends ImageView {
 			switch (d.getTopFace()) {
 			case 1:
 				setImageResource(R.drawable.die1);
-				if (!bugs[player % 2].addBody()) {
+				if (!bugs[player].addBody()) {
 					breakOut = true;
 				}
 				break;
 			case 2:
 				setImageResource(R.drawable.die2);
-				if (!bugs[player % 2].addHead()) {
+				if (!bugs[player].addHead()) {
 					breakOut = true;
 				}
 				break;
 			case 3:
 				setImageResource(R.drawable.die3);
-				if (!bugs[player % 2].addLeg()) {
+				if (!bugs[player].addLeg()) {
 					breakOut = true;
 				}
 				break;
 			case 4:
 				setImageResource(R.drawable.die4);
-				if (!bugs[player % 2].addEye()) {
+				if (!bugs[player].addEye()) {
 					breakOut = true;
 				}
 				break;
 			case 5:
 				setImageResource(R.drawable.die5);
-				if (!bugs[player % 2].addFeeler()) {
+				if (!bugs[player].addFeeler()) {
 					breakOut = true;
 				}
 				break;
 			case 6:
 				setImageResource(R.drawable.die6);
-				// bugs[player % 2].addTail();
+				if (!bugs[player].addTail()) {
+					breakOut = true;
+				}
 				break;
 			default:
 				break;
 			}
 			
 			invalidate();
+			surfaces[player].updateImages();
 			
-			if (breakOut) {
-				surfaces[player % 2].setColorFilter(Color.GRAY);
-				surfaces[++player % 2].clearColorFilter();
-				turn.setText(labels[player % 2]);
+			if (bugs[player].isComplete()) {
+				turn.setText(winners[player]);
 				return true;
 			}
 			
-			if (bugs[player % 2].isComplete()) {
-				turn.setText(winners[player % 2]);
-				
+			if (breakOut) {
+				surfaces[player].setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
+				player = 1 - player;
+				surfaces[player].clearColorFilter();
+				turn.setText(labels[player]);
+				return true;
 			}
-			
-			surfaces[player % 2].updateImages();
 		}
 		
 		return true;
-	}
-	
-	public Die getDie() {
-		return d;
 	}
 	
 	private void setBugs(Beetle one, Beetle two) {

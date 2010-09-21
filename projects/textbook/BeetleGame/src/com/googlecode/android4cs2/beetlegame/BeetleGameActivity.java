@@ -25,9 +25,6 @@ public class BeetleGameActivity extends Activity {
         surface2 = (BeetleView) findViewById(R.id.bug_two);
         dv = (DieView) findViewById(R.id.die);
         
-        surface1.init(dv.getDie());
-        surface2.init(dv.getDie());
-        
         dv.setBugSurfaces(surface1, surface2);
         dv.setTextLabel(turn);
     }
