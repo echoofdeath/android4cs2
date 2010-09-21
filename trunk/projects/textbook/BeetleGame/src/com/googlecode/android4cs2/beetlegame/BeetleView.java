@@ -16,7 +16,6 @@ import android.widget.ImageView;
 public class BeetleView extends ImageView {
 
 	private Beetle b;
-	private Die die;
 	private int[] legRes = { R.drawable.leg1, R.drawable.leg2, R.drawable.leg3, R.drawable.leg4, R.drawable.leg5, R.drawable.leg6 };
 	private int[] feelRes = { R.drawable.ant1, R.drawable.ant2 };
 	private int[] eyeRes = { R.drawable.eye1, R.drawable.eye2 };
@@ -28,19 +27,24 @@ public class BeetleView extends ImageView {
 	
 	public BeetleView(Context context) {
 		super(context);
+		Log.d("Con1: ", "Here.");
+		init();
 	}
 
 	public BeetleView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		Log.d("Con2: ", "Here.");
+		init();
 	}
 
 	public BeetleView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		Log.d("Con3: ", "Here.");
+		init();
 	}
 	
-	public void init(Die d) {
+	public void init() {
 		this.b = new Beetle();
-		this.die = d;
 		setFocusable(true);
 		
 		for (int i = 0; i < legRes.length; i++) {
@@ -98,10 +102,9 @@ public class BeetleView extends ImageView {
 			c.drawBitmap(bodyMap, new Matrix(), null);
 		}
 		
-		/* Beetles don't have tails. ARGH!
 		if (b.getTail()) {
-			
-		} */
+			// c.drawBitmap(tailMap, new Matrix(), null);
+		}
 		
 		this.setImageBitmap(output);
 	}
