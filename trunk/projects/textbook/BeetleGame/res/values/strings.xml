@@ -5,4 +5,8 @@
     <string name="playertwo">Player two\'s turn. Tap the die to roll!</string>
     <string name="playerone_win">Player one wins!</string>
     <string name="playertwo_win">Player two wins!</string>
+    <string name="newgame">New Game</string>
+    <string name="help">Help</string>
+    <string name="intro">Welcome to BeetleGame!</string>
+    <string name="help_text">The goal of this game is to have a complete beetle before your opponent. To play, simple touch the on-screen die to roll it. If you roll 1, you will get the beetle\'s body, and you may proceed to get more body parts. If you are not able to add a body part on your next roll, it becomes the other player\'s turn. Continue rolling until one of you has a complete beetle and wins!</string>
 </resources>

@@ -12,7 +12,9 @@
             </intent-filter>
         </activity>
 
-    </application>
+    
+<activity android:name=".HelpActivity" android:configChanges="keyboardHidden|orientation" android:screenOrientation="landscape"></activity>
+</application>
 
 
 </manifest> 

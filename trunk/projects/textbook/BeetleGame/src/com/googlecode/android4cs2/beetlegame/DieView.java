@@ -40,7 +40,7 @@ public class DieView extends ImageView {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+		if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN && !bugs[player].isComplete()) {
 			d.roll();
 			boolean breakOut = false;
 			
@@ -118,5 +118,16 @@ public class DieView extends ImageView {
 	
 	public void setTextLabel(TextView tv) {
 		turn = tv;
+	}
+	
+	public void newGame() {
+		setImageResource(R.drawable.die4);
+		d = new Die();
+		player = 0;
+		turn.setText(labels[player]);
+		surfaces[0].newGame();
+		surfaces[1].newGame();
+		setBugs(surfaces[0].getBug(), surfaces[1].getBug());
+		invalidate();
 	}
 }

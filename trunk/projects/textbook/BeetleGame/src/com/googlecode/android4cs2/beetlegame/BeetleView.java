@@ -108,4 +108,9 @@ public class BeetleView extends ImageView {
 		
 		this.setImageBitmap(output);
 	}
+	
+	public void newGame() {
+		this.b = new Beetle();
+		updateImages();
+	}
 }
