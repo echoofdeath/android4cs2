@@ -1,7 +1,5 @@
 package com.googlecode.android4cs2.beetlegame;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
