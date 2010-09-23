@@ -7,25 +7,44 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+/** The entry point for this game */
 public class BeetleGameActivity extends Activity {
-    /** Called when the activity is first created. */
-	
+    
+	/** A TextView which displays the current turn 
+	 * @see TextView */
 	private TextView turn;
+	
+	/** An ImageView which provides Die functionality
+	 * @see Die 
+	 * @see ImageView */
 	private DieView dv;
+	
+	/** An ImageView which contains player one's Beetle 
+	 * @see ImageView 
+	 * @see Beetle */
 	private BeetleView surface1;
+	
+	/** An ImageView which contains player two's beetle 
+	 * @see ImageView
+	 * @see Beetle */
 	private BeetleView surface2;
 	
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        // Get references to all widgets that we must alter
         turn = (TextView) findViewById(R.id.turn);
         surface1 = (BeetleView) findViewById(R.id.bug_one);
         surface2 = (BeetleView) findViewById(R.id.bug_two);
         dv = (DieView) findViewById(R.id.die);
         
+        // Give the DieView a reference to the player's Beetles
         dv.setBugSurfaces(surface1, surface2);
+        
+        // Give the DieView a reference to the TextView which displays the current turn
         dv.setTextLabel(turn);
     }
     
@@ -60,6 +79,9 @@ public class BeetleGameActivity extends Activity {
     	}
     }
     
+    /**
+     * Starts a new game 
+     */
     public void newGame() {
     	dv.newGame();
     }
