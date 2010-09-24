@@ -22,7 +22,7 @@ public class BeetleGameActivity extends Activity {
 	/** An ImageView which provides an image of a die
 	 * @see Die 
 	 * @see ImageView */
-	private ImageView dv;
+	private DieView dv;
 	
 	/** An array containing references to the BeetleView objects */
 	private BeetleView[] surfaces = new BeetleView[2];
@@ -52,40 +52,36 @@ public class BeetleGameActivity extends Activity {
 				// This flag lets us know when to change players
 				boolean breakOut = false;
 				
+				dv.updateImages();
+				
 				// If the player rolls such that he cannot add the body part he rolled, break out of this loop and switch players
 				switch (die.getTopFace()) {
 				case 1:
-					dv.setImageResource(R.drawable.die1);
 					if (!bugs[player].addBody()) {
 						breakOut = true;
 					}
 					break;
 				case 2:
-					dv.setImageResource(R.drawable.die2);
 					if (!bugs[player].addHead()) {
 						breakOut = true;
 					}
 					break;
 				case 3:
-					dv.setImageResource(R.drawable.die3);
 					if (!bugs[player].addLeg()) {
 						breakOut = true;
 					}
 					break;
 				case 4:
-					dv.setImageResource(R.drawable.die4);
 					if (!bugs[player].addEye()) {
 						breakOut = true;
 					}
 					break;
 				case 5:
-					dv.setImageResource(R.drawable.die5);
 					if (!bugs[player].addFeeler()) {
 						breakOut = true;
 					}
 					break;
 				case 6:
-					dv.setImageResource(R.drawable.die6);
 					if (!bugs[player].addTail()) {
 						breakOut = true;
 					}
@@ -94,14 +90,7 @@ public class BeetleGameActivity extends Activity {
 					break;
 				}
 				
-				dv.invalidate(); // Update the DieView image...
 				surfaces[player].updateImages(); // Update the current player's BeetleView image...
-				
-				// If the player won, say so
-				if (bugs[player].isComplete()) {
-					turn.setText(winners[player]);
-					return;
-				}
 				
 				// Otherwise, if the player can't add anything to his bug this turn, move on to the next player
 				if (breakOut) {
@@ -111,6 +100,12 @@ public class BeetleGameActivity extends Activity {
 					turn.setText(labels[player]);
 					return;
 				}
+			}
+			
+			// If the player won, say so
+			if (bugs[player].isComplete()) {
+				turn.setText(winners[player]);
+				return;
 			}
 		}
 		
@@ -126,14 +121,12 @@ public class BeetleGameActivity extends Activity {
         turn = (TextView) findViewById(R.id.turn);
         surfaces[0] = (BeetleView) findViewById(R.id.bug_one);
         surfaces[1] = (BeetleView) findViewById(R.id.bug_two);
-        dv = (ImageView) findViewById(R.id.die);
+        dv = (DieView) findViewById(R.id.die);
         
-        for (int i = 0; i < 2; i++) {
-    		bugs[i] = new Beetle();
-    		surfaces[i].setBug(bugs[i]);
-        }
+        // Create a new game
+        newGame();
         
-        die = new Die();
+        // Register the OnClickListener
         dv.setOnClickListener(listener);
     }
     
@@ -173,7 +166,9 @@ public class BeetleGameActivity extends Activity {
      */
     public void newGame() {
     	die = new Die();
-    	dv.invalidate();
+    	die.roll();
+    	dv.setDie(die);
+    	dv.updateImages();
     	
     	for (int i = 0; i < 2; i++) {
     		bugs[i] = new Beetle();

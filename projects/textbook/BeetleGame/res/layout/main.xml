@@ -22,7 +22,7 @@
 		android:padding="40sp"
 		android:scaleType="fitEnd" />
 		
-	<ImageView android:id="@+id/die"
+	<com.googlecode.android4cs2.beetlegame.DieView android:id="@+id/die"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 
 		android:layout_centerHorizontal="true" 
