@@ -1,0 +1,211 @@
+% LaTeX source for textbook ``How to think like a (Python) Programmer''
+% Copyright (c)  2007  Allen B. Downey.
+
+% Permission is granted to copy, distribute and/or modify this
+% document under the terms of the GNU Free Documentation License,
+% Version 1.1  or any later version published by the Free Software
+% Foundation; with no Invariant Sections, no Front-Cover Texts,
+% and no Back-Cover Texts.
+
+% This distribution includes a file named fdl.tex that contains the text
+% of the GNU Free Documentation License.  If it is missing, you can obtain
+% it from www.gnu.org or by writing to the Free Software Foundation,
+% Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+%
+\documentclass[10pt]{book}
+%\documentclass[cup6a]{cupbook}
+\usepackage{pslatex}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{makeidx}
+\usepackage{setspace}
+\usepackage{hevea}
+\usepackage{upquote}
+
+%\usepackage[draft,light]{draftcopy}
+
+\newtheorem{ex}{Exercise}[chapter]
+
+\newcommand{\thetitle}{Learning Data Structures and Algorithms with Android Development}
+\newcommand{\theversion}{0.0.1}
+
+\makeindex
+
+\begin{document}
+
+\frontmatter
+
+
+% LATEXONLY
+
+\input{latexonly}
+
+\begin{latexonly}
+
+\renewcommand{\blankpage}{\thispagestyle{empty} \quad \newpage}
+
+% TITLE PAGES FOR LATEX VERSION
+
+%-half title--------------------------------------------------
+\thispagestyle{empty}
+
+\begin{flushright}
+\vspace*{2.5in}
+
+\begin{spacing}{3}
+{\huge \thetitle}
+\end{spacing}
+
+\vspace{0.25in}
+
+Version \theversion
+
+\vfill
+
+\end{flushright}
+
+%--verso------------------------------------------------------
+
+\blankpage
+\blankpage
+%\clearemptydoublepage
+%\pagebreak
+%\thispagestyle{empty}
+%\vspace*{6in}
+
+%--title page--------------------------------------------------
+\pagebreak
+\thispagestyle{empty}
+
+\begin{flushright}
+\vspace*{2.5in}
+
+\begin{spacing}{3}
+{\huge \thetitle}
+\end{spacing}
+
+\vspace{0.25in}
+
+Version \theversion
+
+\vspace{1in}
+
+
+{\Large
+Mark Goadrich\\
+Jacob Jennings\\
+Matthew Jadud\\
+}
+
+
+\vspace{0.5in}
+
+\vfill
+
+\end{flushright}
+
+
+%--copyright--------------------------------------------------
+\pagebreak
+\thispagestyle{empty}
+
+{\small
+Copyright \copyright ~2010 Mark Goadrich, Jacob Jennings, Matthew Jadud.
+
+Printing history:
+
+\begin{description}
+
+\item[September 2010:] Initial Version by Mark Goadrich
+
+\end{description}
+
+\vspace{0.2in}
+
+Permission is granted to copy, distribute, and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and with no Back-Cover Texts.
+
+The GNU Free Documentation License is available from {\tt www.gnu.org}
+or by writing to the Free Software Foundation, Inc., 59 Temple Place,
+Suite 330, Boston, MA 02111-1307, USA.
+
+The original form of this book is \LaTeX\ source code.  Compiling this
+\LaTeX\ source has the effect of generating a device-independent
+representation of a textbook, which can be converted to other formats
+and printed.
+
+The \LaTeX\ source for this book is available from
+{\tt http://mark.goadrich.com/courses/csc207f09/book}
+
+\vspace{0.2in}
+
+} % end small
+
+\end{latexonly}
+
+
+% HTMLONLY
+
+\begin{htmlonly}
+
+% TITLE PAGE FOR HTML VERSION
+
+{\Huge \thetitle}
+
+{\Large Mark Goadrich}
+
+Version \theversion
+
+\setcounter{chapter}{-1}
+
+\end{htmlonly}
+
+\chapter{Preface}
+
+\section*{Origins of this book}
+
+Mark Goadrich\\
+Shreveport LA\\
+
+Mark Goadrich is an Assistant Professor of Computer Science
+at Centenary College of Louisiana and the Broyles Eminent Scholars 
+Chair of Computational Mathematics.
+
+
+\normalsize
+
+\clearemptydoublepage
+
+% TABLE OF CONTENTS
+\begin{latexonly}
+
+\tableofcontents
+
+\clearemptydoublepage
+
+\end{latexonly}
+
+% START THE BOOK
+\mainmatter
+
+\part{Object-Oriented Programming}
+
+\chapter{Rolling a Die}
+
+\chapter{Playing with Beetles}
+
+\chapter{Domineering}
+
+\chapter{Flipping a Domino}
+
+\chapter{Blinking Lights}
+
+\part{Stacks, Queues and Lists}
+
+
+
+\end{document}

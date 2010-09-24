@@ -1,0 +1,8 @@
+\contentsline {chapter}{Preface}{v}
+\contentsline {part}{I\hspace {1em}Object-Oriented Programming}{1}
+\contentsline {chapter}{\numberline {1}Rolling a Die}{3}
+\contentsline {chapter}{\numberline {2}Playing with Beetles}{5}
+\contentsline {chapter}{\numberline {3}Domineering}{7}
+\contentsline {chapter}{\numberline {4}Flipping a Domino}{9}
+\contentsline {chapter}{\numberline {5}Blinking Lights}{11}
+\contentsline {part}{II\hspace {1em}Stacks, Queues and Lists}{13}
