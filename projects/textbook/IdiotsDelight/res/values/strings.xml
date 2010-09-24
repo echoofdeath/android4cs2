@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">IdiotsDelight</string>
     <string name="title">Idiot\'s Delight</string>
+    <string name="intro">Welcome to Idiot\'s Delight!</string>
+    <string name="newgame">New Game</string>
+    <string name="help">Help</string>
 </resources>
