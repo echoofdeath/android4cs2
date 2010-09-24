@@ -38,6 +38,9 @@ public class BeetleView extends ImageView {
 	/** A Bitmap image of the body */
 	private Bitmap bodyMap;
 	
+	/** A Bitmap image of the tail */
+	private Bitmap tailMap;
+	
 	// Constructors
 	public BeetleView(Context context) {
 		super(context);
@@ -58,7 +61,6 @@ public class BeetleView extends ImageView {
 	/** Initializes all the pertinent information needed by this class and converts the PNG images into Bitmaps */
 	public void init() {
 		// Initialize a new Beetle object
-		this.b = new Beetle();
 		setFocusable(true);
 		
 		// Convert each leg image into a Bitmap
@@ -76,10 +78,10 @@ public class BeetleView extends ImageView {
 			feelMaps[i] = BitmapFactory.decodeResource(getResources(), feelRes[i]);
 		}
 		
-		// Convert head and body images into Bitmaps
+		// Convert head, body, and tail (ugh) images into Bitmaps
 		headMap = BitmapFactory.decodeResource(getResources(), R.drawable.head);
 		bodyMap = BitmapFactory.decodeResource(getResources(), R.drawable.body);
-		
+		tailMap = BitmapFactory.decodeResource(getResources(), R.drawable.tail);
 	}
 
 	/** Returns a reference to the BeetleView's Beetle object
@@ -106,6 +108,11 @@ public class BeetleView extends ImageView {
 			}
 		}
 		
+		// ...then the funky tail
+		if (b.getTail()) {
+			c.drawBitmap(tailMap, new Matrix(), null);
+		}
+		
 		// ...then feelers...
 		if (feelers > 0) {
 			for (int i = 0; i < feelers; i++) {
@@ -130,18 +137,14 @@ public class BeetleView extends ImageView {
 			c.drawBitmap(bodyMap, new Matrix(), null);
 		}
 		
-		// ...then the funky tail
-		if (b.getTail()) {
-			// c.drawBitmap(tailMap, new Matrix(), null);
-		}
-		
 		// ...and finally display the composite image
 		this.setImageBitmap(output);
 	}
 	
-	/** Initializes a new Beetle object and updates this ImageView accordingly */
-	public void newGame() {
-		this.b = new Beetle();
-		updateImages();
+	/** Sets a reference to the Beetle object in the Activity class 
+	 * @see Beetle */
+	public void setBug(Beetle b) {
+		this.b = b;
 	}
+
 }

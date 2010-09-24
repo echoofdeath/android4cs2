@@ -22,12 +22,12 @@
 		android:padding="40sp"
 		android:scaleType="fitEnd" />
 		
-	<com.googlecode.android4cs2.beetlegame.DieView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/die"
+	<ImageView android:id="@+id/die"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 
 		android:layout_centerHorizontal="true" 
-		android:layout_centerInParent="true" />
+		android:layout_centerInParent="true"
+		android:src="@drawable/die4" />
 		
 	<com.googlecode.android4cs2.beetlegame.BeetleView xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/bug_two"
