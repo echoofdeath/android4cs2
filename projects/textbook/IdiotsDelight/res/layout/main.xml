@@ -19,29 +19,25 @@
     	android:layout_below="@id/title"
     	android:gravity="center">
     
-    	<ImageView android:id="@+id/stack1"
+    	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack1"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:padding="20sp"
-    		android:src="@drawable/x2" />
+    		android:padding="20sp" />
     	
-     	<ImageView android:id="@+id/stack2"
+     	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack2"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:padding="20sp"
-    		android:src="@drawable/x5" />
+    		android:padding="20sp" />
     		
-    	<ImageView android:id="@+id/stack3"
+    	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack3"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:padding="20sp"
-    		android:src="@drawable/x20" />	
+    		android:padding="20sp" />	
     	
-    	<ImageView android:id="@+id/stack4"
+    	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack4"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:padding="20sp"
-    		android:src="@drawable/x19" />
+    		android:padding="20sp" />
     		
     </LinearLayout>
     
@@ -53,7 +49,7 @@
     	android:layout_below="@id/linLay"
     	android:gravity="center">
     
-    	<ImageView android:id="@+id/deal"
+    	<com.googlecode.android4cs2.idiotsdelight.DeckView android:id="@+id/deal"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:padding="24sp"
