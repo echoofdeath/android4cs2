@@ -57,34 +57,22 @@ public class BeetleGameActivity extends Activity {
 				// If the player rolls such that he cannot add the body part he rolled, break out of this loop and switch players
 				switch (die.getTopFace()) {
 				case 1:
-					if (!bugs[player].addBody()) {
-						breakOut = true;
-					}
+					breakOut = !bugs[player].addBody();
 					break;
 				case 2:
-					if (!bugs[player].addHead()) {
-						breakOut = true;
-					}
+					breakOut = !bugs[player].addHead();
 					break;
 				case 3:
-					if (!bugs[player].addLeg()) {
-						breakOut = true;
-					}
+					breakOut = !bugs[player].addLeg();
 					break;
 				case 4:
-					if (!bugs[player].addEye()) {
-						breakOut = true;
-					}
+					breakOut = !bugs[player].addEye();
 					break;
 				case 5:
-					if (!bugs[player].addFeeler()) {
-						breakOut = true;
-					}
+					breakOut = !bugs[player].addFeeler();
 					break;
 				case 6:
-					if (!bugs[player].addTail()) {
-						breakOut = true;
-					}
+					breakOut = !bugs[player].addTail();
 					break;
 				default:
 					break;
