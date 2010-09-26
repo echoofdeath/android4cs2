@@ -1,8 +1,11 @@
 package com.googlecode.android4cs2.idiotsdelight;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +22,17 @@ public class IdiotsDelightActivity extends Activity {
 	/** Four references to the CardViews */
 	private CardView[] cv;
 	
+	/** To assist stackListener */
+	private java.util.Stack<CardView> clicked = new java.util.Stack<CardView>();
+	
+	/** Flag which allows only 2 selections*/
+	private boolean change = true;
+	
 	/** A reference to the DeckView */
 	private DeckView dv;
 	
 	/** Array containing the resource IDs of the CardView stacks. */
 	private int[] CVIDs = { R.id.stack1, R.id.stack2, R.id.stack3, R.id.stack4 };
-	
-	/** An integer representing the number of highlighted stacks */
-	private int highlights = 0;
 	
 	/** Listens for clicks on the deck to deal cards. */
 	private OnClickListener deckListener = new OnClickListener() {
@@ -47,26 +53,24 @@ public class IdiotsDelightActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			if (v instanceof CardView) {
-				CardView selected = (CardView)v;
-				
-				if (selected.isHighlighted()) {
-					highlights--;
+			CardView selected = (CardView)v;
+			
+			
+			if (clicked.size() == 2) {
+				if (selected.isSelected()) {
+					selected.toggleSelected();
+					clicked.pop();
 				} else {
-					highlights++;
+					clicked.pop().toggleSelected();
+					selected.toggleSelected();
+					clicked.push(selected);
 				}
-				selected.toggleHighlight();
-				if (highlights == 2) {
-					CardView[] pair = new CardView[2];
-					for (CardView temp: cv) {
-						if (temp.isHighlighted()) {
-							pair[highlights] = temp;
-							highlights--;
-						}
-					}
-					// Try to remove some cards!
-				}
+			} else if (clicked.size() < 2) {
+				clicked.push(selected);
+				selected.toggleSelected();
 			}
+			
+			Log.d("stackListener: ", "Number of selected stacks: " + clicked.size());
 		}
 		
 	};
@@ -83,7 +87,7 @@ public class IdiotsDelightActivity extends Activity {
         for (int i = 0; i < 4; i++) {
         	cv[i] = (CardView) findViewById(CVIDs[i]);
         	cv[i].setOnClickListener(stackListener);
-        	cv[i].setStack(stacks[i], i);
+        	cv[i].setStack(stacks[i]);
         }
         
         dv = (DeckView) findViewById(R.id.deal);
