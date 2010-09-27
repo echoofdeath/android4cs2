@@ -6,4 +6,6 @@
     <string name="newgame">New Game</string>
     <string name="help">Help</string>
     <string name="illegalmove">You can\'t do that! Sorry, try again.</string>
+    <string name="win">Congratulations on being the most delightful Idiot!</string>
+    <string name="fail">Don\'t worry. You can\'t win them all.</string>
 </resources>
