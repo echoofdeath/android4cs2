@@ -129,7 +129,7 @@ public class IdiotsDelightActivity extends Activity {
 					}
 					tv.setText(R.string.win);
 				} else {
-					// The player lost if there aren't any available moves in the stacks
+					// If there are no more available moves, let the player know how much he sucks
 				}
 			} else {
 				Toast.makeText(getApplicationContext(), "Not enough cards selected!", Toast.LENGTH_SHORT).show();
