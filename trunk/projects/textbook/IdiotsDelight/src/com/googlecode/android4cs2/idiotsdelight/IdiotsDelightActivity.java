@@ -1,7 +1,5 @@
 package com.googlecode.android4cs2.idiotsdelight;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,9 +23,6 @@ public class IdiotsDelightActivity extends Activity {
 	
 	/** Assists stackListener and removeListener by storing pointers to the currently selected CardViews. */
 	private java.util.Stack<CardView> clicked = new java.util.Stack<CardView>();
-	
-	/** Flag which allows only 2 selections*/
-	private boolean change = true;
 	
 	/** A reference to the DeckView */
 	private DeckView dv;
@@ -132,14 +127,13 @@ public class IdiotsDelightActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        newGame();
-        
         cv = new CardView[4];
         for (int i = 0; i < 4; i++) {
         	cv[i] = (CardView) findViewById(CVIDs[i]);
         	cv[i].setOnClickListener(stackListener);
-        	cv[i].setStack(stacks[i]);
         }
+        
+        newGame();
         
         dv = (DeckView) findViewById(R.id.deal);
         dv.setOnClickListener(deckListener);
@@ -187,7 +181,10 @@ public class IdiotsDelightActivity extends Activity {
     	stacks = new ArrayStack[4];
     	for (int i = 0; i < 4; i++) {
     		stacks[i] = new ArrayStack<Card>();
+    		cv[i].setStack(stacks[i]);
+    		cv[i].updateImages();
     	}
+    	
     }
     
     public void deal() throws IllegalMoveException {
