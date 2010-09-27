@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class IdiotsDelightActivity extends Activity {
 	
@@ -22,7 +23,7 @@ public class IdiotsDelightActivity extends Activity {
 	/** Four references to the CardViews */
 	private CardView[] cv;
 	
-	/** To assist stackListener */
+	/** Assists stackListener and removeListener by storing pointers to the currently selected CardViews. */
 	private java.util.Stack<CardView> clicked = new java.util.Stack<CardView>();
 	
 	/** Flag which allows only 2 selections*/
@@ -30,6 +31,9 @@ public class IdiotsDelightActivity extends Activity {
 	
 	/** A reference to the DeckView */
 	private DeckView dv;
+	
+	/** A reference to the Remove button */
+	private Button rm;
 	
 	/** Array containing the resource IDs of the CardView stacks. */
 	private int[] CVIDs = { R.id.stack1, R.id.stack2, R.id.stack3, R.id.stack4 };
@@ -55,19 +59,23 @@ public class IdiotsDelightActivity extends Activity {
 		public void onClick(View v) {
 			CardView selected = (CardView)v;
 			
+			if (selected.getStack().isEmpty()) {
+				return;
+			}
 			
-			if (clicked.size() == 2) {
-				if (selected.isSelected()) {
-					selected.toggleSelected();
-					clicked.pop();
-				} else {
-					clicked.pop().toggleSelected();
-					selected.toggleSelected();
-					clicked.push(selected);
-				}
-			} else if (clicked.size() < 2) {
-				clicked.push(selected);
+			if (clicked.size() == 2 && !selected.isSelected()) {
+				clicked.pop().toggleSelected();
 				selected.toggleSelected();
+				clicked.push(selected);
+			} else if (clicked.size() == 2) {
+				selected.toggleSelected();
+				clicked.pop();
+			} else if (clicked.size() > 0 && selected.isSelected()) { 
+				selected.toggleSelected();
+				clicked.pop();
+			} else {
+				selected.toggleSelected();
+				clicked.push(selected);
 			}
 			
 			Log.d("stackListener: ", "Number of selected stacks: " + clicked.size());
@@ -75,7 +83,50 @@ public class IdiotsDelightActivity extends Activity {
 		
 	};
 	
-    /** Called when the activity is first created. */
+    /** Listens for clicks on the remove buttons. */
+	private OnClickListener removeListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			if (clicked.size() == 2) {
+				try {
+			    	
+					CardView one = clicked.pop();
+			    	CardView two = clicked.pop();
+			    	
+					removeLowCard(one, two);
+					
+					one.toggleSelected();
+					two.toggleSelected();
+					
+					one.updateImages();
+					two.updateImages();
+					
+				} catch (IllegalMoveException e1) {
+					Log.d("removeListener: ", "Couldn't remove low card!");
+					try {
+						CardView one = clicked.pop();
+						CardView two = clicked.pop();
+						
+						removePair(one, two);
+						
+						one.toggleSelected();
+						two.toggleSelected();
+						
+						one.updateImages();
+						two.updateImages();
+						
+					} catch (IllegalMoveException e2) {
+						Log.d("removeListener: ", "Couldn't remove pair!");
+					}
+				}
+			} else {
+				// Not enough cards selected to remove anything!
+			}
+		}
+	};
+	
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +143,9 @@ public class IdiotsDelightActivity extends Activity {
         
         dv = (DeckView) findViewById(R.id.deal);
         dv.setOnClickListener(deckListener);
+        
+        rm = (Button) findViewById(R.id.remove);
+        rm.setOnClickListener(removeListener);
         
     }
     
@@ -146,14 +200,53 @@ public class IdiotsDelightActivity extends Activity {
     	
     	for (CardView v: cv) {
     		v.updateImages();
+    		if (v.isSelected()) {
+    			v.toggleSelected();
+    			clicked.pop();
+    		}
     	}
     }
     
-    public void removeLowCard(Card a, Card b) throws IllegalMoveException {
+    public void removeLowCard(CardView one, CardView two) throws IllegalMoveException {
+
+    	Card lowCard = one.getStack().peek();
+    	Card highCard = two.getStack().peek();
+    	CardView removal = one;
+    	
+    	if (lowCard.getRank() > highCard.getRank()) {
+    		Card temp = new Card(lowCard.getRank(), lowCard.getSuit());
+    		lowCard = new Card(highCard.getRank(), highCard.getSuit());
+    		highCard = temp;
+    		removal = two;
+    	}
+    	
+    	if ((lowCard.getSuit() != highCard.getSuit()) || (lowCard.getRank() > highCard.getRank())) {
+    		clicked.push(two);
+    		clicked.push(one);
+    		throw new IllegalMoveException();
+    	}
+    	
+    	Log.d("lowCard: ", lowCard.toString());
+    	Log.d("highCard: ", highCard.toString());
+    	
+    	Log.d("removeLowCard: ", "Removed " + removal.getStack().pop().toString());
     	
     }
     
-    public void removePair(Card a, Card b) throws IllegalMoveException {
+    public void removePair(CardView one, CardView two) throws IllegalMoveException {
+    	Card uno = one.getStack().peek();
+    	Card dos = two.getStack().peek();
     	
+    	if (!uno.equals(dos)) {
+    		clicked.push(two);
+    		clicked.push(one);
+    		throw new IllegalMoveException();
+    	}
+    	
+    	Log.d("Card One: ", uno.toString());
+    	Log.d("Card Two:", dos.toString());
+    	
+    	one.getStack().pop();
+    	two.getStack().pop();
     }
 }

@@ -29,9 +29,15 @@ public class CardView extends ImageView {
 		this.s = s;
 	}
 	
+	public Stack<Card> getStack() {
+		return s;
+	}
+	
 	public void updateImages() {
 		// Aces are at the beginning of this deck, so we treat them separately
-		if (s.peek().getRank() == 1) {
+		if (s.isEmpty()) {
+			setImageResource(R.drawable.blank);
+		} else if (s.peek().getRank() == 1) {
 			switch (s.peek().getSuit()) {
 			case Card.SPADES:
 				setImageResource(R.drawable.x2);
@@ -46,18 +52,12 @@ public class CardView extends ImageView {
 				setImageResource(R.drawable.x1);
 				break;
 			default:
-				// setImageResource(R.drawable.empty);
+				setImageResource(R.drawable.blank);
 				break;
 			}
 		} else {
-			setImageResource(cardIDs[52 - (s.peek().getRank() - 1)*4 + (s.peek().getSuit()+1)]);
+			setImageResource(cardIDs[52 - (s.peek().getRank() - 1)*4 + (s.peek().getSuit()+1)%4]);
 		}
-		
-		if (selected) {
-			setAlpha(150);
-		}
-		
-		invalidate();
 	}
 	
 	public boolean isSelected() {
