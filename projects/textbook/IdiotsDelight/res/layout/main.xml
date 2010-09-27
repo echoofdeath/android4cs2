@@ -9,6 +9,7 @@
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:layout_centerHorizontal="true"
+    	android:layout_marginBottom="12sp"
     	android:textSize="24sp"
     	android:text="@string/title" />
     	
@@ -18,27 +19,27 @@
     	android:layout_height="wrap_content"
     	android:layout_centerHorizontal="true"
     	android:layout_below="@id/title"
+    	android:layout_marginBottom="12sp"
     	android:gravity="center">
     
     	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack1"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:padding="20sp" />
+    		android:layout_width="72sp"
+    		android:layout_height="96sp"
+    		android:layout_marginRight="12sp" />
     	
      	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack2"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:padding="20sp" />
+    		android:layout_width="72sp"
+    		android:layout_height="96sp"
+    		android:layout_marginRight="12sp" />
     		
     	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack3"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:padding="20sp" />	
+    		android:layout_width="72sp"
+    		android:layout_height="96sp"
+    		android:layout_marginRight="12sp" />	
     	
     	<com.googlecode.android4cs2.idiotsdelight.CardView android:id="@+id/stack4"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:padding="20sp" />
+    		android:layout_width="72sp"
+    		android:layout_height="96sp" />
     		
     </LinearLayout>
     
@@ -51,14 +52,14 @@
     	android:gravity="center">
     
     	<com.googlecode.android4cs2.idiotsdelight.DeckView android:id="@+id/deal"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:padding="24sp"
+    		android:layout_width="72sp"
+    		android:layout_height="96sp"
+    		android:layout_marginRight="24sp"
     		android:src="@drawable/xb1fv" />
     		
     	<Button android:id="@+id/remove"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
+    		android:layout_width="72sp"
+    		android:layout_height="96sp"
     		android:text="Remove Cards!" />
     		    		
     </LinearLayout>
