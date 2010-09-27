@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class IdiotsDelightActivity extends Activity {
 	
@@ -30,6 +32,9 @@ public class IdiotsDelightActivity extends Activity {
 	/** A reference to the Remove button */
 	private Button rm;
 	
+	/** A reference to the TextView */
+	private TextView tv;
+	
 	/** Array containing the resource IDs of the CardView stacks. */
 	private int[] CVIDs = { R.id.stack1, R.id.stack2, R.id.stack3, R.id.stack4 };
 	
@@ -41,7 +46,7 @@ public class IdiotsDelightActivity extends Activity {
 			try {
 				deal();
 			} catch (IllegalMoveException e) {
-				// Display a message about the illegal move
+				Toast.makeText(getApplicationContext(), "No cards left!", Toast.LENGTH_SHORT).show();
 			}
 		}
 		
@@ -115,8 +120,19 @@ public class IdiotsDelightActivity extends Activity {
 						Log.d("removeListener: ", "Couldn't remove pair!");
 					}
 				}
+				
+				if (d.isEmpty()) {
+					for (CardView c: cv) {
+						if (!c.getStack().isEmpty()) {
+							return;
+						}
+					}
+					tv.setText(R.string.win);
+				} else {
+					// The player lost if there aren't any available moves in the stacks
+				}
 			} else {
-				// Not enough cards selected to remove anything!
+				Toast.makeText(getApplicationContext(), "Not enough cards selected!", Toast.LENGTH_SHORT).show();
 			}
 		}
 	};
@@ -140,6 +156,8 @@ public class IdiotsDelightActivity extends Activity {
         
         rm = (Button) findViewById(R.id.remove);
         rm.setOnClickListener(removeListener);
+        
+        tv = (TextView) findViewById(R.id.title);
         
     }
     
