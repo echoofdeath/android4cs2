@@ -58,6 +58,7 @@ public class CardView extends ImageView {
 		} else {
 			setImageResource(cardIDs[52 - (s.peek().getRank() - 1)*4 + (s.peek().getSuit()+1)%4]);
 		}
+		setAlpha(150);
 	}
 	
 	public boolean isSelected() {
@@ -67,9 +68,9 @@ public class CardView extends ImageView {
 	public void toggleSelected() {
 		selected = !selected;
 		if (selected) {
-			setAlpha(150);
+			setAlpha(255);
 			return;
 		}
-		setAlpha(255);
+		setAlpha(150);
 	}
 }
