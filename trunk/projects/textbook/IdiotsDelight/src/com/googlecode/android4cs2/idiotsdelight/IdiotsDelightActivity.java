@@ -69,7 +69,13 @@ public class IdiotsDelightActivity extends Activity {
 				clicked.push(selected);
 			} else if (clicked.size() == 2) {
 				selected.toggleSelected();
-				clicked.pop();
+				if (clicked.peek() == selected) {
+					clicked.pop();
+				} else {
+					CardView temp = clicked.pop();
+					clicked.pop();
+					clicked.push(temp);
+				}
 			} else if (clicked.size() > 0 && selected.isSelected()) { 
 				selected.toggleSelected();
 				clicked.pop();
@@ -117,19 +123,36 @@ public class IdiotsDelightActivity extends Activity {
 						two.updateImages();
 						
 					} catch (IllegalMoveException e2) {
-						Log.d("removeListener: ", "Couldn't remove pair!");
+						Toast.makeText(getApplicationContext(), "You can't do that!", Toast.LENGTH_SHORT).show();
 					}
 				}
 				
 				if (d.isEmpty()) {
+					boolean win = true;
 					for (CardView c: cv) {
 						if (!c.getStack().isEmpty()) {
-							return;
+							win = false;
 						}
 					}
-					tv.setText(R.string.win);
-				} else {
-					// If there are no more available moves, let the player know how much he sucks
+					
+					if (win) {
+						tv.setText(R.string.win);
+						return;
+					}
+					
+					for (int i = 0; i < cv.length-1; i++) {
+						for (int j = i; j <= cv.length; j++) {
+							try {
+								if (cv[i].getStack().peek().getRank() == cv[j].getStack().peek().getRank()
+									|| cv[i].getStack().peek().getSuit() == cv[j].getStack().peek().getSuit()) {
+									return;
+								}
+							} catch (EmptyStructureException e) {
+								
+							}
+						}
+					}
+					tv.setText(R.string.fail);
 				}
 			} else {
 				Toast.makeText(getApplicationContext(), "Not enough cards selected!", Toast.LENGTH_SHORT).show();
