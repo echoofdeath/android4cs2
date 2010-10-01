@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, WarActivity!</string>
     <string name="app_name">War</string>
+    <string name="intro"></string>
+    <string name="help">Help</string>
+    <string name="newgame">New Game</string>
 </resources>
