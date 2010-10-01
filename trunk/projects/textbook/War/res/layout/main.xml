@@ -1,12 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-</LinearLayout>
+    android:background="@drawable/background">
+    
+	<TextView android:id="@+id/title"  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textSize="24sp"
+	    android:layout_alignParentTop="true"
+	    android:gravity="center_horizontal" 
+	    android:text="@string/app_name" />
+	
+	<LinearLayout android:id="@+id/linLay"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/title"
+		android:layout_marginTop="12sp"
+		android:gravity="center_horizontal">
+		
+		<com.googlecode.android4cs2.war.DeckView android:id="@+id/p1deck"
+			android:layout_width="72sp"
+			android:layout_height="96sp"
+			android:layout_marginRight="12sp"
+			android:src="@drawable/xb1fv" />
+		
+		<com.googlecode.android4cs2.war.CardView android:id="@+id/p1card"
+			android:layout_width="72sp"
+			android:layout_height="96sp"
+			android:layout_marginRight="24sp"
+			android:src="@drawable/blank" />
+			
+		<com.googlecode.android4cs2.war.CardView android:id="@+id/p2card"
+			android:layout_width="72sp"
+			android:layout_height="96sp"
+			android:layout_marginRight="24sp"
+			android:src="@drawable/blank" />
+			
+		<com.googlecode.android4cs2.war.DeckView android:id="@+id/p2deck"
+			android:layout_width="72sp"
+			android:layout_height="96sp"
+			android:layout_marginRight="12sp"
+			android:src="@drawable/xb1fv" />
+			
+	</LinearLayout>
+	
+	<LinearLayout android:id="@+id/warzones"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/linLay"
+		android:layout_marginTop="12sp"
+		android:gravity="center_horizontal">
+	
+		<com.googlecode.android4cs2.war.WarView android:id="@+id/p1zone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+			
+		<com.googlecode.android4cs2.war.WarView android:id="@+id/p2zone"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+			
+	</LinearLayout>
+</RelativeLayout>
