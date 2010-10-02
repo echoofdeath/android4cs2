@@ -30,13 +30,13 @@
 			android:layout_width="72sp"
 			android:layout_height="96sp"
 			android:layout_marginRight="24sp"
-			android:src="@drawable/blank" />
+			android:src="@drawable/background" />
 			
 		<com.googlecode.android4cs2.war.CardView android:id="@+id/p2card"
 			android:layout_width="72sp"
 			android:layout_height="96sp"
 			android:layout_marginRight="24sp"
-			android:src="@drawable/blank" />
+			android:src="@drawable/background" />
 			
 		<com.googlecode.android4cs2.war.DeckView android:id="@+id/p2deck"
 			android:layout_width="72sp"

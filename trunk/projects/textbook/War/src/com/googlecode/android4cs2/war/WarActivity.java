@@ -7,6 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 public class WarActivity extends Activity {
@@ -46,6 +50,8 @@ public class WarActivity extends Activity {
 	
 	/** Current player */
 	private int player = 0;
+	
+	AnimationSet set[] = new AnimationSet[2];
 	
 	/** OnClickListener for the DeckViews */
 	private OnClickListener deckListener = new OnClickListener() {
@@ -90,12 +96,39 @@ public class WarActivity extends Activity {
 			decks[player].add(p1);
 			decks[player].add(p2);
 			
+			for (int i = 0; i < 2; i++) {
+				cv[i].startAnimation(set[player]);
+			}
+			
 			isGameOver();
 		}
 		
 	};
 	
-    /** Called when the activity is first created. */
+    private AnimationListener animListener = new AnimationListener() {
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			for (int i = 0; i < 2; i++) {
+				cv[i].setImageResource(R.drawable.background);
+			}
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+    	
+    };
+    
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,9 +138,14 @@ public class WarActivity extends Activity {
         	cv[i] = (CardView) findViewById(cvIDs[i]);
         	dv[i] = (DeckView) findViewById(dvIDs[i]);
         	warzones[i] = (WarView) findViewById(zoneIDs[i]);
+        	set[i] = new AnimationSet(true);
+        	set[i].setAnimationListener(animListener);
         }
         
         tv = (TextView) findViewById(R.id.title);
+        
+        set[0].addAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_left));
+        set[1].addAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_right));
         
         newGame();
     }
@@ -166,6 +204,9 @@ public class WarActivity extends Activity {
     		dv[i].setQ(decks[i]);
     		dv[i].updateImages();
     		
+    		// And the Lord said unto his devices, "Let there be touch!"
+    		dv[i].setOnClickListener(deckListener);
+    		
     		// Then the cards...
     		cv[i].setCard(null);
     		cv[i].updateImages();
@@ -173,6 +214,8 @@ public class WarActivity extends Activity {
     		// Finally the war zones
     		warzones[i].clear();
     	}
+    	
+    	tv.setText(R.string.app_name);
     }
     
     public void isGameOver() {
@@ -180,6 +223,8 @@ public class WarActivity extends Activity {
 			if (decks[i].isEmpty()) {
 				// One player just lost, meaning the other just won
 				tv.setText(winIDs[(i+1)%2]);
+				dv[0].setOnClickListener(null);
+				dv[1].setOnClickListener(null);
 			}
 		}
     }

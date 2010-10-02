@@ -30,7 +30,7 @@ public class CardView extends ImageView {
 	public void updateImages() {
 		// Aces are at the beginning of this deck, so we treat them separately
 		if (c == null) {
-			setImageResource(R.drawable.blank);
+			setImageResource(R.drawable.background);
 		} else if (c.getRank() == 1) {
 			switch (c.getSuit()) {
 			case Card.SPADES:
@@ -46,7 +46,7 @@ public class CardView extends ImageView {
 				setImageResource(R.drawable.x1);
 				break;
 			default:
-				setImageResource(R.drawable.blank);
+				setImageResource(R.drawable.background);
 				break;
 			}
 		} else {
