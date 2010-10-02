@@ -24,6 +24,7 @@ public class CardView extends ImageView {
 	
 	public void setCard(Card c) {
 		this.c = c;
+		updateImages();
 	}
 	
 	public void updateImages() {

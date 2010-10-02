@@ -4,4 +4,6 @@
     <string name="intro"></string>
     <string name="help">Help</string>
     <string name="newgame">New Game</string>
+    <string name="p1win">Player 1 Wins!</string>
+    <string name="p2win">Player 2 Wins!</string>
 </resources>
