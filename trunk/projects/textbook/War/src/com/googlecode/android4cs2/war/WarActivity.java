@@ -3,6 +3,7 @@ package com.googlecode.android4cs2.war;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,9 +49,6 @@ public class WarActivity extends Activity {
 	/** Deck of cards */
 	private Deck d;
 	
-	/** Current player */
-	private int player = 0;
-	
 	AnimationSet set[] = new AnimationSet[2];
 	
 	/** OnClickListener for the DeckViews */
@@ -58,21 +56,24 @@ public class WarActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
+			int winner = -1;
+			
 			Card p1 = decks[0].remove();
 			Card p2 = decks[1].remove();
 			
+			Log.d("Card 1:", p1.toString());
+			Log.d("Card 2:", p2.toString());
 			cv[0].setCard(p1);
 			cv[1].setCard(p2);
 			
 			if (p1.getRank() > p2.getRank()) {
 				// Player 1 gets this trick
-				player = 0;
+				winner = 0;
 			} else if (p1.getRank() < p2.getRank()) {
 				// Player 2 gets this trick
-				player = 1;
-			} else {
+				winner = 1;
+			} else if (p1.getRank() == p2.getRank()) {
 				// WAR!
-				int winner = -1;
 				for (int i = 0; i < 3; i++) {
 					for (int j = 0; j < 2; j++) {
 						// Try to deal out 3 cards to both players
@@ -89,15 +90,51 @@ public class WarActivity extends Activity {
 						return;
 					}
 				}
+				for (int i = 0; i < warzones.length; i++) {
+					warzones[i].setQ(warCards[i]);
+					warzones[i].updateImages();
+				}
+				
+				Queue<Card> residual = new ArrayQueue<Card>();
+				for (int i = 0; i < 3; i++) {
+					Card p3 = warCards[0].remove();
+					Log.d("War Card " + i + 1, p3.toString());
+					Card p4 = warCards[1].remove();
+					Log.d("War Card " + i + 2, p4.toString());
+					if (winner > -1) {
+						while (!residual.isEmpty()) {
+							decks[winner].add(residual.remove());
+						}
+						decks[winner].add(p3);
+						decks[winner].add(p4);
+					} else if (p3.getRank() > p4.getRank()) {
+						winner = 0;
+						residual.add(p3);
+						residual.add(p4);
+					} else if (p3.getRank() < p4.getRank()){
+						winner = 1;
+						residual.add(p3);
+						residual.add(p4);
+					} else if (p3.getRank() == p4.getRank()) {
+						residual.add(p3);
+						residual.add(p4);
+					}
+				}
+				
+				for (int i = 0; i < 2; i++) {
+					warzones[i].startAnimation(set[winner]);
+				}
+
+				return;
 			}
 			
 			/* Let the players absorb what just happened for a few seconds, then animate a translation to whoever won the cards
 			 * after adding the two cards to the interim winner's deck. */
-			decks[player].add(p1);
-			decks[player].add(p2);
+			decks[winner].add(p1);
+			decks[winner].add(p2);
 			
 			for (int i = 0; i < 2; i++) {
-				cv[i].startAnimation(set[player]);
+				cv[i].startAnimation(set[winner]);
 			}
 			
 			isGameOver();
@@ -111,6 +148,7 @@ public class WarActivity extends Activity {
 		public void onAnimationEnd(Animation animation) {
 			for (int i = 0; i < 2; i++) {
 				cv[i].setImageResource(R.drawable.background);
+				warzones[i].setImageResource(R.drawable.background);
 			}
 		}
 
