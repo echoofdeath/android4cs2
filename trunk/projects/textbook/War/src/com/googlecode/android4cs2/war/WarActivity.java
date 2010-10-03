@@ -74,6 +74,7 @@ public class WarActivity extends Activity {
 				winner = 1;
 			} else if (p1.getRank() == p2.getRank()) {
 				// WAR!
+				// Problem with war cards going wrong direction :(
 				for (int i = 0; i < 3; i++) {
 					for (int j = 0; j < 2; j++) {
 						// Try to deal out 3 cards to both players
