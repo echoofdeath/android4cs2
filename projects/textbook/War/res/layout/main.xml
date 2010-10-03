@@ -51,15 +51,16 @@
 		android:layout_height="wrap_content"
 		android:layout_below="@id/linLay"
 		android:layout_marginTop="12sp"
-		android:gravity="center_horizontal">
+		android:gravity="center_horizontal"
+		android:layout_centerInParent="true">
 	
 		<com.googlecode.android4cs2.war.WarView android:id="@+id/p1zone"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+			android:layout_height="96sp" />
 			
 		<com.googlecode.android4cs2.war.WarView android:id="@+id/p2zone"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+			android:layout_height="96sp" />
 			
 	</LinearLayout>
 </RelativeLayout>
