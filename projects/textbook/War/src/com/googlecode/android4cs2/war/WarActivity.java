@@ -124,6 +124,7 @@ public class WarActivity extends Activity {
 				
 				for (int i = 0; i < 2; i++) {
 					warzones[i].startAnimation(set[winner]);
+					cv[i].startAnimation(set[winner]);
 				}
 
 				return;
