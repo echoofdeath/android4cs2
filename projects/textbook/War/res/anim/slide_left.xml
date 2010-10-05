@@ -3,6 +3,6 @@
 	<translate android:interpolator="@android:anim/accelerate_interpolator"
 			android:duration="500"
 			android:toXDelta="-100%p"
-			android:startOffset="1000"
+			android:startOffset="3000"
 			android:zAdjustment="top" />
 </set>

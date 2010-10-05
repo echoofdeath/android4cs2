@@ -42,9 +42,7 @@ public class WarView extends ImageView {
 			Bitmap output = Bitmap.createBitmap(102, 96, Bitmap.Config.ARGB_8888);
 			Canvas c = new Canvas(output);
 			
-			for (int i = 0; i < 3; i++) {
-				q.add(q.remove());
-			}
+			reverse();
 			
 			int offset = 0;
 			for (int i = 0; i < 3; i++) {
@@ -78,8 +76,18 @@ public class WarView extends ImageView {
 				q.add(k);
 			}
 			
+			reverse();
 			setImageBitmap(output);
 		}
+	}
+	
+	private void reverse() {
+		Card c1 = q.remove();
+		Card c2 = q.remove();
+		Card c3 = q.remove();
+		q.add(c3);
+		q.add(c2);
+		q.add(c1);
 	}
 
 }

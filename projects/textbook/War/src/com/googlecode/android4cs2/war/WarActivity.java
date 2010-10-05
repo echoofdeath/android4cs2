@@ -75,6 +75,10 @@ public class WarActivity extends Activity {
 			} else if (p1.getRank() == p2.getRank()) {
 				// WAR!
 				// Problem with war cards going wrong direction :(
+				for (int i = 0; i < warCards.length; i++) {
+					warCards[i] = new ArrayQueue<Card>();
+				}
+				
 				for (int i = 0; i < 3; i++) {
 					for (int j = 0; j < 2; j++) {
 						// Try to deal out 3 cards to both players
@@ -82,15 +86,12 @@ public class WarActivity extends Activity {
 							warCards[j].add(decks[j].remove());
 						} catch (EmptyStructureException e) {
 							// If a Queue runs out of cards, the winner is the player with cards remaining in his Queue
-							winner = (j+1) % 2;
+							isGameOver();
+							return;
 						}
 					}
-					// If one of the players ran out of cards, break out of this loop
-					if (winner > -1) {
-						isGameOver();
-						return;
-					}
 				}
+				
 				for (int i = 0; i < warzones.length; i++) {
 					warzones[i].setQ(warCards[i]);
 					warzones[i].updateImages();
@@ -151,6 +152,7 @@ public class WarActivity extends Activity {
 			for (int i = 0; i < 2; i++) {
 				cv[i].setImageResource(R.drawable.background);
 				warzones[i].setImageResource(R.drawable.background);
+				warzones[i].setQ(null);
 			}
 		}
 
