@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GoFish</string>
+    <string name="intro">Help</string>
+    <string name="help"></string>
+    <string name="newgame">New Game</string>
+</resources>
