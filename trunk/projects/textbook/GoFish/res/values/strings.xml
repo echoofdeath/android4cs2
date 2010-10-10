@@ -4,4 +4,7 @@
     <string name="intro">Help</string>
     <string name="help"></string>
     <string name="newgame">New Game</string>
+    <string name="scoreLabel">Score: </string>
+    <string name="choiceLabel">Choices</string>
+    <string name="yourHandLabel">Your Hand</string>
 </resources>

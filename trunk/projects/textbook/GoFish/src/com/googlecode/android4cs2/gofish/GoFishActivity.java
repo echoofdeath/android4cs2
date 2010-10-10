@@ -1,12 +1,30 @@
 package com.googlecode.android4cs2.gofish;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/** The controller of this game */
 public class GoFishActivity extends Activity {
+	
+	/** The deck */
+	private Deck deck;
+	
+	/** The DeckView */
+	private DeckView dv;
+	
+	/** The hands */
+	ArrayList<Card>[] hands = new ArrayList[2];
+	
+	/** Possible choices when asking for a card, corresponding to the ranks in a deck of cards (Ace to King) */
+	boolean[] choices = { true, true, true, true, true, true, true, true, true, true, true, true, true };
+	
+	/**  */
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
