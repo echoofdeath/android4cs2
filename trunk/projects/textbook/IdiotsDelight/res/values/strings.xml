@@ -4,7 +4,8 @@
     <string name="title">Idiot\'s Delight</string>
     <string name="intro">Welcome to Idiot\'s Delight!</string>
     <string name="newgame">New Game</string>
-    <string name="help">The goal of this game is to have no cards remaining in the deck and no cards remaining in the four stacks. You may select up two cards, and if they are the same suit, you can remove the lower ranking one. If they are the same rank, you may remove both of them.</string>
+    <string name="help">Help</string>
+    <string name="helpText">The goal of this game is to have no cards remaining in the deck and no cards remaining in the four stacks. You may select up two cards, and if they are the same suit, you can remove the lower ranking one. If they are the same rank, you may remove both of them.</string>
     <string name="illegalmove">You can\'t do that! Sorry, try again.</string>
     <string name="win">Congratulations on being the most delightful Idiot!</string>
     <string name="fail">Don\'t worry. You can\'t win them all.</string>
