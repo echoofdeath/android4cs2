@@ -16,7 +16,7 @@
   	android:layout_height="wrap_content"
   	android:layout_below="@id/intro"
   	android:gravity="center_horizontal"
-  	android:text="@string/help"
+  	android:text="@string/helpText"
   	android:textSize="14sp" />
   	
   	
