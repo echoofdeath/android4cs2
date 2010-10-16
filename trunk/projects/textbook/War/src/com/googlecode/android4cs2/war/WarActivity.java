@@ -3,6 +3,8 @@ package com.googlecode.android4cs2.war;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,8 +63,6 @@ public class WarActivity extends Activity {
 			Card p1 = decks[0].remove();
 			Card p2 = decks[1].remove();
 			
-			Log.d("Card 1:", p1.toString());
-			Log.d("Card 2:", p2.toString());
 			cv[0].setCard(p1);
 			cv[1].setCard(p2);
 			
@@ -74,61 +74,33 @@ public class WarActivity extends Activity {
 				winner = 1;
 			} else if (p1.getRank() == p2.getRank()) {
 				// WAR!
-				// Problem with war cards going wrong direction :(
-				for (int i = 0; i < warCards.length; i++) {
+		    	for (int i = 0; i < warCards.length; i++) {
 					warCards[i] = new ArrayQueue<Card>();
 				}
-				
-				for (int i = 0; i < 3; i++) {
-					for (int j = 0; j < 2; j++) {
-						// Try to deal out 3 cards to both players
-						try {
-							warCards[j].add(decks[j].remove());
-						} catch (EmptyStructureException e) {
-							// If a Queue runs out of cards, the winner is the player with cards remaining in his Queue
-							isGameOver();
-							return;
+		    	
+		    	// Need card delegation code for when multiple wars occur
+				while (winner < 0 && !isGameOver()) {
+					// Try to deal out 4 cards to both players
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 2; j++) {
+							try {
+								warCards[j].add(decks[j].remove());
+							} catch (EmptyStructureException e) {
+								// If a Queue runs out of cards, the winner is the player with cards remaining in his Queue
+								if (decks[0].isEmpty()) {
+									winner = 1;
+								} else {
+									winner = 0;
+								}
+							}
 						}
 					}
-				}
-				
-				for (int i = 0; i < warzones.length; i++) {
-					warzones[i].setQ(warCards[i]);
-					warzones[i].updateImages();
-				}
-				
-				Queue<Card> residual = new ArrayQueue<Card>();
-				for (int i = 0; i < 3; i++) {
-					Card p3 = warCards[0].remove();
-					Log.d("War Card " + i + 1, p3.toString());
-					Card p4 = warCards[1].remove();
-					Log.d("War Card " + i + 2, p4.toString());
-					if (winner > -1) {
-						while (!residual.isEmpty()) {
-							decks[winner].add(residual.remove());
-						}
-						decks[winner].add(p3);
-						decks[winner].add(p4);
-					} else if (p3.getRank() > p4.getRank()) {
-						winner = 0;
-						residual.add(p3);
-						residual.add(p4);
-					} else if (p3.getRank() < p4.getRank()){
-						winner = 1;
-						residual.add(p3);
-						residual.add(p4);
-					} else if (p3.getRank() == p4.getRank()) {
-						residual.add(p3);
-						residual.add(p4);
+					
+					if (winner < 0) {
+						winner = war(cloneIt(warCards[0]), cloneIt(warCards[1]), 4);
 					}
-				}
-				
-				for (int i = 0; i < 2; i++) {
-					warzones[i].startAnimation(set[winner]);
-					cv[i].startAnimation(set[winner]);
 				}
 
-				return;
 			}
 			
 			/* Let the players absorb what just happened for a few seconds, then animate a translation to whoever won the cards
@@ -136,7 +108,13 @@ public class WarActivity extends Activity {
 			decks[winner].add(p1);
 			decks[winner].add(p2);
 			
+			while (!warCards[0].isEmpty() && !warCards[1].isEmpty()) {
+				decks[winner].add(warCards[0].remove());
+				decks[winner].add(warCards[1].remove());
+			}
+			
 			for (int i = 0; i < 2; i++) {
+				warzones[i].startAnimation(set[winner]);
 				cv[i].startAnimation(set[winner]);
 			}
 			
@@ -152,19 +130,22 @@ public class WarActivity extends Activity {
 			for (int i = 0; i < 2; i++) {
 				cv[i].setImageResource(R.drawable.background);
 				warzones[i].setImageResource(R.drawable.background);
-				warzones[i].setQ(null);
+				warzones[i].setCard(null);
+				dv[i].setOnClickListener(deckListener);
 			}
 		}
 
 		@Override
 		public void onAnimationRepeat(Animation animation) {
-			// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onAnimationStart(Animation animation) {
-			// TODO Auto-generated method stub
+			for (int i = 0; i < dv.length; i++) {
+				dv[i].setOnClickListener(null);
+			}
 			
 		}
     	
@@ -234,11 +215,22 @@ public class WarActivity extends Activity {
     	}
     	
     	// Deal out the cards equally to both players
-    	while (!d.isEmpty()) {
+/*    	while (!d.isEmpty()) {
+    		decks[0].add(d.deal());
+    		decks[1].add(d.deal());
+    	} */
+    	
+    	decks[0].add(new Card(1,1));
+    	decks[1].add(new Card(1,1));
+    	decks[0].add(new Card(2,3));
+    	decks[1].add(new Card(2,3));
+    	decks[0].add(new Card(4,2));
+    	decks[1].add(new Card(9,3));
+    	
+    	for (int i = 0; i < 24; i++) {
     		decks[0].add(d.deal());
     		decks[1].add(d.deal());
     	}
-    	
     	
     	// Update the Views
     	for (int i = 0; i < 2; i++) {
@@ -255,19 +247,63 @@ public class WarActivity extends Activity {
     		
     		// Finally the war zones
     		warzones[i].clear();
+    		warzones[i].setCard(null);
     	}
     	
     	tv.setText(R.string.app_name);
     }
     
-    public void isGameOver() {
+    public boolean isGameOver() {
 		for (int i = 0; i < 2; i++) {
 			if (decks[i].isEmpty()) {
 				// One player just lost, meaning the other just won
 				tv.setText(winIDs[(i+1)%2]);
 				dv[0].setOnClickListener(null);
 				dv[1].setOnClickListener(null);
+				dv[i].updateImages();
+				return true;
 			}
 		}
+		return false;
+    }
+    
+    /** Called when war happens. Returns 0 or 1 which indicates which player won or -1 if all cards were equal
+     * @return int */
+    public int war(Queue<Card> x, Queue<Card> y, int numCards) {		
+		try {
+			Card p1 = x.remove();
+			Card p2 = y.remove();
+			Log.d("Card 1: ", p1.toString());
+			Log.d("Card 2: ", p2.toString());
+			
+			warzones[0].setCard(p1);
+			warzones[0].updateImages(numCards);
+			warzones[1].setCard(p2);
+			warzones[1].updateImages(numCards);
+			
+			SystemClock.sleep(1000);
+			
+			if (p1.getRank() > p2.getRank()) {
+				return 0;
+			} else if (p1.getRank() < p2.getRank()) {
+				return 1;
+			} else {				
+				// Need to pause for a moment before calling this method
+				return war(x,y, numCards-1);
+//				return 1;
+			}
+		} catch (EmptyStructureException e) {
+			return -1;
+		}
+    }
+    
+    public Queue<Card> cloneIt(Queue<Card> q) {
+    	Queue<Card> temp = new ArrayQueue<Card>();
+    	for (int i = 0; i < 4; i++) {
+    		Card c = q.remove();
+    		temp.add(c);
+    		q.add(c);
+    	}
+    	return temp;
     }
 }
