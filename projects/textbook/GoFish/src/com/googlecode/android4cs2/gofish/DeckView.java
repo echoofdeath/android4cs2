@@ -33,5 +33,6 @@ public class DeckView extends ImageView {
 	
 	public void setDeck(Deck d) {
 		this.d = d;
+		updateImages();
 	}
 }

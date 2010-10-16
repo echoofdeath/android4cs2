@@ -18,18 +18,27 @@ public class GoFishActivity extends Activity {
 	private DeckView dv;
 	
 	/** The hands */
-	ArrayList<Card>[] hands = new ArrayList[2];
+	private ArrayList<Card>[] hands = new ArrayList[2];
+	
+	/** The computer's hand view */
+	private CompHandView chv;
 	
 	/** Possible choices when asking for a card, corresponding to the ranks in a deck of cards (Ace to King) */
 	boolean[] choices = { true, true, true, true, true, true, true, true, true, true, true, true, true };
 	
-	/**  */
+	/**  Current player */
+	private int player = 0;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        dv = (DeckView) findViewById(R.id.deck);
+        chv = (CompHandView) findViewById(R.id.computerHand);
+        
+        newGame();
     }
     
     /**
@@ -55,7 +64,7 @@ public class GoFishActivity extends Activity {
     		return true;
     	// Otherwise, if they need help, they can have that too
     	case R.id.help:
-    		Intent i = new Intent(GoFishActivity.this, HelpActivity.class);
+    		Intent i = new Intent(this, HelpActivity.class);
     		startActivity(i);
     		return true;
     	default:
@@ -63,5 +72,28 @@ public class GoFishActivity extends Activity {
     	}
     }
 
-    public void newGame() {}
+    public void newGame() {
+    	deck = new Deck();
+    	deck.shuffle();
+    	
+    	dv.setDeck(deck);
+    	
+    	for (int i = 0; i < 2; i++) {
+    		hands[i] = new ArrayList<Card>();
+    	}
+    	
+    	for (int i = 0; i < 7; i++) {
+    		for (int j = 0; j < 2; j++) {
+    			hands[j].add(deck.deal());
+    		}
+    	}
+    	
+    	chv.setHand(hands[1]);
+    	
+    	for (int i = 0; i < choices.length; i++) {
+    		choices[i] = true;
+    	}
+    	
+    	player = 0;
+    }
 }
