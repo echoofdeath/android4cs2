@@ -1,81 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/background">
     
-    <com.googlecode.android4cs2.gofish.DeckView android:id="@+id/computerHand"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content" 
-    	android:layout_alignParentTop="true" />
-    	
-    <TextView android:id="@+id/compScoreLabel" 
-    	android:text="@string/scoreLabel"
-    	android:layout_width="wrap_content"
+    <TableRow android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:layout_alignParentLeft="true"
-    	android:textSize="24sp" />
+    	android:gravity="center_horizontal">
+	    <com.googlecode.android4cs2.gofish.CompHandView android:id="@+id/computerHand"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="72px" />
+    </TableRow>
     
-    <TextView android:id="@+id/compScore"
-    	android:layout_width="wrap_content"
+    <TableRow android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:layout_toRightOf="@id/compScoreLabel"
-    	android:text="0" />
-    	
-    <com.googlecode.android4cs2.gofish.DeckView android:id="@+id/deck"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@id/compScoreLabel"
-    	android:layout_marginTop="24px"
-    	android:gravity="center_horizontal" />
-    	
-    <TextView android:id="@+id/choiceLabel"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@id/deck"
-    	android:layout_marginTop="24sp"
-    	android:text="@string/choiceLabel"
-    	android:textSize="24sp" />
-    	
-    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"  
-    	android:id="@+id/choices"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@id/choiceLabel"
-    	android:layout_marginTop="12sp"
-    	android:spacing="6sp" />
-    	
-    <TextView android:id="@+id/yourHandLabel"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:gravity="center_horizontal"
-    	android:layout_below="@id/choices"
-    	android:layout_marginTop="12sp"
-    	android:text="@string/yourHandLabel"
-    	android:textSize="24sp" />
-    	
-    <TextView android:id="@+id/yourScoreLabel"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_toRightOf="@id/yourHandLabel"
-    	android:layout_marginLeft="6sp"
-    	android:text="@string/scoreLabel"
-    	android:textSize="12sp" />
-    	
-    <TextView android:id="@+id/yourScore"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_toRightOf="@id/yourScoreLabel"
-    	android:text="0"
-    	android:textSize="12sp" />
-    	
-    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"  
-    	android:id="@+id/yourHand"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@id/yourHandLabel"
-    	android:layout_marginTop="12sp"
-    	android:spacing="6sp" />
-    	
-</RelativeLayout>
+    	android:gravity="left">
+	    <TextView android:id="@+id/compScoreLabel" 
+	    	android:text="@string/scoreLabel"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="16sp" />
+	    <TextView android:id="@+id/compScore"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:text="0"
+	    	android:textSize="12sp" />
+	</TableRow>
+	
+    <TableRow android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:gravity="center_horizontal">	
+	    <com.googlecode.android4cs2.gofish.DeckView android:id="@+id/deck"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:gravity="center_horizontal" />
+	</TableRow>
+    
+    <TableRow android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:gravity="center_horizontal">
+	    <TextView android:id="@+id/choiceLabel"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginTop="24sp"
+	    	android:text="@string/choiceLabel"
+	    	android:textSize="24sp" />
+	</TableRow>
+	
+    <TableRow android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:gravity="center_horizontal">	
+	    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"  
+	    	android:id="@+id/choices"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginTop="12sp"
+	    	android:spacing="6sp" />
+	</TableRow>
+    
+    <TableRow android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:gravity="center_horizontal">
+	    <TextView android:id="@+id/yourHandLabel"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:gravity="center_horizontal"
+	    	android:layout_marginTop="12sp"
+	    	android:text="@string/yourHandLabel"
+	    	android:textSize="24sp" />
+	    	
+	     <TextView android:id="@+id/yourScoreLabel"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginLeft="6sp"
+	    	android:text="@string/scoreLabel"
+	    	android:textSize="16sp" />
+	    	
+	    <TextView android:id="@+id/yourScore"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:text="0"
+	    	android:textSize="12sp"
+	    	android:layout_marginLeft="6sp" />
+	</TableRow>
+	
+	<TableRow android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" 
+    	android:gravity="center_horizontal">
+	    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"  
+	    	android:id="@+id/yourHand"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginTop="12sp"
+	    	android:spacing="6sp" />
+    </TableRow> -->
+    
+</TableLayout>
