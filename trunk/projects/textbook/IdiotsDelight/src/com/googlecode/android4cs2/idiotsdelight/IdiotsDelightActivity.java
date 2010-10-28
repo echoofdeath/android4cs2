@@ -126,34 +126,7 @@ public class IdiotsDelightActivity extends Activity {
 						Toast.makeText(getApplicationContext(), "You can't do that!", Toast.LENGTH_SHORT).show();
 					}
 				}
-				
-				if (d.isEmpty()) {
-					boolean win = true;
-					for (CardView c: cv) {
-						if (!c.getStack().isEmpty()) {
-							win = false;
-						}
-					}
-					
-					if (win) {
-						tv.setText(R.string.win);
-						return;
-					}
-					
-					for (int i = 0; i < cv.length-1; i++) {
-						for (int j = i; j <= cv.length; j++) {
-							try {
-								if (cv[i].getStack().peek().getRank() == cv[j].getStack().peek().getRank()
-									|| cv[i].getStack().peek().getSuit() == cv[j].getStack().peek().getSuit()) {
-									return;
-								}
-							} catch (EmptyStructureException e) {
-								
-							}
-						}
-					}
-					tv.setText(R.string.fail);
-				}
+				gameState();
 			} else {
 				Toast.makeText(getApplicationContext(), "Not enough cards selected!", Toast.LENGTH_SHORT).show();
 			}
@@ -169,19 +142,15 @@ public class IdiotsDelightActivity extends Activity {
         cv = new CardView[4];
         for (int i = 0; i < 4; i++) {
         	cv[i] = (CardView) findViewById(CVIDs[i]);
-        	cv[i].setOnClickListener(stackListener);
         }
         
-        newGame();
-        
         dv = (DeckView) findViewById(R.id.deal);
-        dv.setOnClickListener(deckListener);
         
         rm = (Button) findViewById(R.id.remove);
-        rm.setOnClickListener(removeListener);
         
         tv = (TextView) findViewById(R.id.title);
         
+        newGame();
     }
     
     /**
@@ -224,8 +193,11 @@ public class IdiotsDelightActivity extends Activity {
     		stacks[i] = new ArrayStack<Card>();
     		cv[i].setStack(stacks[i]);
     		cv[i].updateImages();
+    		cv[i].setOnClickListener(stackListener);
     	}
-    	
+    	dv.setOnClickListener(deckListener);
+    	rm.setOnClickListener(removeListener);
+    	tv.setText(R.string.title);
     }
     
     public void deal() throws IllegalMoveException {
@@ -243,6 +215,7 @@ public class IdiotsDelightActivity extends Activity {
     			clicked.pop();
     		}
     	}
+    	gameState();
     }
     
     public void removeLowCard(CardView one, CardView two) throws IllegalMoveException {
@@ -286,5 +259,50 @@ public class IdiotsDelightActivity extends Activity {
     	
     	one.getStack().pop();
     	two.getStack().pop();
+    }
+    
+    public void gameState() {
+    	if (d.isEmpty()) {
+			boolean win = true;
+			for (Stack<Card> s: stacks) {
+				if (!s.isEmpty()) {
+					Log.d("Checking for win.", "Just broke.");
+					win = false;
+					break;
+				}
+			}
+			
+			if (win) {
+				tv.setText(R.string.win);
+				for (CardView c: cv) {
+	    			c.setOnClickListener(null);
+	    		}
+	    		rm.setOnClickListener(null);
+	    		dv.setOnClickListener(null);
+				return;
+			} else {
+	    		for (int i = 0; i < stacks.length-1; i++) {
+					for (int j = i+1; j < stacks.length; j++) {
+						try {
+							Log.d("We're checking...", "and checking.");
+							if (stacks[i].peek().getRank() == stacks[j].peek().getRank()
+								|| stacks[i].peek().getSuit() == stacks[j].peek().getSuit()) {
+								Log.d("We are at line 241", "");
+								return;
+							}
+						} catch (EmptyStructureException e) {
+							Log.d("Checking for loss...", "and we have no cards in stack " + i + ","+ j);
+						}
+					}
+				}
+	    		tv.setText(R.string.fail);
+	    		for (CardView c: cv) {
+	    			c.setOnClickListener(null);
+	    		}
+	    		rm.setOnClickListener(null);
+	    		dv.setOnClickListener(null);
+	    		return;
+			}
+    	}
     }
 }
