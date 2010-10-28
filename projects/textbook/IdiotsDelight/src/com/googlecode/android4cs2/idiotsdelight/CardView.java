@@ -1,8 +1,6 @@
 package com.googlecode.android4cs2.idiotsdelight;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
