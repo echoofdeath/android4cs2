@@ -12,9 +12,9 @@ import android.widget.ImageView;
 public class CardAdapter extends BaseAdapter {
 
 	private Context context;
-	private ArrayList<Card> hand;
+	private GoFishHand hand;
 	
-	public CardAdapter(Context c, ArrayList<Card> h) {
+	public CardAdapter(Context c, GoFishHand h) {
 		this.context = c;
 		this.hand = h;
 	}
@@ -25,8 +25,8 @@ public class CardAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int arg0) {
-		return hand.get(arg0);
+	public Object getItem(int position) {
+		return hand.get(position);
 	}
 
 	@Override
