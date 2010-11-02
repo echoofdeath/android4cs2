@@ -13,37 +13,29 @@
 	    	android:layout_height="72px" />
     </TableRow>
     
-    <TableRow android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:gravity="left">
-	    <TextView android:id="@+id/compScoreLabel" 
-	    	android:text="@string/scoreLabel"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:textSize="16sp" />
-	    <TextView android:id="@+id/compScore"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:text="0"
-	    	android:textSize="12sp" />
+    <TableRow>
+    	<TextView android:id="@+id/compScore"
+    		android:textSize="16sp" 
+    		android:text="Score: 0" />
 	</TableRow>
 	
     <TableRow android:layout_width="fill_parent"
     	android:layout_height="wrap_content" 
     	android:gravity="center_horizontal">	
 	    <com.googlecode.android4cs2.gofish.DeckView android:id="@+id/deck"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
+	    	android:layout_width="72sp"
+	    	android:layout_height="96sp"
 	    	android:gravity="center_horizontal" />
 	</TableRow>
     
     <TableRow android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" 
+    	android:layout_height="wrap_content"
     	android:gravity="center_horizontal">
 	    <TextView android:id="@+id/choiceLabel"
 	    	android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
 	    	android:layout_marginTop="24sp"
+	    	android:gravity="center_horizontal"
 	    	android:text="@string/choiceLabel"
 	    	android:textSize="24sp" />
 	</TableRow>
@@ -59,30 +51,21 @@
 	    	android:spacing="6sp" />
 	</TableRow>
     
-    <TableRow android:layout_width="fill_parent"
+    <TableRow android:layout_width="wrap_content"
     	android:layout_height="wrap_content" 
-    	android:gravity="center_horizontal">
+    	android:layout_marginTop="6sp">
 	    <TextView android:id="@+id/yourHandLabel"
 	    	android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
-	    	android:gravity="center_horizontal"
-	    	android:layout_marginTop="12sp"
+	    	android:layout_marginLeft="6sp"
 	    	android:text="@string/yourHandLabel"
 	    	android:textSize="24sp" />
 	    	
-	     <TextView android:id="@+id/yourScoreLabel"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:layout_marginLeft="6sp"
-	    	android:text="@string/scoreLabel"
+	     <TextView android:id="@+id/yourScore"
+	    	android:layout_marginLeft="0sp"
+	    	android:text="Score: 0"
 	    	android:textSize="16sp" />
 	    	
-	    <TextView android:id="@+id/yourScore"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:text="0"
-	    	android:textSize="12sp"
-	    	android:layout_marginLeft="6sp" />
 	</TableRow>
 	
 	<TableRow android:layout_width="fill_parent"
@@ -90,10 +73,10 @@
     	android:gravity="center_horizontal">
 	    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"  
 	    	android:id="@+id/yourHand"
-	    	android:layout_width="fill_parent"
+	    	android:layout_width="250sp"
 	    	android:layout_height="wrap_content"
 	    	android:layout_marginTop="12sp"
 	    	android:spacing="6sp" />
-    </TableRow> -->
+    </TableRow>
     
 </TableLayout>

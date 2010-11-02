@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Gallery;
+import android.widget.Toast;
 
 /** The controller of this game */
 public class GoFishActivity extends Activity {
@@ -17,11 +21,30 @@ public class GoFishActivity extends Activity {
 	/** The DeckView */
 	private DeckView dv;
 	
-	/** The hands */
+	/** The hands. User is 0, computer is 1. */
 	private ArrayList<Card>[] hands = new ArrayList[2];
 	
 	/** The computer's hand view */
 	private CompHandView chv;
+	
+	/** The gallery of available choices for your turn */
+	private Gallery choiceGal;
+	
+	/** The player's hand gallery */
+	private Gallery yourHand;
+	
+	/** The listener for the Go Fish deck. Only active when the user can't get cards from the computer. */
+	private OnClickListener deckListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (!deck.isEmpty()) {
+				hands[0].add(deck.deal());
+				player = 1-player;
+			} else {
+				Toast.makeText(getApplicationContext(), "No cards left!", Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
 	
 	/** Possible choices when asking for a card, corresponding to the ranks in a deck of cards (Ace to King) */
 	boolean[] choices = { true, true, true, true, true, true, true, true, true, true, true, true, true };
@@ -38,7 +61,12 @@ public class GoFishActivity extends Activity {
         dv = (DeckView) findViewById(R.id.deck);
         chv = (CompHandView) findViewById(R.id.computerHand);
         
+        // choiceGal = (Gallery) findViewById(R.id.choices);
+        yourHand = (Gallery) findViewById(R.id.yourHand);
+        
         newGame();
+        
+        yourHand.setAdapter(new CardAdapter(this, hands[0]));
     }
     
     /**
