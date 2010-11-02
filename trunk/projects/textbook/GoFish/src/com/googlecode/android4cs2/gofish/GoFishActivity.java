@@ -1,7 +1,5 @@
 package com.googlecode.android4cs2.gofish;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +45,7 @@ public class GoFishActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (!deck.isEmpty()) {
+				// Animate this card down to your hand, and upon completion of the animation, call the notifyDatSetChanged method
 				hands[0].add(deck.deal());
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
 				player = 1-player;
