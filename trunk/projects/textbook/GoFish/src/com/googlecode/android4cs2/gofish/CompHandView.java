@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 public class CompHandView extends ImageView {
 
-	private ArrayList<Card> hand;
+	private GoFishHand hand;
 	
 	public CompHandView(Context context) {
 		super(context);
@@ -42,7 +42,7 @@ public class CompHandView extends ImageView {
 		setImageBitmap(output);
 	}
 	
-	public void setHand(ArrayList<Card> hand) {
+	public void setHand(GoFishHand hand) {
 		this.hand = hand;
 		updateImages();
 	}
