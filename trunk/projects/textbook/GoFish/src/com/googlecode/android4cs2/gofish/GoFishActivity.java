@@ -9,8 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Gallery;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 /** The controller of this game */
 public class GoFishActivity extends Activity {
@@ -21,8 +25,14 @@ public class GoFishActivity extends Activity {
 	/** The DeckView */
 	private DeckView dv;
 	
-	/** The hands. User is 0, computer is 1. */
-	private ArrayList<Card>[] hands = new ArrayList[2];
+	/** The hands */
+	private GoFishHand[] hands = new GoFishHand[2];
+	
+	/** The scores*/
+	private int[] scores = new int[2];
+	
+	/** What to do */
+	private TextView instructions;
 	
 	/** The computer's hand view */
 	private CompHandView chv;
@@ -39,11 +49,37 @@ public class GoFishActivity extends Activity {
 		public void onClick(View v) {
 			if (!deck.isEmpty()) {
 				hands[0].add(deck.deal());
+				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
 				player = 1-player;
 			} else {
 				Toast.makeText(getApplicationContext(), "No cards left!", Toast.LENGTH_SHORT).show();
 			}
+			dv.setOnClickListener(null);
+			player = 1 - player;
+			computerTurn();
 		}
+	};
+	
+	/** Listener for the Gallery of available cards */
+	private OnItemClickListener choiceListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			// If the computer had at least one card for the user, give it to him
+			if (hands[player].give(arg2+1, hands[1-player])) {
+				// Animate cards sliding from computer to player
+				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
+				player = 1 - player;
+				computerTurn();
+				return;
+			} else {
+				// Otherwise, go fish!
+				instructions.setText(R.string.gofish);
+				dv.setOnClickListener(deckListener);
+			}
+		}
+		
 	};
 	
 	/** Possible choices when asking for a card, corresponding to the ranks in a deck of cards (Ace to King) */
@@ -60,13 +96,15 @@ public class GoFishActivity extends Activity {
         
         dv = (DeckView) findViewById(R.id.deck);
         chv = (CompHandView) findViewById(R.id.computerHand);
+        instructions = (TextView) findViewById(R.id.instructions);
         
-        // choiceGal = (Gallery) findViewById(R.id.choices);
+        choiceGal = (Gallery) findViewById(R.id.choices);
         yourHand = (Gallery) findViewById(R.id.yourHand);
         
         newGame();
         
         yourHand.setAdapter(new CardAdapter(this, hands[0]));
+        choiceGal.setAdapter(new ChoiceAdapter(choices, this));
     }
     
     /**
@@ -107,9 +145,9 @@ public class GoFishActivity extends Activity {
     	dv.setDeck(deck);
     	
     	for (int i = 0; i < 2; i++) {
-    		hands[i] = new ArrayList<Card>();
+    		hands[i] = new GoFishHand();
     	}
-    	
+        
     	for (int i = 0; i < 7; i++) {
     		for (int j = 0; j < 2; j++) {
     			hands[j].add(deck.deal());
@@ -122,6 +160,10 @@ public class GoFishActivity extends Activity {
     		choices[i] = true;
     	}
     	
+    	instructions.setText(R.string.choiceLabel);
+    	choiceGal.setOnItemClickListener(choiceListener);
     	player = 0;
     }
+    
+    public void computerTurn() {}
 }

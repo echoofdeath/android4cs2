@@ -12,7 +12,7 @@ public class ChoiceAdapter extends BaseAdapter {
 	private boolean available[];
 	
 	/** An array containing the resource IDs for images of the available cards */
-	private int choiceRes[] = {};
+	private int choiceRes[] = { R.drawable.ace, R.drawable.two, R.drawable.three, R.drawable.four, R.drawable.five, R.drawable.six, R.drawable.seven, R.drawable.eight, R.drawable.nine, R.drawable.ten, R.drawable.jack, R.drawable.queen, R.drawable.king };
 	private Context context;
 	
 	public ChoiceAdapter(boolean choices[], Context c) {
@@ -45,10 +45,8 @@ public class ChoiceAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ImageView i = new ImageView(context);
-		for (int j = 0; j < available.length; j++) {
-			if (available[j]) {
-				i.setImageResource(choiceRes[j]);
-			}
+		if (available[position]) {
+			i.setImageResource(choiceRes[position]);
 		}
 		return i;
 	}
