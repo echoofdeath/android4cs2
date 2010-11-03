@@ -8,4 +8,6 @@
     <string name="choiceLabel">Ask the computer for one of the following: </string>
     <string name="yourHandLabel">Your Hand</string>
     <string name="gofish">Go fish!</string>
+    <string name="asking">Got any</string>
+    <string name="liar">Liar. Give up your cards.</string>
 </resources>

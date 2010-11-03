@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,15 @@ public class GoFishActivity extends Activity {
 	
 	/** The player's hand gallery */
 	private Gallery yourHand;
+	
+	/** Tell the computer to go fish*/
+	private Button goFish;
+	
+	/** int which tells how many cards of the desired rank the user has (Keeps them from lying) */
+	private int numCards;
+	
+	/** Which card the computer wants */
+	private Card wanted;
 	
 	/** The listener for the Go Fish deck. Only active when the user can't get cards from the computer. */
 	private OnClickListener deckListener = new OnClickListener() {
@@ -80,6 +90,43 @@ public class GoFishActivity extends Activity {
 		
 	};
 	
+	/** Listener for the Go Fish Button */
+	private OnClickListener goFishListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			if (numCards > 0) {
+				Toast.makeText(getApplicationContext(), getString(R.string.liar), Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (!deck.isEmpty()) {
+				hands[1].add(deck.deal());
+			}
+			goFish.setVisibility(View.GONE);
+			choiceGal.setVisibility(View.VISIBLE);
+		}
+		
+	};
+	
+	/** A listener for the Gallery to animate cards out of your hand to the computer */
+	private OnItemClickListener giveListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			// Animate arg1 up to the other player if its rank is the same as the desired rank
+			if (wanted.getRank() == hands[0].get(arg2).getRank()) {
+				// animation stuffs
+				numCards--;
+			}
+			// If the user has selected each card of the appropriate rank, update the models accordingly
+			if (numCards == 0) {
+				hands[0].give(wanted.getRank(), hands[1]);
+			}
+		}
+		
+	};
+	
 	/** Possible choices when asking for a card, corresponding to the ranks in a deck of cards (Ace to King) */
 	boolean[] choices = { true, true, true, true, true, true, true, true, true, true, true, true, true };
 	
@@ -95,6 +142,7 @@ public class GoFishActivity extends Activity {
         dv = (DeckView) findViewById(R.id.deck);
         chv = (CompHandView) findViewById(R.id.computerHand);
         instructions = (TextView) findViewById(R.id.instructions);
+        goFish = (Button) findViewById(R.id.goFish);
         
         choiceGal = (Gallery) findViewById(R.id.choices);
         yourHand = (Gallery) findViewById(R.id.yourHand);
@@ -103,6 +151,7 @@ public class GoFishActivity extends Activity {
         
         yourHand.setAdapter(new CardAdapter(this, hands[0]));
         choiceGal.setAdapter(new ChoiceAdapter(choices, this));
+        goFish.setOnClickListener(goFishListener);
     }
     
     /**
@@ -163,5 +212,42 @@ public class GoFishActivity extends Activity {
     	player = 0;
     }
     
-    public void computerTurn() {}
+    public void computerTurn() {
+    	choiceGal.setOnItemClickListener(null);
+    	choiceGal.setVisibility(View.GONE);
+    	wanted = hands[1].get((int)Math.random()*hands[1].size()+1);
+    	for (Card c: hands[0]) {
+    		if (wanted.getRank() == c.getRank()) {
+    			numCards++;
+    		}
+    	}
+    	
+    	yourHand.setOnItemClickListener(giveListener);
+    	
+		goFish.setVisibility(View.VISIBLE);
+		String request = getString(R.string.asking);
+		switch (wanted.getRank()) {
+		case Card.ACE:
+			request += " Aces?";
+			break;
+		case Card.JACK:
+			request += " Jacks?";
+			break;
+		case Card.QUEEN:
+			request += " Queens?";
+			break;
+		case Card.KING:
+			request += " Kings?";
+			break;
+		default:
+			request += " " + wanted.getRank() + "s?";
+			break;
+		}
+		instructions.setText(request);
+		
+    }
+    
+    public int score(GoFishHand hand) {
+    	return 0;
+    }
 }
