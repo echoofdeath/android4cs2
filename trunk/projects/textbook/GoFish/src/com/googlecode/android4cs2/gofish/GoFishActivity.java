@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class GoFishActivity extends Activity {
 	private Button goFish;
 	
 	/** int which tells how many cards of the desired rank the user has (Keeps them from lying) */
-	private int numCards;
+	private int numCards = 0;
 	
 	/** Which card the computer wants */
 	private Card wanted;
@@ -58,12 +59,10 @@ public class GoFishActivity extends Activity {
 				// Animate this card down to your hand, and upon completion of the animation, call the notifyDatSetChanged method
 				hands[0].add(deck.deal());
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
-				player = 1-player;
 			} else {
 				Toast.makeText(getApplicationContext(), "No cards left!", Toast.LENGTH_SHORT).show();
 			}
 			dv.setOnClickListener(null);
-			player = 1 - player;
 			computerTurn();
 		}
 	};
@@ -75,10 +74,9 @@ public class GoFishActivity extends Activity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			// If the computer had at least one card for the user, give it to him
-			if (hands[player].give(arg2+1, hands[1-player])) {
+			if (hands[1].give(arg2+1, hands[0])) {
 				// Animate cards sliding from computer to player
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
-				player = 1 - player;
 				computerTurn();
 				return;
 			} else {
@@ -104,6 +102,8 @@ public class GoFishActivity extends Activity {
 			}
 			goFish.setVisibility(View.GONE);
 			choiceGal.setVisibility(View.VISIBLE);
+			choiceGal.setOnItemClickListener(choiceListener);
+			instructions.setText(R.string.choiceLabel);
 		}
 		
 	};
@@ -122,6 +122,8 @@ public class GoFishActivity extends Activity {
 			// If the user has selected each card of the appropriate rank, update the models accordingly
 			if (numCards == 0) {
 				hands[0].give(wanted.getRank(), hands[1]);
+				((BaseAdapter) yourHand.getAdapter()).notifyDataSetChanged();
+				computerTurn();
 			}
 		}
 		
@@ -129,9 +131,6 @@ public class GoFishActivity extends Activity {
 	
 	/** Possible choices when asking for a card, corresponding to the ranks in a deck of cards (Ace to King) */
 	boolean[] choices = { true, true, true, true, true, true, true, true, true, true, true, true, true };
-	
-	/**  Current player */
-	private int player = 0;
 	
     /** Called when the activity is first created. */
     @Override
@@ -209,7 +208,6 @@ public class GoFishActivity extends Activity {
     	
     	instructions.setText(R.string.choiceLabel);
     	choiceGal.setOnItemClickListener(choiceListener);
-    	player = 0;
     }
     
     public void computerTurn() {
@@ -244,7 +242,6 @@ public class GoFishActivity extends Activity {
 			break;
 		}
 		instructions.setText(request);
-		
     }
     
     public int score(GoFishHand hand) {
