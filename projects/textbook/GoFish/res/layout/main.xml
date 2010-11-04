@@ -30,7 +30,6 @@
 	    <com.googlecode.android4cs2.gofish.DeckView android:id="@+id/deck"
 	    	android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
-	    	android:background="@drawable/xb1fv"
 	    	android:gravity="center_horizontal" />
 	    	
 	</TableRow>
