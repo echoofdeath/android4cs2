@@ -77,7 +77,6 @@ public class GoFishActivity extends Activity {
 			if (hands[1].give(arg2+1, hands[0])) {
 				// Animate cards sliding from computer to player
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
-				computerTurn();
 				return;
 			} else {
 				// Otherwise, go fish!
@@ -104,6 +103,7 @@ public class GoFishActivity extends Activity {
 			choiceGal.setVisibility(View.VISIBLE);
 			choiceGal.setOnItemClickListener(choiceListener);
 			instructions.setText(R.string.choiceLabel);
+			
 		}
 		
 	};
@@ -118,6 +118,8 @@ public class GoFishActivity extends Activity {
 			if (wanted.getRank() == hands[0].get(arg2).getRank()) {
 				// animation stuffs
 				numCards--;
+			} else {
+				return;
 			}
 			// If the user has selected each card of the appropriate rank, update the models accordingly
 			if (numCards == 0) {
@@ -213,7 +215,7 @@ public class GoFishActivity extends Activity {
     public void computerTurn() {
     	choiceGal.setOnItemClickListener(null);
     	choiceGal.setVisibility(View.GONE);
-    	wanted = hands[1].get((int)Math.random()*hands[1].size()+1);
+    	wanted = hands[1].get((int)(Math.random()*hands[1].size()+1));
     	for (Card c: hands[0]) {
     		if (wanted.getRank() == c.getRank()) {
     			numCards++;
