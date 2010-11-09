@@ -31,6 +31,10 @@ public class CompHandView extends ImageView {
 	
 	public void updateImages() {
 		int numCards = hand.size();
+		if (numCards == 0) {
+			setImageResource(R.drawable.background);
+			return;
+		}
 		Bitmap edge = BitmapFactory.decodeResource(getResources(), R.drawable.xb1pl);
 		Bitmap top = BitmapFactory.decodeResource(getResources(), R.drawable.xb1fv);
 		Bitmap output = Bitmap.createBitmap(edge.getWidth()*(numCards-1)+top.getWidth(), top.getHeight(), Bitmap.Config.ARGB_8888);
