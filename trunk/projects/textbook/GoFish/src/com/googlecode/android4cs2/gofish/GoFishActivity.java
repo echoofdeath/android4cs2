@@ -3,6 +3,7 @@ package com.googlecode.android4cs2.gofish;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +52,9 @@ public class GoFishActivity extends Activity {
 	/** Which card the computer wants */
 	private Card wanted;
 	
+	/** TextViews for scores */
+	private TextView[] scoreViews = new TextView[2];
+	
 	/** The listener for the Go Fish deck. Only active when the user can't get cards from the computer. */
 	private OnClickListener deckListener = new OnClickListener() {
 		@Override
@@ -58,12 +62,17 @@ public class GoFishActivity extends Activity {
 			if (!deck.isEmpty()) {
 				// Animate this card down to your hand, and upon completion of the animation, call the notifyDatSetChanged method
 				hands[0].add(deck.deal());
+				scores[0] += score(hands[0]);
+				scoreViews[0].setText("Score: " + scores[0]);
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
 			} else {
 				Toast.makeText(getApplicationContext(), "No cards left!", Toast.LENGTH_SHORT).show();
 			}
 			dv.setOnClickListener(null);
-			computerTurn();
+			yourHand.setSelection(hands[0].size()-1, true);
+			if (!isGameOver()) {
+				computerTurn();
+			}
 		}
 	};
 	
@@ -76,7 +85,11 @@ public class GoFishActivity extends Activity {
 			// If the computer had at least one card for the user, give it to him
 			if (hands[1].give(arg2+1, hands[0])) {
 				// Animate cards sliding from computer to player
+				scores[0] += score(hands[0]);
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
+				scoreViews[0].setText("Score: " + scores[0]);
+				yourHand.setSelection(hands[0].size()-1, true);
+				isGameOver();
 				return;
 			} else {
 				// Otherwise, go fish!
@@ -95,15 +108,18 @@ public class GoFishActivity extends Activity {
 			if (numCards > 0) {
 				Toast.makeText(getApplicationContext(), getString(R.string.liar), Toast.LENGTH_SHORT).show();
 				return;
-			}
+			}				
 			if (!deck.isEmpty()) {
 				hands[1].add(deck.deal());
 			}
+			scores[0] += score(hands[0]);
+			scoreViews[0].setText("Score: " + scores[0]);
+			((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
 			goFish.setVisibility(View.GONE);
 			choiceGal.setVisibility(View.VISIBLE);
 			choiceGal.setOnItemClickListener(choiceListener);
 			instructions.setText(R.string.choiceLabel);
-			
+			isGameOver();
 		}
 		
 	};
@@ -118,14 +134,20 @@ public class GoFishActivity extends Activity {
 			if (wanted.getRank() == hands[0].get(arg2).getRank()) {
 				// animation stuffs
 				numCards--;
+				Log.d("giveListener", "Just gave one up...");
 			} else {
 				return;
 			}
 			// If the user has selected each card of the appropriate rank, update the models accordingly
 			if (numCards == 0) {
 				hands[0].give(wanted.getRank(), hands[1]);
-				((BaseAdapter) yourHand.getAdapter()).notifyDataSetChanged();
-				computerTurn();
+				scores[1] += score(hands[1]);
+				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
+				scoreViews[1].setText("Score: " + scores[1]);
+				Log.d("giveListener", "The computer goes again!");
+				if (!isGameOver()) {
+					computerTurn();
+				}
 			}
 		}
 		
@@ -153,6 +175,8 @@ public class GoFishActivity extends Activity {
         yourHand.setAdapter(new CardAdapter(this, hands[0]));
         choiceGal.setAdapter(new ChoiceAdapter(choices, this));
         goFish.setOnClickListener(goFishListener);
+        scoreViews[0] = (TextView) findViewById(R.id.yourScore);
+        scoreViews[1] = (TextView) findViewById(R.id.compScore);
     }
     
     /**
@@ -215,7 +239,7 @@ public class GoFishActivity extends Activity {
     public void computerTurn() {
     	choiceGal.setOnItemClickListener(null);
     	choiceGal.setVisibility(View.GONE);
-    	wanted = hands[1].get((int)(Math.random()*hands[1].size()+1));
+    	wanted = hands[1].get((int)(Math.random()*hands[1].size()));
     	for (Card c: hands[0]) {
     		if (wanted.getRank() == c.getRank()) {
     			numCards++;
@@ -247,6 +271,22 @@ public class GoFishActivity extends Activity {
     }
     
     public int score(GoFishHand hand) {
-    	return 0;
+    	return hand.meldSets();
+    }
+    
+    public boolean isGameOver() {
+    	if (scores[0] + scores[1] >= 13) {
+			int winner = 0;
+			if (scores[0] < scores[1]) {
+				winner = 1;
+			}
+			instructions.setText("Player " + winner + " " + getString(R.string.win) + " " + scores[winner]);
+			dv.setOnClickListener(null);
+			choiceGal.setVisibility(View.GONE);
+			yourHand.setOnItemClickListener(null);
+			goFish.setOnClickListener(null);
+			return true;
+		}
+    	return false;
     }
 }

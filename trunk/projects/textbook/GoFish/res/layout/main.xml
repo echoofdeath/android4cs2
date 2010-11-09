@@ -58,7 +58,9 @@
     		android:layout_height="wrap_content"
     		android:visibility="gone"
     		android:text="@string/gofish"
-    		android:textSize="16sp" /> 	
+    		android:textSize="16sp"
+    		android:layout_marginTop="22sp"
+    		android:layout_marginBottom="6sp" /> 	
     		
 	    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"  
 	    	android:id="@+id/choices"
@@ -73,16 +75,10 @@
     	android:layout_height="wrap_content" 
     	android:layout_marginTop="6sp">
     	
-	    <TextView android:id="@+id/yourHandLabel"
-	    	android:layout_width="wrap_content"
-	    	android:layout_height="wrap_content"
-	    	android:layout_marginLeft="6sp"
-	    	android:text="@string/yourHandLabel"
-	    	android:textSize="24sp" />
-	    	
 	     <TextView android:id="@+id/yourScore"
 	    	android:text="Score: 0"
-	    	android:textSize="16sp" />
+	    	android:textSize="16sp"
+	    	android:gravity="left" />
 	    	
 	</TableRow>
 	
