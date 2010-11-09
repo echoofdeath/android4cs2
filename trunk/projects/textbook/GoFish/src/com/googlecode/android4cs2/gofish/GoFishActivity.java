@@ -70,6 +70,7 @@ public class GoFishActivity extends Activity {
 			}
 			dv.setOnClickListener(null);
 			yourHand.setSelection(hands[0].size()-1, true);
+			yourHand.setOnItemClickListener(giveListener);
 			if (!isGameOver()) {
 				computerTurn();
 			}
@@ -87,6 +88,7 @@ public class GoFishActivity extends Activity {
 				// Animate cards sliding from computer to player
 				scores[0] += score(hands[0]);
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
+				chv.updateImages();
 				scoreViews[0].setText("Score: " + scores[0]);
 				yourHand.setSelection(hands[0].size()-1, true);
 				isGameOver();
@@ -94,6 +96,8 @@ public class GoFishActivity extends Activity {
 			} else {
 				// Otherwise, go fish!
 				instructions.setText(R.string.gofish);
+				choiceGal.setOnItemClickListener(null);
+				yourHand.setOnItemClickListener(null);
 				dv.setOnClickListener(deckListener);
 			}
 		}
@@ -112,9 +116,10 @@ public class GoFishActivity extends Activity {
 			if (!deck.isEmpty()) {
 				hands[1].add(deck.deal());
 			}
-			scores[0] += score(hands[0]);
-			scoreViews[0].setText("Score: " + scores[0]);
+			scores[1] += score(hands[1]);
+			scoreViews[1].setText("Score: " + scores[1]);
 			((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
+			chv.updateImages();
 			goFish.setVisibility(View.GONE);
 			choiceGal.setVisibility(View.VISIBLE);
 			choiceGal.setOnItemClickListener(choiceListener);
@@ -144,6 +149,7 @@ public class GoFishActivity extends Activity {
 				scores[1] += score(hands[1]);
 				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
 				scoreViews[1].setText("Score: " + scores[1]);
+				chv.updateImages();
 				Log.d("giveListener", "The computer goes again!");
 				if (!isGameOver()) {
 					computerTurn();
