@@ -5,7 +5,7 @@
     <string name="help"></string>
     <string name="newgame">New Game</string>
     <string name="scoreLabel">Score: </string>
-    <string name="choiceLabel">Ask the computer for one of the following: </string>
+    <string name="choiceLabel">Ask the computer for...</string>
     <string name="yourHandLabel">Your Hand</string>
     <string name="gofish">Go fish!</string>
     <string name="asking">Got any</string>
