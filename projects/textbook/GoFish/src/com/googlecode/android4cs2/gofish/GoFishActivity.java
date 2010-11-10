@@ -8,8 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.TextView;
@@ -26,7 +29,7 @@ public class GoFishActivity extends Activity {
 	private DeckView dv;
 	
 	/** The hands */
-	private GoFishHand[] hands = new GoFishHand[2];
+	private MyGoFishHand[] hands = new MyGoFishHand[2];
 	
 	/** The scores*/
 	private int[] scores = new int[2];
@@ -54,6 +57,12 @@ public class GoFishActivity extends Activity {
 	
 	/** TextViews for scores */
 	private TextView[] scoreViews = new TextView[2];
+	
+	/** Animation sets for giving or receiving cards */
+	private AnimationSet slideDown;
+	
+	/** Animation for cards sliding back and forth */
+//	private AnimationSet[] sets = new AnimationSet[2];
 	
 	/** The listener for the Go Fish deck. Only active when the user can't get cards from the computer. */
 	private OnClickListener deckListener = new OnClickListener() {
@@ -137,7 +146,10 @@ public class GoFishActivity extends Activity {
 				long arg3) {
 			// Animate arg1 up to the other player if its rank is the same as the desired rank
 			if (wanted.getRank() == hands[0].get(arg2).getRank()) {
-				// animation stuffs
+				// Animate card downward
+				hands[0].give(hands[0].get(arg2), hands[1]);
+				Log.d("giveListener: ", hands[0].toString());
+				arg1.startAnimation(slideDown);
 				numCards--;
 				Log.d("giveListener", "Just gave one up...");
 			} else {
@@ -145,16 +157,41 @@ public class GoFishActivity extends Activity {
 			}
 			// If the user has selected each card of the appropriate rank, update the models accordingly
 			if (numCards == 0) {
-				hands[0].give(wanted.getRank(), hands[1]);
 				scores[1] += score(hands[1]);
-				((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
 				scoreViews[1].setText("Score: " + scores[1]);
-				chv.updateImages();
-				Log.d("giveListener", "The computer goes again!");
+				Log.d("giveListener", "The toHide = arg1;computer goes again!");
 				if (!isGameOver()) {
 					computerTurn();
 				}
 			}
+		}
+		
+	};
+	
+	/** A listener for the animation */
+	private AnimationListener downListener = new AnimationListener() {
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			/*
+			 * When we're done animating the card down, we then slide another card across the screen in the
+			 * main layout context.
+			 */
+			
+			((CardAdapter) yourHand.getAdapter()).notifyDataSetChanged();
+			chv.updateImages();
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	};
@@ -176,7 +213,9 @@ public class GoFishActivity extends Activity {
         choiceGal = (Gallery) findViewById(R.id.choices);
         yourHand = (Gallery) findViewById(R.id.yourHand);
         
+        Log.d("onCreate: ", "Right before new game...");
         newGame();
+        Log.d("onCreate: ", "Right after new game...");
         
         yourHand.setAdapter(new CardAdapter(this, hands[0]));
         choiceGal.setAdapter(new ChoiceAdapter(choices, this));
@@ -223,9 +262,16 @@ public class GoFishActivity extends Activity {
     	dv.setDeck(deck);
     	
     	for (int i = 0; i < 2; i++) {
-    		hands[i] = new GoFishHand();
+    		hands[i] = new MyGoFishHand();
+//    		sets[i] = new AnimationSet(true);
     	}
         
+/*    	sets[0].addAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+    	sets[1].addAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down)); */
+    	slideDown = new AnimationSet(true);
+    	slideDown.addAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+    	slideDown.setAnimationListener(downListener);
+    	
     	for (int i = 0; i < 7; i++) {
     		for (int j = 0; j < 2; j++) {
     			hands[j].add(deck.deal());
@@ -276,7 +322,7 @@ public class GoFishActivity extends Activity {
 		instructions.setText(request);
     }
     
-    public int score(GoFishHand hand) {
+    public int score(MyGoFishHand hand) {
     	return hand.meldSets();
     }
     
