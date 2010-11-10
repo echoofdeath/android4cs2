@@ -37,15 +37,15 @@
 			android:src="@drawable/xb1fv" />
 					
 		<com.googlecode.android4cs2.war.CardView android:id="@+id/p1card"
-			android:layout_width="72sp"
-			android:layout_height="96sp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:layout_marginRight="24sp"
 			android:layout_toRightOf="@id/p1deck"
 			android:src="@drawable/background" />
 			
 		<com.googlecode.android4cs2.war.CardView android:id="@+id/p2card"
-			android:layout_width="72sp"
-			android:layout_height="96sp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:layout_marginRight="24sp"
 			android:layout_toLeftOf="@id/p2deck"
 			android:src="@drawable/background" />
@@ -62,11 +62,11 @@
 	
 		<com.googlecode.android4cs2.war.WarView android:id="@+id/p1zone"
 			android:layout_width="wrap_content"
-			android:layout_height="96sp" />
+			android:layout_height="wrap_content" />
 			
 		<com.googlecode.android4cs2.war.WarView android:id="@+id/p2zone"
 			android:layout_width="wrap_content"
-			android:layout_height="96sp" />
+			android:layout_height="wrap_content" />
 			
 	</LinearLayout>
 </RelativeLayout>
