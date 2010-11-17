@@ -21,8 +21,11 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -52,10 +55,9 @@ public class QuestionsActivity extends Activity {
 	private Button submit;
 	
 	/** Container for yes/no buttons and user/submit controls */
-	private TableRow controls;
+	private TableLayout layout;
 	
-	/** Tells us whether the user has submitted an answer */
-	private boolean haveAnswer = false;
+	private int currentState;
 	
 	/** The answer */
 	private String answer;
@@ -63,73 +65,180 @@ public class QuestionsActivity extends Activity {
 	/** The question to elicit "answer" */
 	private String question;
 	
+	private AnimationSet fadeUp;
+	
+	private AnimationSet fadeDown;
+	
+	private final int ASKING_QUESTION = 0;
+	private final int ASKING_ITEM = 1;
+	private final int ASKING_WHAT = 2;
+	private final int ASKING_WHAT_QUESTION = 3;
+	private final int PLAY_AGAIN = 4;
+	private final int WIN = 5;
+	private final int THANKS = 6;
+	private final int NEW_GAME = 7;
+	
+	private AnimationListener animListenerDown = new AnimationListener() {
+
+		@Override
+		public void onAnimationEnd(Animation arg0) {
+			switch (currentState) {
+			case ASKING_QUESTION:
+				questions.setText(node.getItem());
+				break;
+			case ASKING_ITEM:
+				questions.setText(getString(R.string.isIt) + " " + node.getItem() + "?");
+				break;
+			case ASKING_WHAT:
+				questions.setText(getString(R.string.giveUp) + " " + getString(R.string.what));
+				user.setVisibility(View.VISIBLE);
+				submit.setVisibility(View.VISIBLE);
+				yes.setVisibility(View.GONE);
+				no.setVisibility(View.GONE);
+				break;
+			case ASKING_WHAT_QUESTION:
+				questions.setText(getString(R.string.distinguish) + " " + node.getItem());
+				break;
+			case PLAY_AGAIN:
+				questions.setText(getString(R.string.again));
+				user.setVisibility(View.GONE);
+				submit.setVisibility(View.GONE);
+				yes.setVisibility(View.VISIBLE);
+				no.setVisibility(View.VISIBLE);
+				break;
+			case WIN:
+				questions.setText(getString(R.string.win) + " " + getString(R.string.again));
+				break;
+			case THANKS:
+				questions.setText(getString(R.string.thanks));
+				break;
+			case NEW_GAME:
+				newGame();
+				break;
+			default:
+				// Do nothing
+				break;
+			}
+			
+			layout.startAnimation(fadeUp);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
+	private AnimationListener animListenerUp = new AnimationListener() {
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			layout.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onAnimationStart(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
 	/** Button listener */
 	private OnClickListener buttonListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
+			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(user.getWindowToken(), 0);
 			switch (v.getId()) {
 			case R.id.yes:
-				// Win!
-				if (!haveAnswer) {
-					haveAnswer = true;
-					questions.setText(getString(R.string.win) + " " + getString(R.string.again));
-				} else {
-					newGame();
+				
+				switch (currentState) {
+				case ASKING_QUESTION:
+					if (node.getLeft() == null) {
+						currentState = ASKING_ITEM;
+						break;
+					}
+					node = node.getLeft();
+					currentState = ASKING_ITEM;
+					break;
+				case ASKING_ITEM:
+					currentState = WIN;
+					break;
+				case PLAY_AGAIN:
+					currentState = NEW_GAME;
+					break;
+				case WIN:
+					currentState = NEW_GAME;
+					break;
+				default:
+					break;
 				}
+				
 				break;
 			case R.id.no:
-				if (!haveAnswer) {
-					// Go down the other branch of the BinaryNode
+				
+				switch (currentState) {
+				case ASKING_QUESTION:
 					if (node.getRight() == null) {
-						// Animate a change in text with opacity shift
-						user.setVisibility(View.VISIBLE);
-						submit.setVisibility(View.VISIBLE);
-						yes.setVisibility(View.GONE);
-						no.setVisibility(View.GONE);
-						questions.setText(getString(R.string.giveUp) + " " + getString(R.string.what));
-
-					} else {
-						node = node.getRight();
-						if (node.getItem().equals("a giraffe")) {
-							questions.setText(getString(R.string.isIt) + " " + node.getItem() + "?");
-						} else {
-							questions.setText(node.getItem() + "?");
-						}
+						currentState = ASKING_WHAT;
+						break;
 					}
-				} else {
-					questions.setText(R.string.thanks);
-					yes.setOnClickListener(null);
-					no.setOnClickListener(null);
+					node = node.getRight();
+					currentState = ASKING_QUESTION;
+					break;
+				case ASKING_ITEM:
+					currentState = ASKING_WHAT;
+					break;
+				case PLAY_AGAIN:
+					currentState = THANKS;
+					break;
+				case WIN:
+					currentState = THANKS;
+				default:
+					break;
 				}
+				
 				break;
 			case R.id.submit:
-				// Submit the text in the user EditText
-				// Set the answer the first time around, then ask for the question 
-				if (!haveAnswer) {
+				
+				switch (currentState) {
+				case ASKING_WHAT:
 					answer = user.getText().toString();
 					user.setText("", TextView.BufferType.EDITABLE);
-					haveAnswer = !haveAnswer;
-					questions.setText(getString(R.string.distinguish) + " " + node.getItem());
-				// Set the question and ask to play again
-				} else {
+					currentState = ASKING_WHAT_QUESTION;
+					break;
+				case ASKING_WHAT_QUESTION:
 					question = user.getText().toString();
-					user.setText("", TextView.BufferType.EDITABLE);
 					node.setLeft(new BinaryNode<String>(answer));
 					node.setRight(new BinaryNode<String>(node.getItem()));
 					node.setItem(question);
-					questions.setText(R.string.again);
-					yes.setVisibility(View.VISIBLE);
-					no.setVisibility(View.VISIBLE);
-					user.setVisibility(View.GONE);
-					submit.setVisibility(View.GONE);
+					currentState = PLAY_AGAIN;
+					break;
+				default:
+					break;
 				}
+				
 				break;
 			default:
 				// We shouldn't ever get here, so if we do, log it
 				Log.d("buttonListener: ", "Shouldn't be here! Ahhh!");
 				break;
 			}
+			layout.startAnimation(fadeDown);
 		}
 	};
 	
@@ -144,11 +253,19 @@ public class QuestionsActivity extends Activity {
         no = (Button) findViewById(R.id.no);
         user = (EditText) findViewById(R.id.user);
         submit = (Button) findViewById(R.id.submit);
-        controls = (TableRow) findViewById(R.id.controlPanel);
+        layout = (TableLayout) findViewById(R.id.layout);
     	
         load(this);
         newGame();
         
+        fadeUp = new AnimationSet(true);
+        fadeDown = new AnimationSet(true);
+        
+        fadeUp.addAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_up));
+        fadeDown.addAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_down));
+        
+        fadeDown.setAnimationListener(animListenerDown);
+        fadeUp.setAnimationListener(animListenerUp);
     }
     
     /** Called just before the activity is stopped. This gives us a chance to save our tree. */
@@ -201,7 +318,11 @@ public class QuestionsActivity extends Activity {
     /** Begin a new game */
     public void newGame() {
     	node = root;
-    	haveAnswer = false;
+    	if (node.getItem().equals("a giraffe")) {
+    		currentState = ASKING_ITEM;
+    	} else {
+    		currentState = ASKING_QUESTION;
+    	}
     	if (node.getItem().equals("a giraffe")) {
     		questions.setText(getString(R.string.isIt) + " " + node.getItem() + "?");
     	} else {
