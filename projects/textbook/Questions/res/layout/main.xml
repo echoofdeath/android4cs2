@@ -1,12 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-</LinearLayout>
+    android:layout_height="fill_parent">
+    
+    <TableRow android:gravity="center"
+    	android:layout_height="wrap_content"
+    	android:layout_width="fill_parent">
+    		
+	    <TextView android:id="@+id/label"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="24sp"
+	    	android:text="@string/isIt" />
+	    	
+	</TableRow>
+    
+    <TableRow android:id="@+id/controlPanel"
+    	android:gravity="center_horizontal"
+    	android:layout_height="wrap_content"
+    	android:layout_width="fill_parent">
+	    <Button android:id="@+id/yes"
+	    	android:gravity="center_horizontal"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="24sp"
+	    	android:text="@string/yes" />
+
+	    <Button android:id="@+id/no"
+	    	android:gravity="center_horizontal"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="24sp"
+	    	android:text="@string/no" />
+
+		<EditText android:id="@+id/user"
+			android:gravity="center_horizontal"
+			android:layout_width="290sp"
+	    	android:layout_height="70sp"
+			android:textSize="24sp"
+			android:visibility="gone" />
+	</TableRow>
+	
+	<TableRow android:gravity="center"
+    	android:layout_height="wrap_content"
+    	android:layout_width="fill_parent">
+    			
+		<Button android:id="@+id/submit"
+			android:gravity="center_horizontal"
+			android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+			android:textSize="24sp"
+			android:text="@string/submit"
+			android:visibility="gone" />
+			
+	</TableRow>
+		
+</TableLayout>
