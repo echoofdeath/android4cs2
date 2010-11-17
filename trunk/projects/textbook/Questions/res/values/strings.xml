@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, QuestionsActivity!</string>
+	<string name="what">What is it?</string>
+	<string name="distinguish">I need a question to distinguish that from</string>
+	<string name="enterQuestion">Enter the question:</string>
+	<string name="isIt">Is it</string>
+	<string name="win">I win!</string>
+	<string name="giveUp">I give up.</string>
+	<string name="again">Play again?</string>
+	<string name="yes">Yepp!</string>
+	<string name="no">Nope!</string>
+	<string name="submit">Learn it!</string>
+	<string name="thanks">Thanks for playing!</string>
+	<string name="intro">Help</string>
+	<string name="help"></string>
+	<string name="title">Questions</string>
+	<string name="newgame">New Game</string>
+	<string name="clear">Clear Tree</string>
     <string name="app_name">Questions</string>
 </resources>
