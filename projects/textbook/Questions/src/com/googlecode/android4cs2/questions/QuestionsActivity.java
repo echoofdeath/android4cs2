@@ -84,7 +84,7 @@ public class QuestionsActivity extends Activity {
 		public void onAnimationEnd(Animation arg0) {
 			switch (currentState) {
 			case ASKING_QUESTION:
-				questions.setText(node.getItem());
+				questions.setText(node.getItem() + "?");
 				break;
 			case ASKING_ITEM:
 				questions.setText(getString(R.string.isIt) + " " + node.getItem() + "?");
@@ -168,7 +168,7 @@ public class QuestionsActivity extends Activity {
 				
 				switch (currentState) {
 				case ASKING_QUESTION:
-					if (node.getLeft() == null) {
+					if (node.isLeaf()) {
 						currentState = ASKING_ITEM;
 						break;
 					}
@@ -193,11 +193,11 @@ public class QuestionsActivity extends Activity {
 				
 				switch (currentState) {
 				case ASKING_QUESTION:
-					if (node.getRight() == null) {
-						currentState = ASKING_WHAT;
+					node = node.getRight();
+					if (node.isLeaf()) {
+						currentState = ASKING_ITEM;
 						break;
 					}
-					node = node.getRight();
 					currentState = ASKING_QUESTION;
 					break;
 				case ASKING_ITEM:
@@ -223,6 +223,7 @@ public class QuestionsActivity extends Activity {
 					break;
 				case ASKING_WHAT_QUESTION:
 					question = user.getText().toString();
+					user.setText("", TextView.BufferType.EDITABLE);
 					node.setLeft(new BinaryNode<String>(answer));
 					node.setRight(new BinaryNode<String>(node.getItem()));
 					node.setItem(question);
@@ -318,14 +319,11 @@ public class QuestionsActivity extends Activity {
     /** Begin a new game */
     public void newGame() {
     	node = root;
-    	if (node.getItem().equals("a giraffe")) {
+    	if (node.isLeaf()) {
+    		questions.setText(getString(R.string.isIt) + " " + node.getItem() + "?");
     		currentState = ASKING_ITEM;
     	} else {
     		currentState = ASKING_QUESTION;
-    	}
-    	if (node.getItem().equals("a giraffe")) {
-    		questions.setText(getString(R.string.isIt) + " " + node.getItem() + "?");
-    	} else {
     		questions.setText(node.getItem() + "?");
     	}
         yes.setOnClickListener(buttonListener);
