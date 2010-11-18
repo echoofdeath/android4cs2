@@ -159,7 +159,7 @@ public class QuestionsActivity extends Activity {
 	
 	/** Button listener */
 	private OnClickListener buttonListener = new OnClickListener() {
-
+		
 		@Override
 		public void onClick(View v) {
 			((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(user.getWindowToken(), 0);
@@ -168,19 +168,17 @@ public class QuestionsActivity extends Activity {
 				
 				switch (currentState) {
 				case ASKING_QUESTION:
+					node = node.getLeft();
 					if (node.isLeaf()) {
 						currentState = ASKING_ITEM;
 						break;
 					}
-					node = node.getLeft();
-					currentState = ASKING_ITEM;
+					currentState = ASKING_QUESTION;
 					break;
 				case ASKING_ITEM:
 					currentState = WIN;
 					break;
 				case PLAY_AGAIN:
-					currentState = NEW_GAME;
-					break;
 				case WIN:
 					currentState = NEW_GAME;
 					break;
@@ -204,8 +202,6 @@ public class QuestionsActivity extends Activity {
 					currentState = ASKING_WHAT;
 					break;
 				case PLAY_AGAIN:
-					currentState = THANKS;
-					break;
 				case WIN:
 					currentState = THANKS;
 				default:
