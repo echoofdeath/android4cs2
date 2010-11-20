@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:background="@drawable/gradient">
+    
+    <TextView android:id="@+id/welcome"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:textSize="24sp"
+    	android:text="@string/welcome"
+    	android:layout_alignParentTop="true"
+    	android:layout_marginBottom="18sp" />
+    
+    <TextView android:id="@+id/instructions"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:textSize="18sp"
+    	android:text="@string/instructions"
+    	android:layout_below="@id/welcome" />
+    	
+    <TextView android:id="@+id/word"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:textSize="18sp"
+    	android:layout_below="@id/instructions" />
+    	
+    <ImageView android:id="@+id/ghost"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/ghost"
+    	android:layout_toLeftOf="@id/word"
+    	android:layout_below="@id/instructions"
+    	android:visibility="gone" />
+    	
+    <EditText android:id="@+id/bogusWord"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:visibility="gone"
+    	android:layout_below="@id/word" />
+</RelativeLayout>
