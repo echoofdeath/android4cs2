@@ -19,12 +19,13 @@
     	android:layout_height="wrap_content"
     	android:textSize="18sp"
     	android:text="@string/instructions"
-    	android:layout_below="@id/welcome" />
+    	android:layout_below="@id/welcome"
+    	android:layout_marginBottom="24sp" />
     	
     <TextView android:id="@+id/word"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:textSize="18sp"
+    	android:textSize="36sp"
     	android:layout_below="@id/instructions" />
     	
     <ImageView android:id="@+id/ghost"
@@ -34,10 +35,5 @@
     	android:layout_toLeftOf="@id/word"
     	android:layout_below="@id/instructions"
     	android:visibility="gone" />
-    	
-    <EditText android:id="@+id/bogusWord"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:visibility="gone"
-    	android:layout_below="@id/word" />
+
 </RelativeLayout>
