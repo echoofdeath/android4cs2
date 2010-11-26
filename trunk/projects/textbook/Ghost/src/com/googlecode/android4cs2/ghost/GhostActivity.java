@@ -53,7 +53,13 @@ public class GhostActivity extends Activity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 		Log.d("onKeyUp", "Key code: " + (char)event.getUnicodeChar());
 		if (player == 0) {
-			word += (char)event.getUnicodeChar();
+			if (event.getUnicodeChar() >= 97 && event.getUnicodeChar() <= 122) {
+				word += (char)event.getUnicodeChar();
+			} else {
+				Log.d("onKeyUp", "Not a valid character");
+				return false;
+			}
+			
 			if (word.length() == 1) {
 				root = loadNodes();
 				node = root;
@@ -92,6 +98,7 @@ public class GhostActivity extends Activity {
     		}
     		input = null;
     		assman.close();
+    		assman = null;
     	} catch (Exception e) {
     		Log.d("loadNodes: ", "Problem with words.txt!");
     	}
