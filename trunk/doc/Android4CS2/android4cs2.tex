@@ -1,17 +1,39 @@
-% LaTeX source for textbook ``How to think like a (Python) Programmer''
-% Copyright (c)  2007  Allen B. Downey.
-
+% Android for CS2
+% Copyright (C) 2010-2011 Goadrich, Jennings, Jadud
+%
 % Permission is granted to copy, distribute and/or modify this
 % document under the terms of the GNU Free Documentation License,
 % Version 1.1  or any later version published by the Free Software
 % Foundation; with no Invariant Sections, no Front-Cover Texts,
 % and no Back-Cover Texts.
-
 % This distribution includes a file named fdl.tex that contains the text
 % of the GNU Free Documentation License.  If it is missing, you can obtain
 % it from www.gnu.org or by writing to the Free Software Foundation,
 % Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 %
+% ``Android for CS2'' is intended to support the introduction of 
+% data structures and algorithms to students in their second programming course. 
+% It is based in the Java programming language, and is written around a series 
+% of assignments adapted from those presented in "Data Structures and Algorithms in Java"
+% by Peter Drake. 
+
+% The LaTeX template for this book is based on that used by Downey in his book
+% ``How to think like a (Python) Programmer.'' The template itself
+% came with the following license:
+
+% LaTeX source for textbook ``How to think like a (Python) Programmer''
+% Copyright (c)  2007  Allen B. Downey.
+% Permission is granted to copy, distribute and/or modify this
+% document under the terms of the GNU Free Documentation License,
+% Version 1.1  or any later version published by the Free Software
+% Foundation; with no Invariant Sections, no Front-Cover Texts,
+% and no Back-Cover Texts.
+% This distribution includes a file named fdl.tex that contains the text
+% of the GNU Free Documentation License.  If it is missing, you can obtain
+% it from www.gnu.org or by writing to the Free Software Foundation,
+% Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+%
+
 \documentclass[10pt]{book}
 %\documentclass[cup6a]{cupbook}
 \usepackage{pslatex}
@@ -23,13 +45,24 @@
 \usepackage{setspace}
 \usepackage{hevea}
 \usepackage{upquote}
-
+\usepackage{svn-multi}
 %\usepackage[draft,light]{draftcopy}
 
 \newtheorem{ex}{Exercise}[chapter]
 
 \newcommand{\thetitle}{Learning Data Structures and Algorithms with Android Development}
 \newcommand{\theversion}{0.0.1}
+
+%%%%%%
+% LaTeX Interaction
+%%%%%%
+\svnidlong
+{$LastChangedBy$}
+{$LastChangedRevision$}
+{$LastChangedDate$}
+{$HeadURL$}
+
+
 
 \makeindex
 
@@ -114,11 +147,12 @@ Matthew Jadud\\
 {\small
 Copyright \copyright ~2010 Mark Goadrich, Jacob Jennings, Matthew Jadud.
 
-Printing history:
+Revision history, mostly:
 
 \begin{description}
 
 \item[September 2010:] Initial Version by Mark Goadrich
+\item[September 2011:] ``Beetle Game'' by Matt Jadud
 
 \end{description}
 
