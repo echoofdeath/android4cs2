@@ -1,0 +1,58 @@
+\chapter{Opening Projects in Eclipse}
+\section{Setup}
+First, download Eclipse
+
+Install Android SDK
+
+Download all versions and tools
+
+Set up so Device can be found on computer
+
+Install Eclipse ADT Plugin
+
+Set location of Android in Eclipse
+
+\section{Project}
+
+Download the tar.gz file
+
+Import
+
+General
+
+Existing Projects into Workspace
+
+Select archive file
+
+Finish
+
+Write missing classes, or copy from DSAJ text.
+
+Run As : Android Application.
+
+\section{Problems}
+
+\subsection{Version of Java}
+Android requires .class compatibility set to 5.0. Please fix project properties.
+
+Android Tools -> Fix Project Properties
+
+\subsection{Missing R.java}
+
+ERROR: Unable to open class file \/...\/workspace\/DieRoller\/gen\/com\/googlecode\/android4cs2\/dieroller\/R.java: No such file or directory
+
+Ok, just Run the project and it will be created.
+
+\subsection{Missing /gen directory}
+
+Clean the Project. Project -> Clean
+
+\subsection{Fatal Java Error}
+
+A fatal error has been detected by the Java Runtime Environment.
+
+This is because you are trying to run the project as a Java application,
+not an Android application. Caused by having main method in other files, 
+running them instead of main Activity file. 
+Wipe and reset your Launch properties,
+make sure you are choosing Android Project.
