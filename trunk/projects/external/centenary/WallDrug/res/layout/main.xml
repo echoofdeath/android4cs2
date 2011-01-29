@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
+
+<RelativeLayout 
+  android:id="@+id/RelativeLayout01" 
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent" 
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView 
+        android:id="@+id/biglabel" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:textSize="30sp" 
+        android:padding="5sp" 
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/imagearrow" 
+        android:text="@string/hello"></TextView>
+  <ImageView 
+    android:layout_width="wrap_content" 
     android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-</LinearLayout>
+    android:layout_centerInParent="true" 
+    android:padding="10sp" 
+    android:src="@drawable/wallq" 
+    android:layout_below="@+id/imagedie" 
+    android:id="@+id/imagearrow"></ImageView>
+    <TextView 
+        android:id="@+id/distance" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:textSize="20sp" 
+        android:padding="5sp" 
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imagearrow"  
+        android:text="@string/distance"></TextView>
+</RelativeLayout>

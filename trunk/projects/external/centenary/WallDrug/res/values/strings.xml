@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, WallDrug!</string>
+    <string name="hello">Wall Drug</string>
     <string name="app_name">Wall Drug Finder</string>
+<string name="distance">Waiting for GPS</string>
 </resources>
