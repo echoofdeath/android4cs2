@@ -30,13 +30,17 @@ public class WallDrug extends Activity implements SensorEventListener {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	
+    	// Set up the layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		tv = (TextView) this.findViewById(R.id.distance);
 		iv = (ImageView) this.findViewById(R.id.imagearrow);
 
+		// Set Location of Wall Drug
 		wallGP = new GeoPoint(43.993231, -102.241795);
 		
+		// Request updates from the LocationManager for GPS changes
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
         locationListener = new MyLocationListener();
         lm.requestLocationUpdates(
@@ -46,6 +50,7 @@ public class WallDrug extends Activity implements SensorEventListener {
         		locationListener);
         Log.d("LocListener", "Created Listener");
 
+        // Request updates from the SensorManager for compass changes
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		if (sensorManager == null) {
 			Toast.makeText(getBaseContext(), "No Sensor Manager",
@@ -65,6 +70,8 @@ public class WallDrug extends Activity implements SensorEventListener {
     @Override
     public void onDestroy() {
 		super.onDestroy();
+		
+		// Remove all Listeners
     	lm.removeUpdates(locationListener);
 		if (sensorManager != null) {
 			sensorManager.unregisterListener(this);
@@ -77,6 +84,8 @@ public class WallDrug extends Activity implements SensorEventListener {
 			iv.setImageResource(R.drawable.wallq);
 		} else {
 			synchronized (this) {
+				
+				// Calculate bearing from here to Wall Drug, and calibrate
 				double magneticHeading = arg0.values[0];
 				double bearing = myGP.bearing(wallGP);
 				double diff = bearing - magneticHeading;
@@ -84,9 +93,12 @@ public class WallDrug extends Activity implements SensorEventListener {
 					diff = 360 + diff;
 				}
 	
+				// If within 1 mile, we're here!
 				if (myGP.greatCircle(wallGP) < 1) {
 					iv.setImageResource(R.drawable.wallarrowhere);
 				} else {
+					
+					// Otherwise swap in the image for the appropriate bearing
 					int tmp = (int) Math.round(diff / 45);
 					switch (tmp) {
 					case 1: {
@@ -134,10 +146,11 @@ public class WallDrug extends Activity implements SensorEventListener {
 	 * Standard class to listen for changes in GPS Location.
 	 */
     private class MyLocationListener implements LocationListener {
+    	
         @Override
         public void onLocationChanged(Location loc) {
             myGP = new GeoPoint(loc.getLatitude(), loc.getLongitude());
-            tv.setText("" + myGP.greatCircle(wallGP) + " Miles");
+            tv.setText("" + (int)myGP.greatCircle(wallGP) + " Miles");
             Log.d("LocListener", "Found the loc!");
         }
 
