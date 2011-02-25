@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
     <TextView android:id="@+id/title"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
@@ -10,4 +11,19 @@
         android:layout_centerInParent="true" 
         android:text="@string/hello"
         android:textSize="24sp" />
-</LinearLayout>
+        
+    <GridView android:id="@+id/board"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:numColumns="3" 
+        android:stretchMode="spacingWidthUniform"
+        android:gravity="center"
+        android:listSelector="@drawable/icon" />
+    
+
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:id="@+id/rotate" android:layout_below="@+id/board" android:text="@string/rotate" android:textSize="20sp"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/left" android:layout_toLeftOf="@+id/rotate" android:text="@string/left" android:textSize="20sp"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/right" android:layout_toRightOf="@+id/rotate" android:text="@string/right" android:textSize="20sp"></Button>
+
+</RelativeLayout>
