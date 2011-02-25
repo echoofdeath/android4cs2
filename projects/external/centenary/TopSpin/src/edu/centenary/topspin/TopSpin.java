@@ -17,5 +17,7 @@ public interface TopSpin {
 
     public int get(int i);
     
+    public void mixup(int moves);
+    
 }
 

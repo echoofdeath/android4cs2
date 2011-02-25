@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">SubTest</string>
+    <string name="hello">Choose your board size</string>
+    <string name="gamelabel">Put the pieces in order</string>
     <string name="app_name">Top Spin</string>
     <string name="button1">3x3</string>
     <string name="button2">4x4</string>
@@ -8,4 +9,5 @@
     <string name="rotate">Rotate</string>
     <string name="left">Left</string>
     <string name="right">Right</string>
+    <string name="solved">Solved!</string>
 </resources>
