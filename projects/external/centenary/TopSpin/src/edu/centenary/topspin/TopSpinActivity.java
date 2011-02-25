@@ -24,7 +24,7 @@ public class TopSpinActivity extends Activity {
         four.setOnClickListener(new GameClickListener(4));
         five = (Button) findViewById(R.id.twentyfive);
         five.setOnClickListener(new GameClickListener(5));
-    }
+   }
     
     private class GameClickListener implements OnClickListener {
 
@@ -40,7 +40,7 @@ public class TopSpinActivity extends Activity {
     		Bundle bundle = new Bundle();
     		bundle.putInt("size", size);
     		i.putExtras(bundle);
-    		startActivity(i);			
+    		TopSpinActivity.this.startActivity(i);			
 		}
     }
 }

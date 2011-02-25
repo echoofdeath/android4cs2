@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, TopSpinActivity!</string>
+    <string name="hello">SubTest</string>
     <string name="app_name">Top Spin</string>
     <string name="button1">3x3</string>
     <string name="button2">4x4</string>
     <string name="button3">5x5</string>
+    <string name="rotate">Rotate</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
 </resources>
