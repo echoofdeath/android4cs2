@@ -21,6 +21,7 @@ public class GameActivity extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		Bundle bundle = this.getIntent().getExtras();
 		size = bundle.getInt("size");
 		Log.d("GameActivity", "found size = " + size);
@@ -35,9 +36,8 @@ public class GameActivity extends Activity {
 			setContentView(R.layout.five_main);
 			break;
 		}
-		title = (TextView) this.findViewById(R.id.title);
-		title.setText("" + size);
 		
+		title = (TextView) this.findViewById(R.id.title);		
 		boardView = (GridView) this.findViewById(R.id.board);
 		
         // Get the height and width of the screen
@@ -50,6 +50,7 @@ public class GameActivity extends Activity {
         }
         
         ts = new ArrayTopSpin((size - 1) * 4, size);
+        ts.mixup(100);
         
 		ia = new ImageAdapter(getApplicationContext(), width, ts, size);
 		boardView.setAdapter(ia);
@@ -59,8 +60,8 @@ public class GameActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				ts.shiftLeft();
-				ia.notifyDataSetChanged();				
+				ts.shiftRight();
+				updateViews();
 			}
 			
 		});
@@ -69,8 +70,8 @@ public class GameActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				ts.shiftRight();
-				ia.notifyDataSetChanged();				
+				ts.shiftLeft();
+				updateViews();
 			}
 			
 		});
@@ -80,8 +81,18 @@ public class GameActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				ts.spin();
-				ia.notifyDataSetChanged();				
+				updateViews();
 			}
 		});		
+	}
+	
+	public void updateViews() {
+		ia.notifyDataSetChanged();				
+		if (ts.isSolved()) {
+			title.setText(R.string.solved);
+		} else {
+			title.setText(R.string.gamelabel);
+		}
+		
 	}
 }

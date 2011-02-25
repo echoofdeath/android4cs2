@@ -19,13 +19,15 @@ public class ImageAdapter extends BaseAdapter {
 	private int width;
 	
 	private int squares;
+	
+	public static final int MAXPIECES = 16;
 
-	private int[] pIDs = { R.drawable.x1, R.drawable.x2, R.drawable.x3, R.drawable.x4, R.drawable.x5, R.drawable.x6, R.drawable.x7, R.drawable.x8, R.drawable.x9, R.drawable.x10, R.drawable.x11, R.drawable.x12, R.drawable.x13, R.drawable.x14, R.drawable.x15, R.drawable.x16}; //, R.drawable.x17, R.drawable.x18, R.drawable.x19, R.drawable.x20, R.drawable.x21, R.drawable.x22, R.drawable.x23, R.drawable.x24, R.drawable.x25, R.drawable.x26, R.drawable.x27, R.drawable.x28, R.drawable.x29, R.drawable.x30, R.drawable.x31, R.drawable.x32, R.drawable.x33, R.drawable.x34, R.drawable.x35, R.drawable.x36, R.drawable.x37, R.drawable.x38, R.drawable.x39, R.drawable.x40, R.drawable.x41, R.drawable.x42, R.drawable.x43, R.drawable.x44, R.drawable.x45, R.drawable.x46, R.drawable.x47, R.drawable.x48, R.drawable.x49, R.drawable.x50, R.drawable.x51, R.drawable.x52 };
+	private int[] pIDs = { R.drawable.x1, R.drawable.x2, R.drawable.x3, R.drawable.x4, R.drawable.x5, R.drawable.x6, R.drawable.x7, R.drawable.x8, R.drawable.x9, R.drawable.x10, R.drawable.x11, R.drawable.x12, R.drawable.x13, R.drawable.x14, R.drawable.x15, R.drawable.x16, R.drawable.r1, R.drawable.r2, R.drawable.r3, R.drawable.r4, R.drawable.r5, R.drawable.r6, R.drawable.r7, R.drawable.r8, R.drawable.r9, R.drawable.r10, R.drawable.r11, R.drawable.r12, R.drawable.r13, R.drawable.r14, R.drawable.r15, R.drawable.r16}; //, R.drawable.x17, R.drawable.x18, R.drawable.x19, R.drawable.x20, R.drawable.x21, R.drawable.x22, R.drawable.x23, R.drawable.x24, R.drawable.x25, R.drawable.x26, R.drawable.x27, R.drawable.x28, R.drawable.x29, R.drawable.x30, R.drawable.x31, R.drawable.x32, R.drawable.x33, R.drawable.x34, R.drawable.x35, R.drawable.x36, R.drawable.x37, R.drawable.x38, R.drawable.x39, R.drawable.x40, R.drawable.x41, R.drawable.x42, R.drawable.x43, R.drawable.x44, R.drawable.x45, R.drawable.x46, R.drawable.x47, R.drawable.x48, R.drawable.x49, R.drawable.x50, R.drawable.x51, R.drawable.x52 };
 	/**
 	 * Constructor for an ImageAdapter. This class maps images to the GridView based on the squares array in the Domineering object.
 	 * @param c The context in which the GridView is placed.
 	 * @param w The width of the screen and the gameboard.
-	 * @param dom The Domineering object with which we are concerned.
+	 * @param top The TopSpin object with which we are concerned.
 	 * @see BaseAdapter
 	 */
 	public ImageAdapter(Context c, int w, TopSpin top, int n) {
@@ -71,7 +73,7 @@ public class ImageAdapter extends BaseAdapter {
 			view = new ImageView(context);
 			view.setLayoutParams(new GridView.LayoutParams(width/squares, width/squares));
 			view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			view.setPadding(2,2,2,2);
+			view.setPadding(3,3,3,3);
 		} else {
 			view = (ImageView) convertView;
 		}
@@ -79,16 +81,18 @@ public class ImageAdapter extends BaseAdapter {
 		int column = position % squares;
 		if (row == 0 || column == 0 || row == squares - 1 || column == squares - 1) {
 			int where = 0;
+			int red = 0;
 			if (row == 0) {
-				where += column;
+				where = 2 * (squares - 1) + column;
 			} else if (row == squares - 1) {
-				where = 2 * (squares - 1) + (squares - 1 - column);
+				where = (squares - 1 - column);
+				red = MAXPIECES;
 			} else if (column == 0) {
-				where = 3 * (squares - 1) + (squares - 1 - row);
+				where = (squares - 1) + (squares - 1 - row);
 			} else {
-				where = (squares - 1) + row;
+				where = 3 * (squares - 1) + row;
 			}
-			view.setImageResource(pIDs[ts.get(where) - 1]);
+			view.setImageResource(pIDs[red + ts.get(where) - 1]);
 		} 
 		return view;
 	}
