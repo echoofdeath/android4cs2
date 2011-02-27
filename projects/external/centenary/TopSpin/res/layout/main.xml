@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:id="@+id/RelativeLayout01" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-<TextView  
-    android:id="@+id/toptest"
-    android:layout_width="wrap_content" 
-    android:layout_height="wrap_content" 
-       android:layout_above="@+id/nine"
-        android:layout_centerInParent="true" 
-    android:text="@string/hello"
-    />
-    <Button android:layout_width="wrap_content"
-            android:layout_above="@+id/sixteen"
-        android:layout_centerInParent="true" 
-    android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:id="@+id/nine"  android:text="@string/button1" android:textSize="20sp"></Button>
-<Button android:layout_width="wrap_content" 
-        android:layout_centerInParent="true" 
-android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:id="@+id/sixteen" android:text="@string/button2" android:textSize="20sp"></Button>
-<Button android:layout_width="wrap_content" 
-            android:layout_below="@+id/sixteen"
-        android:layout_centerInParent="true" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:id="@+id/twentyfive"  android:text="@string/button3" android:textSize="20sp"></Button>
-    
+<RelativeLayout android:id="@+id/RelativeLayout01"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TextView android:id="@+id/toptest" 
+	    android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:layout_above="@+id/nine"
+		android:layout_centerInParent="true" 
+		android:text="@string/hello"
+		android:textSize="24sp" 
+		android:padding="10sp" />
+	<Button android:layout_width="wrap_content"
+		android:layout_above="@+id/sixteen" 
+		android:layout_centerInParent="true"
+		android:layout_height="wrap_content" 
+		android:layout_centerHorizontal="true"
+		android:id="@+id/nine" 
+		android:text="@string/button1"
+		android:textSize="40sp"></Button>
+	<Button android:layout_width="wrap_content"
+		android:layout_centerInParent="true" 
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true" 
+		android:id="@+id/sixteen"
+		android:text="@string/button2" 
+		android:textSize="40sp"></Button>
+	<Button android:layout_width="wrap_content"
+		android:layout_below="@+id/sixteen" 
+		android:layout_centerInParent="true"
+		android:layout_height="wrap_content" 
+		android:layout_centerHorizontal="true"
+		android:id="@+id/twentyfive" 
+		android:text="@string/button3"
+		android:textSize="40sp"></Button>
+
 </RelativeLayout>

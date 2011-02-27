@@ -18,16 +18,29 @@ public class ImageAdapter extends BaseAdapter {
 	/** The width of the gameboard. */
 	private int width;
 	
+	/** The number of squares in the grid */
 	private int squares;
 	
+	/** Maximum number of pieces, from 5x5 board */
 	public static final int MAXPIECES = 16;
 
-	private int[] pIDs = { R.drawable.x1, R.drawable.x2, R.drawable.x3, R.drawable.x4, R.drawable.x5, R.drawable.x6, R.drawable.x7, R.drawable.x8, R.drawable.x9, R.drawable.x10, R.drawable.x11, R.drawable.x12, R.drawable.x13, R.drawable.x14, R.drawable.x15, R.drawable.x16, R.drawable.r1, R.drawable.r2, R.drawable.r3, R.drawable.r4, R.drawable.r5, R.drawable.r6, R.drawable.r7, R.drawable.r8, R.drawable.r9, R.drawable.r10, R.drawable.r11, R.drawable.r12, R.drawable.r13, R.drawable.r14, R.drawable.r15, R.drawable.r16}; //, R.drawable.x17, R.drawable.x18, R.drawable.x19, R.drawable.x20, R.drawable.x21, R.drawable.x22, R.drawable.x23, R.drawable.x24, R.drawable.x25, R.drawable.x26, R.drawable.x27, R.drawable.x28, R.drawable.x29, R.drawable.x30, R.drawable.x31, R.drawable.x32, R.drawable.x33, R.drawable.x34, R.drawable.x35, R.drawable.x36, R.drawable.x37, R.drawable.x38, R.drawable.x39, R.drawable.x40, R.drawable.x41, R.drawable.x42, R.drawable.x43, R.drawable.x44, R.drawable.x45, R.drawable.x46, R.drawable.x47, R.drawable.x48, R.drawable.x49, R.drawable.x50, R.drawable.x51, R.drawable.x52 };
+	/** References to the images for the pieces */
+	private int[] pIDs = { R.drawable.x1, R.drawable.x2, R.drawable.x3, 
+			R.drawable.x4, R.drawable.x5, R.drawable.x6, R.drawable.x7, 
+			R.drawable.x8, R.drawable.x9, R.drawable.x10, R.drawable.x11, 
+			R.drawable.x12, R.drawable.x13, R.drawable.x14, R.drawable.x15, 
+			R.drawable.x16, R.drawable.r1, R.drawable.r2, R.drawable.r3, 
+			R.drawable.r4, R.drawable.r5, R.drawable.r6, R.drawable.r7, 
+			R.drawable.r8, R.drawable.r9, R.drawable.r10, R.drawable.r11, 
+			R.drawable.r12, R.drawable.r13, R.drawable.r14, R.drawable.r15, R.drawable.r16}; 
+
 	/**
-	 * Constructor for an ImageAdapter. This class maps images to the GridView based on the squares array in the Domineering object.
+	 * Constructor for an ImageAdapter. This class maps images to the GridView based 
+	 * on the pieces in the TopSpin object.
 	 * @param c The context in which the GridView is placed.
 	 * @param w The width of the screen and the gameboard.
 	 * @param top The TopSpin object with which we are concerned.
+	 * @param n total number of squares
 	 * @see BaseAdapter
 	 */
 	public ImageAdapter(Context c, int w, TopSpin top, int n) {
@@ -71,7 +84,7 @@ public class ImageAdapter extends BaseAdapter {
 		ImageView view;
 		if (convertView == null) {
 			view = new ImageView(context);
-			view.setLayoutParams(new GridView.LayoutParams(width/squares, width/squares));
+			view.setLayoutParams(new GridView.LayoutParams(width/(squares + 1), width/(squares + 1)));
 			view.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			view.setPadding(3,3,3,3);
 		} else {
@@ -79,6 +92,8 @@ public class ImageAdapter extends BaseAdapter {
 		}
 		int row = position / squares;
 		int column = position % squares;
+		
+		// only draw pieces in the outside box, make them clockwise
 		if (row == 0 || column == 0 || row == squares - 1 || column == squares - 1) {
 			int where = 0;
 			int red = 0;
@@ -86,6 +101,7 @@ public class ImageAdapter extends BaseAdapter {
 				where = 2 * (squares - 1) + column;
 			} else if (row == squares - 1) {
 				where = (squares - 1 - column);
+				// The bottom row should be red pieces
 				red = MAXPIECES;
 			} else if (column == 0) {
 				where = (squares - 1) + (squares - 1 - row);
@@ -96,5 +112,4 @@ public class ImageAdapter extends BaseAdapter {
 		} 
 		return view;
 	}
-
 }
