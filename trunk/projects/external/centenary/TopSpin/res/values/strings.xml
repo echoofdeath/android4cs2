@@ -6,8 +6,8 @@
     <string name="button1">3x3</string>
     <string name="button2">4x4</string>
     <string name="button3">5x5</string>
-    <string name="rotate">Rotate</string>
-    <string name="left">Left</string>
-    <string name="right">Right</string>
+    <string name="rotate">Spin Red</string>
+    <string name="left">Clock</string>
+    <string name="right">Counter</string>
     <string name="solved">Solved!</string>
 </resources>

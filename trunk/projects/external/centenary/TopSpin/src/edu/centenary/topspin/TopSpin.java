@@ -15,8 +15,10 @@ public interface TopSpin {
     // Returns true if the puzzle is solved, such that the pieces are in numerical order.
     public boolean isSolved();
 
+    // Retrieves the number in the ith spot of the cycle
     public int get(int i);
     
+    // Either shift left, right, or spin the object for moves times
     public void mixup(int moves);
     
 }

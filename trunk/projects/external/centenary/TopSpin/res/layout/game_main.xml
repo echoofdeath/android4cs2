@@ -21,8 +21,17 @@
         android:gravity="center" />
     
 
-<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:id="@+id/rotate" android:layout_below="@+id/board" android:text="@string/rotate" android:textSize="20sp"></Button>
-<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/left" android:layout_toLeftOf="@+id/rotate" android:layout_below="@+id/board" android:text="@string/left" android:textSize="20sp"></Button>
-<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/right" android:layout_toRightOf="@+id/rotate" android:layout_below="@+id/board" android:text="@string/right" android:textSize="20sp"></Button>
+    <ImageButton android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+	    android:id="@+id/rotate" android:layout_below="@+id/board"
+	    android:src="@drawable/spinred"></ImageButton>
+	<ImageButton android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/left"
+		android:layout_toLeftOf="@+id/rotate" android:layout_below="@+id/board"
+		android:src="@drawable/left"></ImageButton>
+	<ImageButton android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/right"
+		android:layout_toRightOf="@+id/rotate" android:layout_below="@+id/board"
+		android:src="@drawable/right"></ImageButton>
 
 </RelativeLayout>
