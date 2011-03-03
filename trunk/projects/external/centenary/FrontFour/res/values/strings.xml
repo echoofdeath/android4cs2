@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Front Four</string>
+    <string name="help_begin">To begin, enter a number of initial permutations. This is how many random moves will be made to set the puzzle, so the higher this number, the harder the game. Remember: no matter how many permutations you specify, the game is always able to be solved.</string>
+    <string name="help_goal">The goal of this game is to organize the numbers into either ascending or descending numerical order. To do this, you can tap the front four numbers once to reverse them (or press the select button) and also spin the circle by dragging your finger right or left on the screen (or pressing the left or right button).</string>
+    <string name="help_end">Use a combination of these moves to spin and flip your way to victory. Or die by the raptor that I\'ve programmed to jump out of your handset and devour you. Your choice. Remember: the raptor runs at 10 m/s and knows no fear.</string>
+    <string name="about">Front Four is written by Jacob Jennings and is based on the game TopSpin by Binary Games. I take no credit for the invention of this game or the discovery of the theory behind it.</string>
+    <string name="kenny">A special thanks to Kenneth Smith for designing the awesome icon. Even though I drew it in Inkscape two weeks later. It\'s cool, though. I\'m not bitter.</string>
+</resources>

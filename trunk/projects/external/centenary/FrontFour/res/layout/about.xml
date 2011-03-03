@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  <TableRow android:gravity="center">
+  <TextView android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:textSize="24px"
+		android:layout_marginTop="15px"
+		android:text="About"
+		android:gravity="center" />
+  </TableRow>
+  <TableRow android:gravity="center">
+	<TextView android:id="@+id/aboutFF"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_marginTop="20px"
+		android:layout_marginBottom="20px"
+		android:text="@string/about"
+		android:gravity="center"
+	/>
+  </TableRow>
+  <TableRow android:gravity="center">
+  	<TextView android:id="@+id/kenny" 
+  		android:layout_height="wrap_content"
+  		android:layout_width="wrap_content"
+  		android:layout_marginBottom="6dip"
+  		android:text="@string/kenny" 
+  		android:gravity="center" />
+  </TableRow>
+</TableLayout>
