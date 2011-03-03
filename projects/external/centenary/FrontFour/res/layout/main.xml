@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#99cc33">
+  <TableRow android:gravity="center">
+  	<TextView 
+  		android:id="@+id/new_game"
+  		android:scaleType="fitCenter"
+  		android:padding="21px"
+  		android:text="New Game"
+  		android:textColor="#000000"
+  		android:textSize="48px" />
+  </TableRow>
+  <TableRow android:gravity="center">
+  	<TextView 
+  		android:id="@+id/load_game"
+  		android:scaleType="fitCenter"
+  		android:padding="21px"
+  		android:text="Load Game" 
+  		android:textColor="#000000"
+  		android:textSize="48px"/>  	
+  </TableRow>
+  <TableRow android:gravity="center">
+  	<TextView 
+  		android:id="@+id/options"
+  		android:scaleType="fitCenter"
+  		android:padding="21px"
+  		android:text="Options" 
+  		android:textColor="#000000"
+  		android:textSize="48px"/>
+  </TableRow>
+  <TableRow android:gravity="center">
+  	<TextView 
+  		android:id="@+id/about"
+  		android:scaleType="fitCenter"
+  		android:padding="21px"
+  		android:text="About" 
+  		android:textColor="#000000"
+  		android:textSize="48px" />
+  </TableRow>
+</TableLayout>
