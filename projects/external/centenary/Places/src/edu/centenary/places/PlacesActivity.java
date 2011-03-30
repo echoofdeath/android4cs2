@@ -3,6 +3,7 @@ package edu.centenary.places;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import android.app.Activity;
@@ -35,7 +36,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PlacesActivity extends Activity { //implements SensorEventListener{
+public class PlacesActivity extends Activity implements SensorEventListener{
 	
 	private float magcompass;
 	private boolean gpsfound;
@@ -93,31 +94,30 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
         
 		tv = (TextView) this.findViewById(R.id.headertext);
 		pList = (ListView) this.findViewById(R.id.list_places);
-		//list = new ArrayList<QTLocation<String>>();
-		list = db.proximitySearch(new GeoPoint(32,-90), 5);
+		list = new ArrayList<QTLocation<String>>();
 		pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass));
 		pList.setTextFilterEnabled(true);
 
-//		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-//
-//		if (sensorManager == null) {
-//			if (!gpsfound) {
-//				Toast.makeText(getBaseContext(), "No Sensor Manager",
-//						Toast.LENGTH_SHORT).show();
-//			}
-//			return;
-//		}
-//		compass = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-//		if (compass == null) {
-//			if (!gpsfound) {
-//				Toast.makeText(getBaseContext(), "No Compass", Toast.LENGTH_SHORT)
-//				.show();
-//			}
-//			return;
-//		}
-//		sensorManager.registerListener(this, compass,
-//				SensorManager.SENSOR_DELAY_UI);
-//		
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+		if (sensorManager == null) {
+			if (!gpsfound) {
+				Toast.makeText(getBaseContext(), "No Sensor Manager",
+						Toast.LENGTH_SHORT).show();
+			}
+			return;
+		}
+		compass = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+		if (compass == null) {
+			if (!gpsfound) {
+				Toast.makeText(getBaseContext(), "No Compass", Toast.LENGTH_SHORT)
+				.show();
+			}
+			return;
+		}
+		sensorManager.registerListener(this, compass,
+				SensorManager.SENSOR_DELAY_UI);
+		
     }
 
     /**
@@ -125,9 +125,9 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
 	 */
 	public void onDestroy() {
 		super.onDestroy();
-//		if (sensorManager != null) {
-//			sensorManager.unregisterListener(this);
-//		}
+		if (sensorManager != null) {
+			sensorManager.unregisterListener(this);
+		}
 		Log.d("Places", "Destroying the Activity");
 	}
     
@@ -150,7 +150,7 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
     		while (input.hasNextLine()) {
     			double lat = input.nextDouble();
     			double lon = input.nextDouble();
-    			String line = input.nextLine();
+    			String line = input.nextLine().trim();
     			Log.d("loadNodes: ", "lat" + lat + "lon" + lon + line);
     			places.add(new GeoPoint(lat, lon), line);
     		}
@@ -158,7 +158,7 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
     		is.close();
     		is = null;
     	} catch (IOException e) {
-    		Log.d("loadNodes: ", "Problem with words.txt!\n");
+    		Log.d("loadNodes: ", "Problem with centenary.txt!\n");
     	}
     	
     	return places;
@@ -213,48 +213,48 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
 			QTLocation<String> o = items.get(position);
 			if (o != null) {
 				// Also use sensor bearing to rotate appropriately???
-				double bearing = 90; //o.getLoc().bearing(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()));
+				double bearing = o.getLoc().bearing(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()));
 				double diff = bearing - this.magcompass;
 				if (bearing < this.magcompass) {
 					diff = 360 + diff;
 				}
 				ImageView iv = (ImageView) v.findViewById(R.id.icon);
 
-//				int tmp = (int) Math.round(diff / 45);
-//				switch (tmp) {
-//					case 1: {
-//						iv.setImageResource(R.drawable.wallarrowne);
-//						break;
-//					}
-//					case 2: {
-//						iv.setImageResource(R.drawable.wallarrowe);
-//						break;
-//					}
-//					case 3: {
-//						iv.setImageResource(R.drawable.wallarrowse);
-//						break;
-//					}
-//					case 4: {
-//						iv.setImageResource(R.drawable.wallarrows);
-//						break;
-//					}
-//					case 5: {
-//						iv.setImageResource(R.drawable.wallarrowsw);
-//						break;
-//					}
-//					case 6: {
-//						iv.setImageResource(R.drawable.wallarroww);
-//						break;
-//					}
-//					case 7: {
-//						iv.setImageResource(R.drawable.wallarrownw);
-//						break;
-//					}
-//					default: {
-//						iv.setImageResource(R.drawable.wallarrown);
-//						break;
-//					}
-//				}
+				int tmp = (int) Math.round(diff / 45);
+				switch (tmp) {
+					case 1: {
+						iv.setImageResource(R.drawable.wallarrowne);
+						break;
+					}
+					case 2: {
+						iv.setImageResource(R.drawable.wallarrowe);
+						break;
+					}
+					case 3: {
+						iv.setImageResource(R.drawable.wallarrowse);
+						break;
+					}
+					case 4: {
+						iv.setImageResource(R.drawable.wallarrows);
+						break;
+					}
+					case 5: {
+						iv.setImageResource(R.drawable.wallarrowsw);
+						break;
+					}
+					case 6: {
+						iv.setImageResource(R.drawable.wallarroww);
+						break;
+					}
+					case 7: {
+						iv.setImageResource(R.drawable.wallarrownw);
+						break;
+					}
+					default: {
+						iv.setImageResource(R.drawable.wallarrown);
+						break;
+					}
+				}
 				
 
 				TextView tt = (TextView) v.findViewById(R.id.toptext);
@@ -274,11 +274,11 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
 	
 	public void resetListAdapter() {
 		synchronized (this) {
-//			LocationAdapter da = (LocationAdapter) pList.getAdapter();
-//			da.setMagCompass(magcompass);
-//			da.notifyDataSetChanged();
-//			da.notifyDataSetInvalidated();
-//			pList.invalidateViews();
+			LocationAdapter da = (LocationAdapter) pList.getAdapter();
+			da.setMagCompass(magcompass);
+			da.notifyDataSetChanged();
+			da.notifyDataSetInvalidated();
+			pList.invalidateViews();
 			
 			pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass)); 
 			pList.setTextFilterEnabled(true);
@@ -286,20 +286,20 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
 		}
 	}
 
-//	@Override
-//	public void onSensorChanged(SensorEvent se) {
-//		synchronized (this) {
-//			float magneticHeading = se.values[0];
-//			magcompass = magneticHeading;
-//			resetListAdapter();
-//		}
-//	}
-//
-//	@Override
-//	public void onAccuracyChanged(Sensor arg0, int arg1) {
-//		// TODO Auto-generated method stub
-//	}
-//	
+	@Override
+	public void onSensorChanged(SensorEvent se) {
+		synchronized (this) {
+			float magneticHeading = se.values[0];
+			magcompass = magneticHeading;
+			resetListAdapter();
+		}
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
+	}
+	
     /**
 	 * Standard class to listen for changes in GPS Location.
 	 */
@@ -310,6 +310,7 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
         	if (loc != null) {
                 myloc = loc;
                 list = db.proximitySearch(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()), 5);
+                Collections.sort(list);
     			LocationAdapter da = (LocationAdapter) pList.getAdapter();
     			da.setList(list);
     			resetListAdapter();
