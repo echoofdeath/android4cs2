@@ -1,6 +1,7 @@
 package edu.centenary.places;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -92,8 +93,8 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
         
 		tv = (TextView) this.findViewById(R.id.headertext);
 		pList = (ListView) this.findViewById(R.id.list_places);
-		list = new ArrayList<QTLocation<String>>();
-		list.add(new QTLocation<String>(new GeoPoint(0, 0), "Hello"));
+		//list = new ArrayList<QTLocation<String>>();
+		list = db.proximitySearch(new GeoPoint(32,-90), 5);
 		pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass));
 		pList.setTextFilterEnabled(true);
 
@@ -143,7 +144,8 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
     	SpatialDB<String> places = new QuadTree<String>(new GeoPoint(-90, -180), new GeoPoint(90, 180));
     	try {
     		AssetManager am = getAssets();
-    		Scanner input = new Scanner(am.open("centenary.txt"));
+    		InputStream is = am.open("centenary.txt");
+    		Scanner input = new Scanner(is);
    			Log.d("loadNodes: ", "opened file");
     		while (input.hasNextLine()) {
     			double lat = input.nextDouble();
@@ -153,8 +155,8 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
     			places.add(new GeoPoint(lat, lon), line);
     		}
     		input = null;
-    		am.close();
-    		am = null;
+    		is.close();
+    		is = null;
     	} catch (IOException e) {
     		Log.d("loadNodes: ", "Problem with words.txt!\n");
     	}
@@ -164,8 +166,8 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
 
 	
 	/**
-	 * Makes the list of sniffs look much better, icon to the left and two text
-	 * fields, one large for message, one small and green for intensity
+	 * Makes the list of places look much better, icon to the left and two text
+	 * fields, one large for message, one small and green for distance
 	 * 
 	 */
 	private class LocationAdapter extends ArrayAdapter<QTLocation<String>> implements Filterable{
@@ -211,48 +213,48 @@ public class PlacesActivity extends Activity { //implements SensorEventListener{
 			QTLocation<String> o = items.get(position);
 			if (o != null) {
 				// Also use sensor bearing to rotate appropriately???
-				double bearing = o.getLoc().bearing(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()));
+				double bearing = 90; //o.getLoc().bearing(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()));
 				double diff = bearing - this.magcompass;
 				if (bearing < this.magcompass) {
 					diff = 360 + diff;
 				}
 				ImageView iv = (ImageView) v.findViewById(R.id.icon);
 
-				int tmp = (int) Math.round(diff / 45);
-				switch (tmp) {
-					case 1: {
-						iv.setImageResource(R.drawable.wallarrowne);
-						break;
-					}
-					case 2: {
-						iv.setImageResource(R.drawable.wallarrowe);
-						break;
-					}
-					case 3: {
-						iv.setImageResource(R.drawable.wallarrowse);
-						break;
-					}
-					case 4: {
-						iv.setImageResource(R.drawable.wallarrows);
-						break;
-					}
-					case 5: {
-						iv.setImageResource(R.drawable.wallarrowsw);
-						break;
-					}
-					case 6: {
-						iv.setImageResource(R.drawable.wallarroww);
-						break;
-					}
-					case 7: {
-						iv.setImageResource(R.drawable.wallarrownw);
-						break;
-					}
-					default: {
-						iv.setImageResource(R.drawable.wallarrown);
-						break;
-					}
-				}
+//				int tmp = (int) Math.round(diff / 45);
+//				switch (tmp) {
+//					case 1: {
+//						iv.setImageResource(R.drawable.wallarrowne);
+//						break;
+//					}
+//					case 2: {
+//						iv.setImageResource(R.drawable.wallarrowe);
+//						break;
+//					}
+//					case 3: {
+//						iv.setImageResource(R.drawable.wallarrowse);
+//						break;
+//					}
+//					case 4: {
+//						iv.setImageResource(R.drawable.wallarrows);
+//						break;
+//					}
+//					case 5: {
+//						iv.setImageResource(R.drawable.wallarrowsw);
+//						break;
+//					}
+//					case 6: {
+//						iv.setImageResource(R.drawable.wallarroww);
+//						break;
+//					}
+//					case 7: {
+//						iv.setImageResource(R.drawable.wallarrownw);
+//						break;
+//					}
+//					default: {
+//						iv.setImageResource(R.drawable.wallarrown);
+//						break;
+//					}
+//				}
 				
 
 				TextView tt = (TextView) v.findViewById(R.id.toptext);
