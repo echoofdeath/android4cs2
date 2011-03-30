@@ -9,6 +9,21 @@
                 android:layout_height="wrap_content"
                 android:text="Loading..." 
                 android:textStyle="bold" />
+        <LinearLayout 
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <Button android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:id="@+id/up" 
+                android:text="@string/up" 
+                android:textSize="20sp"></Button>
+        <Button android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:id="@+id/down" 
+                android:text="@string/down" 
+                android:textSize="20sp"></Button>
+        </LinearLayout>
         <ListView android:id="@+id/list_places"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"/>

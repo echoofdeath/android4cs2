@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,11 +46,13 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 	private TextView tv;
 	private ListView pList;
 	private SensorManager sensorManager;
+	private LocationManager locMan;
 	private ArrayList<QTLocation<String>> list;
 	private SpatialDB<String> db;
 	private MyLocationListener locationListener;
 	private int minTime = 10000;
 	private int minDistance = 5;
+	private int numPlaces = 5;
 
 	
     /** Called when the activity is first created. */
@@ -57,10 +60,17 @@ public class PlacesActivity extends Activity implements SensorEventListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainlist);
-        
-		db = loadPlaces();
-        
-	    LocationManager locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        Runnable viewOrders = new Runnable(){
+            @Override
+            public void run() {
+                db = loadPlaces();
+            }
+        };
+    Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
+        thread.start();
+                
+	    locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!locMan.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
     		Builder adb = new AlertDialog.Builder(this);
     		adb.setIcon(R.drawable.icon);
@@ -93,6 +103,28 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         		locationListener); 
         
 		tv = (TextView) this.findViewById(R.id.headertext);
+		
+		Button up = (Button) this.findViewById(R.id.up);
+		up.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				numPlaces = Math.min(numPlaces + 1, 8);
+				searchDB();
+			}
+        	
+		});
+		Button down = (Button) this.findViewById(R.id.down);
+		down.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				numPlaces = Math.max(numPlaces - 1, 0);
+				searchDB();
+			}
+        	
+		});
+		
 		pList = (ListView) this.findViewById(R.id.list_places);
 		list = new ArrayList<QTLocation<String>>();
 		pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass));
@@ -128,6 +160,7 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 		if (sensorManager != null) {
 			sensorManager.unregisterListener(this);
 		}
+		locMan.removeUpdates(locationListener);
 		Log.d("Places", "Destroying the Activity");
 	}
     
@@ -140,6 +173,10 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         startActivity(gpsOptionsIntent);  
 	}
 
+	/** 
+	 * Load the places found in the text file into the SpatialDB
+	 * @return
+	 */
     public SpatialDB<String> loadPlaces() {
     	SpatialDB<String> places = new QuadTree<String>(new GeoPoint(-90, -180), new GeoPoint(90, 180));
     	try {
@@ -204,7 +241,6 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			Log.d("Adapter", "Is this called?");
 			View v = convertView;
 			if (v == null) {
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -213,7 +249,7 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 			QTLocation<String> o = items.get(position);
 			if (o != null) {
 				// Also use sensor bearing to rotate appropriately???
-				double bearing = o.getLoc().bearing(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()));
+				double bearing = (new GeoPoint(myloc.getLatitude(), myloc.getLongitude()).bearing(o.getLoc()));
 				double diff = bearing - this.magcompass;
 				if (bearing < this.magcompass) {
 					diff = 360 + diff;
@@ -254,8 +290,7 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 						iv.setImageResource(R.drawable.wallarrown);
 						break;
 					}
-				}
-				
+				}			
 
 				TextView tt = (TextView) v.findViewById(R.id.toptext);
 				TextView bt = (TextView) v.findViewById(R.id.bottomtext);
@@ -265,27 +300,36 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 				}
 				if (bt != null) {
 					bt.setText("Distance: "
-							+ String.format("%.4f", o.getDistance()));
+							+ String.format("%.4f", o.getDistance()) + "KM");
 				}
 			}
 			return v;
 		}
 	}
 	
-	public void resetListAdapter() {
-		synchronized (this) {
-			LocationAdapter da = (LocationAdapter) pList.getAdapter();
-			da.setMagCompass(magcompass);
-			da.notifyDataSetChanged();
-			da.notifyDataSetInvalidated();
-			pList.invalidateViews();
-			
-			pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass)); 
-			pList.setTextFilterEnabled(true);
-			 
-		}
+	public synchronized void resetListAdapter() {
+		// Y U NO WORK?
+		LocationAdapter da = (LocationAdapter) pList.getAdapter();
+		da.setMagCompass(magcompass);
+		da.notifyDataSetChanged();
+		da.notifyDataSetInvalidated();
+		pList.invalidateViews();
+		
+		pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass)); 
+		pList.setTextFilterEnabled(true);	 
 	}
 
+	public synchronized void searchDB() {
+		if (myloc != null && db != null) {
+		    list = db.proximitySearch(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()), numPlaces);
+		    Collections.sort(list);
+			LocationAdapter da = (LocationAdapter) pList.getAdapter();
+			da.setList(list);
+			tv.setText("Local Places: " + list.size());
+			resetListAdapter();	
+		}
+	}
+	
 	@Override
 	public void onSensorChanged(SensorEvent se) {
 		synchronized (this) {
@@ -309,13 +353,8 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         public void onLocationChanged(Location loc) {
         	if (loc != null) {
                 myloc = loc;
-                list = db.proximitySearch(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()), 5);
-                Collections.sort(list);
-    			LocationAdapter da = (LocationAdapter) pList.getAdapter();
-    			da.setList(list);
-    			resetListAdapter();
-    			tv.setText("Local Places: " + list.size());
-            }
+                searchDB();
+             }
         }
 
         @Override
