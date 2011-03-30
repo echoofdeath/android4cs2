@@ -1,5 +1,6 @@
 package com.googlecode.android4cs2.ghost;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 import android.app.Activity;
@@ -145,15 +146,16 @@ public class GhostActivity extends Activity {
     public DigitalNode<Boolean> loadNodes() {
     	DigitalNode<Boolean> words = new DigitalNode<Boolean>(false);
     	try {
-    		AssetManager assman = getAssets();
-    		Scanner input = new Scanner(assman.open(word.charAt(0) + ".txt"));
+    		AssetManager am = getAssets();
+    		InputStream is = am.open(word.charAt(0) + ".txt");
+    		Scanner input = new Scanner(is);
     		while (input.hasNextLine()) {
     			String line = input.nextLine();
     			addWord(line, words);
     		}
     		input = null;
-    		assman.close();
-    		assman = null;
+    		is.close();
+    		is = null;
     	} catch (Exception e) {
     		Log.d("loadNodes: ", "Problem with words.txt!");
     	}
