@@ -21,6 +21,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -53,7 +54,6 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 	private int minTime = 10000;
 	private int minDistance = 5;
 	private int numPlaces = 5;
-
 	
     /** Called when the activity is first created. */
     @Override
@@ -61,15 +61,12 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainlist);
 
-        Runnable viewOrders = new Runnable(){
-            @Override
-            public void run() {
-                db = loadPlaces();
-            }
-        };
-    Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
-        thread.start();
+		new LoadDataTask().execute("blue");
                 
+        // See if GPS is enabled, if not, let the user decide
+        myloc = new Location("FAKE");
+        myloc.setLatitude(32.483859666667);
+        myloc.setLongitude(-93.73131635);
 	    locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!locMan.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
     		Builder adb = new AlertDialog.Builder(this);
@@ -94,6 +91,7 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         	adb.show();
         }       
         
+        // Set up GPS Listener
 		locMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
         locationListener = new MyLocationListener();
         locMan.requestLocationUpdates(
@@ -102,8 +100,10 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         		minDistance, 
         		locationListener); 
         
+        // Save the TextView for alteration later
 		tv = (TextView) this.findViewById(R.id.headertext);
 		
+		// Add Callbacks for the buttons to increase or decrease search number
 		Button up = (Button) this.findViewById(R.id.up);
 		up.setOnClickListener(new View.OnClickListener() {
 
@@ -125,11 +125,13 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         	
 		});
 		
+		// Initialize and set the Adapter for the List
 		pList = (ListView) this.findViewById(R.id.list_places);
 		list = new ArrayList<QTLocation<String>>();
 		pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass));
 		pList.setTextFilterEnabled(true);
 
+		// Listen to the compass for updates
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 		if (sensorManager == null) {
@@ -153,7 +155,7 @@ public class PlacesActivity extends Activity implements SensorEventListener{
     }
 
     /**
-	 * 
+	 * Release all the listeners when killing the activity
 	 */
 	public void onDestroy() {
 		super.onDestroy();
@@ -307,18 +309,25 @@ public class PlacesActivity extends Activity implements SensorEventListener{
 		}
 	}
 	
+	/**
+	 * When new compass or GPS reading, reset the Adapter to have new information
+	 */
 	public synchronized void resetListAdapter() {
-		// Y U NO WORK?
 		LocationAdapter da = (LocationAdapter) pList.getAdapter();
 		da.setMagCompass(magcompass);
-		da.notifyDataSetChanged();
-		da.notifyDataSetInvalidated();
-		pList.invalidateViews();
+
+		// Y U NO WORK?
+		//da.notifyDataSetChanged();
+		//da.notifyDataSetInvalidated();
+		//pList.invalidateViews();
 		
 		pList.setAdapter(new LocationAdapter(PlacesActivity.this, R.layout.row, list, magcompass)); 
 		pList.setTextFilterEnabled(true);	 
 	}
 
+	/**
+	 * Search the SpatialDB for n closest objects
+	 */
 	public synchronized void searchDB() {
 		if (myloc != null && db != null) {
 		    list = db.proximitySearch(new GeoPoint(myloc.getLatitude(), myloc.getLongitude()), numPlaces);
@@ -372,6 +381,33 @@ public class PlacesActivity extends Activity implements SensorEventListener{
         public void onStatusChanged(String provider, int status, 
             Bundle extras) {
             // TODO Auto-generated method stub
+        }
+    }
+    
+    /**
+     * AsyncTask for loading the DB in the background. Updates the 
+     * List with a proximity search when loaded, based on current location.
+     *
+     */
+    public class LoadDataTask extends AsyncTask<String, Void, String> {
+
+        // can use UI thread here
+        protected void onPreExecute() {
+            Toast.makeText(getBaseContext(), 
+                    "Loading DB...", 
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        // automatically done on worker thread (separate from UI thread)
+        protected String doInBackground(final String... args) {
+        	db = loadPlaces();
+        	return "";
+        }
+
+        // can use UI thread here
+        protected void onPostExecute(final String reply) {
+         	// reset the output view by retrieving the new data
+			searchDB();
         }
     }
 }
